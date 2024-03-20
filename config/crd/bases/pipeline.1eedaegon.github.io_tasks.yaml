@@ -4,45 +4,37 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: pipelines.pipeline.1eedaegon.github.io
+  name: tasks.pipeline.1eedaegon.github.io
 spec:
   group: pipeline.1eedaegon.github.io
   names:
-    kind: Pipeline
-    listKind: PipelineList
-    plural: pipelines
-    singular: pipeline
+    kind: Task
+    listKind: TaskList
+    plural: tasks
+    singular: task
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
     - description: ProjectName
-      jsonPath: .metadata.projectName
+      jsonPath: .spec.projectName
       name: ProjectName
       type: string
     - description: PipelineName
-      jsonPath: .metadata.pipelineName
+      jsonPath: .spec.pipelineName
       name: PipelineName
+      type: string
+    - description: currentStep
+      jsonPath: .status.currentStep
+      name: CurrentStep
       type: string
     - description: State
       jsonPath: .status.state
       name: State
       type: string
-    - description: initializingTasks
-      jsonPath: .status.initializingTasks
-      name: InitializingTasks
-      type: number
-    - description: runningTasks
-      jsonPath: .status.runningTasks
-      name: runningTasks
-      type: number
-    - description: completedTasks
-      jsonPath: .status.completedTasks
-      name: completedTasks
-      type: number
     name: v1
     schema:
       openAPIV3Schema:
-        description: Pipeline is the Schema for the pipelines API
+        description: Task is the Schema for the tasks API
         properties:
           apiVersion:
             description: |-
@@ -61,12 +53,8 @@ spec:
             type: string
           metadata:
             type: object
-          pipelineName:
-            type: string
-          projectName:
-            type: string
           spec:
-            description: PipelineSpec defines the desired state of Pipeline
+            description: TaskSpec defines the desired state of Task
             properties:
               children:
                 items:
@@ -86,24 +74,54 @@ spec:
                 items:
                   type: string
                 type: array
-              tasks:
+              pipelineName:
+                type: string
+              projectName:
+                description: |-
+                  INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                  Important: Run "make" to regenerate code after modifying this file
+                type: string
+              resource:
+                properties:
+                  cpu:
+                    type: string
+                  gpu:
+                    items:
+                      type: string
+                    type: array
+                  memory:
+                    type: string
+                type: object
+              steps:
                 items:
-                  type: string
+                  description: |-
+                    EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
+                    NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+                  properties:
+                    args:
+                      items:
+                        type: string
+                      type: array
+                    command:
+                      items:
+                        type: string
+                      type: array
+                    image:
+                      type: string
+                    name:
+                      type: string
+                  type: object
                 type: array
             type: object
           status:
-            description: PipelineStatus defines the observed state of Pipeline
+            description: TaskStatus defines the observed state of Task
             properties:
-              completedTasks:
-                type: integer
-              initializingTasks:
-                type: integer
-              runningTasks:
-                type: integer
-              state:
+              currentStep:
                 description: |-
                   INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
                   Important: Run "make" to regenerate code after modifying this file
+                type: string
+              state:
                 type: string
             type: object
         type: object
