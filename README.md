@@ -4,6 +4,8 @@
 
 ## Description
 
+If you want to excitedly create a pipeline with YAML, deploy it all at once and define it with YAML at once
+
 ## Getting Started
 
 ### Prerequisites
