@@ -9,7 +9,7 @@
 apiVersion: pipeline.1eedaegon.github.io/v1
 kind: Pipeline
 metadata:
-  projectName: test-project
+  # projectName: test-project
   name: pipeline-chain-test
 spec:
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
@@ -41,8 +41,11 @@ spec:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
         amount: 2
   - name: transform-data
+    image: nginx
     runBefore:
     - load-data
+    args:
+    - "aws cp s3://something"
     runAfter: []
     inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
     outputs: []
@@ -63,13 +66,14 @@ status:
   jobs:
   - name: load-data
     state: running
-    runAfter: transform-data
-    runBefore: transform-data
+    runAfter: []
+    runBefore: []
     startDate: 2024-05-13:16:00:00
     finishDate: 2024-05-13:17:00:00
   - name: transform-data
     state: waiting
-    runAfter: -
-    runBefore: transform-data
+    runAfter: []
+    runBefore:
+    - transform-data
     startDate: 2024-05-13:16:00:00
     finishDate: 2024-05-13:17:00:00

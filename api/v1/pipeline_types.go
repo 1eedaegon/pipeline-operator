@@ -98,26 +98,10 @@ status:
   - name: initialize-data
     state: completed
     runAfter:
-	- load-data-1
-	- load-data-2
+	  - load-data-1
+	  - load-data-2
     startDate: 2024-05-13:16:00:00
-    finishDate: 2024-05-13:17:00:00
-  - name: load-data-1
-    state: running
-    runAfter:
-	- transform-data
-    startDate: 2024-05-13:16:00:00
-    finishDate: -
-  - name: load-data-2
-    state: running
-    runAfter:
-	- transform-data
-    startDate: 2024-05-13:16:00:00
-    finishDate: -
-  - name: transform-data
-    state: waiting
-    startDate: -
-    finishDate: -
+    finishDate: 2024-05-13:17:00:00S
 */
 
 // Pipeline/Run:
@@ -147,7 +131,7 @@ const (
 )
 
 type Resource struct {
-	Cpu    string      `json:"cpu,omitempty"`
+	Cpu    int         `json:"cpu,omitempty"`
 	Memory string      `json:"memory,omitempty"`
 	Gpu    GpuResource `json:"gpu,omitempty"`
 }
@@ -211,13 +195,36 @@ type Task struct {
 	Outputs   []string `json:"outputs,omitempty"`
 }
 
+// status:
+//
+//	  # name 뒤에 postfix가 붙어야한다.
+//	  state: running
+//	  currentJobs:
+//	  - load-data-1
+//	  - load-data-2
+//	  startDate: 2024-05-13:16:00:00
+//	  finishDate: 2024-05-13:17:00:00
+//	  initializing: 1
+//	  running: 2
+//	  completed: 1
+//	  jobs:
+//	  - name: initialize-data
+//	    state: completed
+//	    runAfter:
+//		  - load-data-1
+//		  - load-data-2
+//	    startDate: 2024-05-13:16:00:00
+//	    finishDate: 2024-05-13:17:00:00S
+//
 // TaskStatus defines the observed state of Task
 // Task가 status를 갖는다는 의미는 job으로 변환되었다는 의미다.
 type TaskStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Name       string   `json:"name,omitempty"`
 	State      JobState `json:"state,omitempty"`
-	RunAfter   string   `json:"runAfter,omitempty"`
+	RunAfter   []string `json:"runAfter,omitempty"`
+	RunBefore  []string `json:"runBefore,omitempty"`
 	StartDate  string   `json:"startDate,omitempty"`
 	FinishDate string   `json:"finishDate,omitempty"`
 }
@@ -237,38 +244,50 @@ type TaskStatus struct {
 type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Name     string   `json:"name,omitempty"`
-	Parents  []string `json:"parents,omitempty"`
-	Children []string `json:"children,omitempty"`
-	Inputs   []string `json:"inputs,omitempty"`
-	Outputs  []string `json:"outputs,omitempty"`
-	Tasks    []string `json:"tasks,omitempty"`
+	Name      string   `json:"name,omitempty"`
+	Schedule  Schedule `json:"schedule,omitempty"`
+	RunAfter  []string `json:"runAfter,omitempty"`
+	RunBefore []string `json:"runBefore,omitempty"`
+	Inputs    []string `json:"inputs,omitempty"`
+	Outputs   []string `json:"outputs,omitempty"`
+	Tasks     []Task   `json:"tasks,omitempty"`
 }
 
+//	state: running
+//	 startDate: 2024-05-13:16:00:00
+//	 finishDate: 2024-05-13:17:00:00
+//	 initializing: 1
+//	 running: 1
+//	 completed: 0
+//	 currentJobs:
+//	 - load-data
+//
 // PipelineStatus defines the observed state of Pipeline
 type PipelineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	State             State `json:"state,omitempty"`
-	InitializingTasks int   `json:"initializingTasks,omitempty"`
-	RunningTasks      int   `json:"runningTasks,omitempty"`
-	CompletedTasks    int   `json:"completedTasks,omitempty"`
+	State        RunState     `json:"state,omitempty"`
+	StartDate    *metav1.Time `json:"startDate,omitempty"`
+	FinishDate   *metav1.Time `json:"finishDate,omitempty"`
+	Initailizing int          `json:"initializing,omitempty"`
+	Running      int          `json:"running,omitempty"`
+	Completed    int          `json:"completed,omitempty"`
+	CurrentJobs  []string     `json:"currentJobs,omitempty"`
+	Jobs         []TaskStatus `json:"jobs,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +kubebuilder:printcolumn:name="ProjectName",type="string",JSONPath=".metadata.projectName",description="ProjectName"
-// +kubebuilder:printcolumn:name="PipelineName",type="string",JSONPath=".metadata.pipelineName",description="PipelineName"
 // +kubebuilder:printcolumn:name="State",type="string",JSONPath=".status.state",description="State"
-// +kubebuilder:printcolumn:name="InitializingTasks",type="number",JSONPath=".status.initializingTasks",description="initializingTasks"
-// +kubebuilder:printcolumn:name="runningTasks",type="number",JSONPath=".status.runningTasks",description="runningTasks"
-// +kubebuilder:printcolumn:name="completedTasks",type="number",JSONPath=".status.completedTasks",description="completedTasks"
+// +kubebuilder:printcolumn:name="StartDate",type="string",JSONPath=".status.startDate",description="Start date"
+// +kubebuilder:printcolumn:name="FinishDate",type="string",JSONPath=".status.finishDate",description="Finish date"
+// +kubebuilder:printcolumn:name="Initializing",type="number",JSONPath=".status.initializing",description="initializing"
+// +kubebuilder:printcolumn:name="running",type="number",JSONPath=".status.running",description="running"
+// +kubebuilder:printcolumn:name="completed",type="number",JSONPath=".status.completed",description="completed"
 // Pipeline is the Schema for the pipelines API
 type Pipeline struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	ProjectName       string         `json:"projectName,omitempty"`
-	PipelineName      string         `json:"pipelineName,omitempty"`
 	Spec              PipelineSpec   `json:"spec,omitempty"`
 	Status            PipelineStatus `json:"status,omitempty"`
 }
