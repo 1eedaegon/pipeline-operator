@@ -18,6 +18,8 @@ package controller
 
 import (
 	"context"
+	"fmt"
+	"sort"
 	"time"
 
 	"k8s.io/apimachinery/pkg/runtime"
@@ -25,6 +27,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	pipelinev1 "github.com/1eedaegon/pipeline-operator/api/v1"
+	"github.com/robfig/cron"
 	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -143,11 +146,170 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 		log.Error(err, "unable to update pipeline status")
 		return ctrl.Result{}, err
 	}
+
+	if err := r.Status().Update(ctx, &pipeline); err != nil {
+		log.Error(err, "unable to update pipeline status")
+		return ctrl.Result{}, err
+	}
+
+	if pipeline.Spec.SuccessfulJobsHistoryLimit != nil {
+		sort.Slice(successfulJobs, func(i, j int) bool {
+			if successfulJobs[i] == nil {
+				return successfulJobs[j].Status.StartTime != nil
+			}
+			return successfulJobs[i].Status.StartTime.Before(successfulJobs[j].Status.StartTime)
+		})
+		for i, job := range successfulJobs {
+			if int32(i) >= int32(len(successfulJobs))-*pipeline.Spec.SuccessfulJobsHistoryLimit {
+				break
+			}
+			if err := r.Delete(ctx, job, client.PropagationPolicy(metav1.DeletePropagationBackground)); client.IgnoreNotFound(err) != nil {
+				log.Error(err, "unable to delete old success job", "job", job)
+			} else {
+				log.V(0).Info("deleted old success job", "job", job)
+			}
+		}
+	}
+	if pipeline.Spec.FailedJobsHistoryLimit != nil {
+		sort.Slice(failedJobs, func(i, j int) bool {
+			if failedJobs[i] == nil {
+				return failedJobs[j].Status.StartTime != nil
+			}
+			return failedJobs[i].Status.StartTime.Before(failedJobs[j].Status.StartTime)
+		})
+		for i, job := range failedJobs {
+			if int32(i) >= int32(len(failedJobs))-*pipeline.Spec.FailedJobsHistoryLimit {
+				break
+			}
+			if err := r.Delete(ctx, job, client.PropagationPolicy(metav1.DeletePropagationBackground)); client.IgnoreNotFound(err) != nil {
+				log.Error(err, "unable to delete old failed job", "job", job)
+			} else {
+				log.V(0).Info("deleted old failed job", "job", job)
+			}
+		}
+	}
+	if pipeline.Spec.Suspend != nil && *pipeline.Spec.Suspend {
+		log.V(1).Info("pipeline suspended, skipping")
+		return ctrl.Result{}, nil
+	}
+
+	getNextSchedule := func(pipeline *pipelinev1.pipeline, now time.Time) (lastMissed time.Time, next time.Time, err error) {
+		sched, err := cron.ParseStandard(pipeline.Spec.Schedule)
+		if err != nil {
+			return time.Time{}, time.Time{}, fmt.Errorf("Unparseable schedule %q: %v", pipeline.Spec.Schedule, err)
+		}
+
+		var earliestTime time.Time
+		if pipeline.Status.LastScheduleTime != nil {
+			earliestTime = pipeline.Status.LastScheduleTime.Time
+		} else {
+			earliestTime = pipeline.ObjectMeta.CreationTimestamp.Time
+		}
+		if pipeline.Spec.StartingDeadlineSeconds != nil {
+			schedulingDeadline := now.Add(-time.Second * time.Duration(*pipeline.Spec.StartingDeadlineSeconds))
+			if schedulingDeadline.After(earliestTime) {
+				earliestTime = schedulingDeadline
+			}
+		}
+		if earliestTime.After(now) {
+			return time.Time{}, sched.Next(now), nil
+		}
+		/*
+			주의: 컨트롤러는 여러 번의 시작을 놓칠 수 있다.
+			예를 들어, 금요일 오후 5시 1분에 전직원이 퇴근 후 컨트롤러가 멈췄는데
+			누군가 화요일 오전에 문제를 발견하고 해결한다음 컨트롤러를 다시 시작하면
+			각 시간별 예약된 작업은 추가 개입 없이 모두 실행을 시작해야 한다.
+			하지만 어딘가에 버그가 있거나 컨트롤러 서버 또는 API 서버에 잘못된 클락이 있는 경우
+			시작 하지 못한 잡이 너무 많이 누적되어 CPU를 모두 소모할 수 있다.
+		*/
+		starts := 0
+		for t := sched.Next(earliestTime); !t.After(now); t = sched.Next(t) {
+			lastMissed = t
+			starts++
+			if starts > 100 {
+				return time.Time{},
+					time.Time{},
+					fmt.Errorf("Too many missed start times (> 100). set or decreased .spec.startingDeadlineSeconds or check clock skew.")
+			}
+		}
+		return lastMissed, sched.Next(now), nil
+	}
+	missedRun, nextRun, err := getNextSchedule(&pipeline, r.Now())
+	if err != nil {
+		log.Error(err, "unable to figure out pipeline schedule")
+		return ctrl.Result{}, nil
+	}
+	scheduledResult := ctrl.Result{RequeueAfter: nextRun.Sub(r.Now())}
+	log = log.WithValues("now", r.Now(), "next run", nextRun)
+	if missedRun.IsZero() {
+		log.V(1).Info("no upcomming scheduled times, sleeping until next")
+		return scheduledResult, nil
+	}
+	log = log.WithValues("current run", missedRun)
+	tooLate := false
+	if pipeline.Spec.StartingDeadlineSeconds != nil {
+		tooLate = missedRun.Add(time.Duration(*pipeline.Spec.StartingDeadlineSeconds) * time.Second).Before(r.Now())
+	}
+	if tooLate {
+		log.V(1).Info("missed starting deadline for last run, sleeping till next")
+		return scheduledResult, nil
+	}
+
+	if pipeline.Spec.ConcurrencyPolicy == pipelinev1.ForbidConcurrent && len(activeJobs) > 0 {
+		log.V(1).Info("concurrency policy blocks concurrent runs, skipping", "num active", len(activeJobs))
+		return scheduledResult, nil
+	}
+	if pipeline.Spec.ConcurrencyPolicy == pipelinev1.ReplaceConcurrent {
+		for _, activeJob := range activeJobs {
+			if err := r.Delete(ctx, activeJob, client.PropagationPolicy(metav1.DeletePropagationBackground)); client.IgnoreNotFound(err) != nil {
+				log.Error(err, "unable to delete active job", "job", activeJob)
+				return ctrl.Result{}, err
+			}
+		}
+	}
+	constructJobForPipeline := func(pipeline *pipelinev1.pipeline, scheduleTime time.Time) (*kbatchv1.Job, error) {
+		name := fmt.Sprintf("%s-%d", pipeline.Name, scheduleTime.Unix())
+
+		job := &kbatchv1.Job{
+			ObjectMeta: metav1.ObjectMeta{
+				Labels:      make(map[string]string),
+				Annotations: make(map[string]string),
+				Name:        name,
+				Namespace:   pipeline.Namespace,
+			},
+			Spec: *pipeline.Spec.JobTemplate.Spec.DeepCopy(),
+		}
+
+		for k, v := range pipeline.Spec.JobTemplate.Annotations {
+			job.Annotations[k] = v
+		}
+		job.Annotations[scheduledTimeAnnotation] = scheduleTime.Format(time.RFC3339)
+		for k, v := range pipeline.Spec.JobTemplate.Labels {
+			job.Labels[k] = v
+		}
+		if err := ctrl.SetControllerReference(pipeline, job, r.Scheme); err != nil {
+			return nil, err
+		}
+		return job, nil
+	}
+	job, err := constructJobForPipeline(&pipeline, missedRun)
+	if err != nil {
+		log.Error(err, "unable to construct job from template")
+		return scheduledResult, nil
+	}
+
+	if err := r.Create(ctx, job); err != nil {
+		log.Error(err, "unable to create Job for pipeline", "job", job)
+		return ctrl.Result{}, err
+	}
+	log.V(1).Info("created Job for pipeline run", "job", job)
+	return scheduledResult, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *PipelineReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&pipelinev1.Pipeline{}).
+		Owns(&kbatchv1.Job{}).
 		Complete(r)
 }
