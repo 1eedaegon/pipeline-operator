@@ -141,6 +141,11 @@ type GpuResource struct {
 	Amount  int    `json:"amount,omitempty"`
 }
 
+type StorageResource struct {
+	Name     string `json: name`
+	Capacity string `json: capacity`
+}
+
 type ScheduleType string
 
 const (
@@ -153,32 +158,6 @@ type Schedule struct {
 	StartAt      string       `json:"startAt,omitempty"`
 }
 
-// - name: load-data
-// image: nginx
-// command:
-// - aws s3
-// args:
-// - "cp s3://something"
-// # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-// # cron일 때 pipeline에 schedule이 걸려있으면 경고를 띄운다.
-// schedule:
-//
-//	type: date
-//	startAt: "2024-06-30:16:00:00"
-//
-// runBefore: []
-// runAfter:
-// - transform-data
-// inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-// outputs: []
-// resource:
-//
-//	  cpu: 1
-//	  memory: 2Mi
-//	  gpu:
-//		type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
-//		amount: 2
-//
 // TaskSpec defines the desired state of Task
 type Task struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
@@ -195,73 +174,20 @@ type Task struct {
 	Outputs   []string `json:"outputs,omitempty"`
 }
 
-// status:
-//
-//	  # name 뒤에 postfix가 붙어야한다.
-//	  state: running
-//	  currentJobs:
-//	  - load-data-1
-//	  - load-data-2
-//	  startDate: 2024-05-13:16:00:00
-//	  finishDate: 2024-05-13:17:00:00
-//	  initializing: 1
-//	  running: 2
-//	  completed: 1
-//	  jobs:
-//	  - name: initialize-data
-//	    state: completed
-//	    runAfter:
-//		  - load-data-1
-//		  - load-data-2
-//	    startDate: 2024-05-13:16:00:00
-//	    finishDate: 2024-05-13:17:00:00S
-//
-// TaskStatus defines the observed state of Task
-// Task가 status를 갖는다는 의미는 job으로 변환되었다는 의미다.
-type TaskStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	Name       string   `json:"name,omitempty"`
-	State      JobState `json:"state,omitempty"`
-	RunAfter   []string `json:"runAfter,omitempty"`
-	RunBefore  []string `json:"runBefore,omitempty"`
-	StartDate  string   `json:"startDate,omitempty"`
-	FinishDate string   `json:"finishDate,omitempty"`
-}
-
-// schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-//
-//	type: cron
-//	interval: "5 * * * * *"
-//
-// # schedule:
-// #   type: date
-// #   startAt: "2024-06-30:16:00:00"
-// runAfter: []
-// runBefore: [] # runBefore를 걸었을 때 tasks/pipeline에 해당 이름이 없으면 경고를 띄운다.
-// tasks:
 // PipelineSpec defines the desired state of Pipeline
 type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Name      string   `json:"name,omitempty"`
-	Schedule  Schedule `json:"schedule,omitempty"`
-	RunAfter  []string `json:"runAfter,omitempty"`
-	RunBefore []string `json:"runBefore,omitempty"`
-	Inputs    []string `json:"inputs,omitempty"`
-	Outputs   []string `json:"outputs,omitempty"`
-	Tasks     []Task   `json:"tasks,omitempty"`
+	Name       string   `json:"name,omitempty"`
+	VolumeName string   `json:"volumeName,omitempty"`
+	Schedule   Schedule `json:"schedule,omitempty"`
+	RunAfter   []string `json:"runAfter,omitempty"`
+	RunBefore  []string `json:"runBefore,omitempty"`
+	Inputs     []string `json:"inputs,omitempty"`
+	Outputs    []string `json:"outputs,omitempty"`
+	Tasks      []Task   `json:"tasks,omitempty"`
 }
 
-//	state: running
-//	 startDate: 2024-05-13:16:00:00
-//	 finishDate: 2024-05-13:17:00:00
-//	 initializing: 1
-//	 running: 1
-//	 completed: 0
-//	 currentJobs:
-//	 - load-data
-//
 // PipelineStatus defines the observed state of Pipeline
 type PipelineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
@@ -273,7 +199,18 @@ type PipelineStatus struct {
 	Running      int          `json:"running,omitempty"`
 	Completed    int          `json:"completed,omitempty"`
 	CurrentJobs  []string     `json:"currentJobs,omitempty"`
-	Jobs         []TaskStatus `json:"jobs,omitempty"`
+	Jobs         []string     `json:"jobs,omitempty"`
+}
+
+type JobStatus struct {
+	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
+	// Important: Run "make" to regenerate code after modifying this file
+	Name       string   `json:"name,omitempty"`
+	State      JobState `json:"state,omitempty"`
+	RunAfter   []string `json:"runAfter,omitempty"`
+	RunBefore  []string `json:"runBefore,omitempty"`
+	StartDate  string   `json:"startDate,omitempty"`
+	FinishDate string   `json:"finishDate,omitempty"`
 }
 
 // +kubebuilder:object:root=true

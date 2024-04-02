@@ -62,11 +62,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: "schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면
-              경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시\n\n\n\ttype: cron\n\tinterval:
-              \"5 * * * * *\"\n\n\n# schedule:\n#   type: date\n#   startAt: \"2024-06-30:16:00:00\"\nrunAfter:
-              []\nrunBefore: [] # runBefore를 걸었을 때 tasks/pipeline에 해당 이름이 없으면 경고를
-              띄운다.\ntasks:\nPipelineSpec defines the desired state of Pipeline"
+            description: PipelineSpec defines the desired state of Pipeline
             properties:
               inputs:
                 items:
@@ -98,16 +94,7 @@ spec:
                 type: object
               tasks:
                 items:
-                  description: "- name: load-data\nimage: nginx\ncommand:\n- aws s3\nargs:\n-
-                    \"cp s3://something\"\n# Schedule의 cron과 runAfter/runBefore가 동시에
-                    걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시\n# cron일 때
-                    pipeline에 schedule이 걸려있으면 경고를 띄운다.\nschedule:\n\n\n\ttype: date\n\tstartAt:
-                    \"2024-06-30:16:00:00\"\n\n\nrunBefore: []\nrunAfter:\n- transform-data\ninputs:
-                    [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를
-                    띄운다.\noutputs: []\nresource:\n\n\n\t  cpu: 1\n\t  memory: 2Mi\n\t
-                    \ gpu:\n\t\ttype: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를
-                    띄운다.\n\t\tamount: 2\n\n\nTaskSpec defines the desired state of
-                    Task"
+                  description: TaskSpec defines the desired state of Task
                   properties:
                     args:
                       items:
@@ -163,12 +150,11 @@ spec:
                       type: object
                   type: object
                 type: array
+              volumeName:
+                type: string
             type: object
           status:
-            description: "\tstate: running\n\t startDate: 2024-05-13:16:00:00\n\t
-              finishDate: 2024-05-13:17:00:00\n\t initializing: 1\n\t running: 1\n\t
-              completed: 0\n\t currentJobs:\n\t - load-data\n\n\nPipelineStatus defines
-              the observed state of Pipeline"
+            description: PipelineStatus defines the observed state of Pipeline
             properties:
               completed:
                 type: integer
@@ -183,35 +169,7 @@ spec:
                 type: integer
               jobs:
                 items:
-                  description: "status:\n\n\n\t  # name 뒤에 postfix가 붙어야한다.\n\t  state:
-                    running\n\t  currentJobs:\n\t  - load-data-1\n\t  - load-data-2\n\t
-                    \ startDate: 2024-05-13:16:00:00\n\t  finishDate: 2024-05-13:17:00:00\n\t
-                    \ initializing: 1\n\t  running: 2\n\t  completed: 1\n\t  jobs:\n\t
-                    \ - name: initialize-data\n\t    state: completed\n\t    runAfter:\n\t\t
-                    \ - load-data-1\n\t\t  - load-data-2\n\t    startDate: 2024-05-13:16:00:00\n\t
-                    \   finishDate: 2024-05-13:17:00:00S\n\n\nTaskStatus defines the
-                    observed state of Task\nTask가 status를 갖는다는 의미는 job으로 변환되었다는 의미다."
-                  properties:
-                    finishDate:
-                      type: string
-                    name:
-                      description: |-
-                        INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-                        Important: Run "make" to regenerate code after modifying this file
-                      type: string
-                    runAfter:
-                      items:
-                        type: string
-                      type: array
-                    runBefore:
-                      items:
-                        type: string
-                      type: array
-                    startDate:
-                      type: string
-                    state:
-                      type: string
-                  type: object
+                  type: string
                 type: array
               running:
                 type: integer
