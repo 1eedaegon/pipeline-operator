@@ -7,6 +7,7 @@ import (
 	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	"k8s.io/apimachinery/pkg/api/resource"
 )
@@ -21,7 +22,7 @@ import (
 // Binary expression: 2^10 -> 2Ki
 const (
 	pvcPrefix       string = "pvc-"
-	mountPathPrefix string = "/data/"
+	mountPathPrefix string = "/data/pipeline"
 )
 
 func PvcByStorageClassTemplate(ctx context.Context, namespace, volumeName, capacity string, storageClassName *string) (*corev1.PersistentVolumeClaim, error) {
@@ -49,11 +50,11 @@ func PvcByStorageClassTemplate(ctx context.Context, namespace, volumeName, capac
 	}, nil
 }
 
-func jobTemplate(ctx context.Context, namespace, volumeName string, task pipelinev1.Task) (*kbatchv1.Job, error) {
+func JobTemplate(ctx context.Context, namespace, volumeName string, task pipelinev1.Task) (*kbatchv1.Job, error) {
 	var inputsOutputsMount []corev1.VolumeMount
 	var inputsOutputsVolume []corev1.Volume
 
-	for input := range task.Inputs.ToSlice() {
+	for input := range task.Spec.Inputs {
 		inputsOutputsMount = append(inputsOutputsMount, corev1.VolumeMount{
 			Name:      volumeName,
 			MountPath: mountPathPrefix + volumeName,
@@ -63,16 +64,19 @@ func jobTemplate(ctx context.Context, namespace, volumeName string, task pipelin
 			Name: volumeName,
 		})
 	}
-	for output, _ := range task.Outputs.ToSlice() {
+	for output := range task.Spec.Outputs {
 		inputsOutputsMount = append(inputsOutputsMount, corev1.VolumeMount{
 			Name:      volumeName,
 			MountPath: mountPathPrefix + volumeName,
 			SubPath:   string(output),
 		})
+		inputsOutputsVolume = append(inputsOutputsVolume, corev1.Volume{
+			Name: volumeName,
+		})
 	}
 	job := &kbatchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      task.Name,
+			Name:      task.Spec.Name,
 			Namespace: namespace,
 		},
 		Spec: kbatchv1.JobSpec{
@@ -80,9 +84,9 @@ func jobTemplate(ctx context.Context, namespace, volumeName string, task pipelin
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{
 						{
-							Name:         task.Name,
-							Image:        task.Image,
-							Command:      task.Command,
+							Name:         task.Spec.Name,
+							Image:        task.Spec.Image,
+							Command:      task.Spec.Command,
 							VolumeMounts: inputsOutputsMount,
 						},
 					},
@@ -104,41 +108,16 @@ func jobTemplate(ctx context.Context, namespace, volumeName string, task pipelin
 	return job, nil
 }
 
-/*
-1. job과 pod은 1:1
-*/
-func constructJobForPipelineTasks(pipeline *pipelinev1.Pipeline) ([]*kbatchv1.Job, error) {
+func ConstructJobsFromPipelineTasks(ctx context.Context, pipeline *pipelinev1.Pipeline) ([]*kbatchv1.Job, error) {
+	log := log.FromContext(ctx)
 	var jobs []*kbatchv1.Job
 	for _, task := range pipeline.Spec.Tasks {
-		job := &kbatchv1.Job{
-			ObjectMeta: metav1.ObjectMeta{
-				Labels:      make(map[string]string),
-				Annotations: make(map[string]string),
-				Name:        task.Name,
-				Namespace:   pipeline.Namespace,
-			},
-			Spec: &kbatchv1.JobSpec{
-				Template: corev1.PodTemplateSpec{
-					spec: corev1.PodSpec{
-						Containers: []corev1.Container{
-							corev1.Container{
-								Image:   task.Image,
-								Command: task.Command,
-								Args:    task.Args,
-							},
-						},
-						Volumes: []corev1.Volume{
-							corev1.Volume{
-								VolumeSource: corev1.VolumeSource{
-									PersistentVolumeClaim: &corev1.PersistentVolumeClaimSpec{
-										ClaimName: "",
-									},
-								},
-							},
-						},
-					},
-				},
-			},
+		job, err := JobTemplate(ctx, pipeline.Namespace, pipeline.Spec.VolumeName, task)
+		if err != nil {
+			log.V(1).Error(err, "Can't generate Job from request")
+			continue
 		}
+		jobs = append(jobs, job)
 	}
+	return jobs, nil
 }

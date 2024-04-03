@@ -4,45 +4,20 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: pipelines.pipeline.1eedaegon.github.io
+  name: runs.pipeline.1eedaegon.github.io
 spec:
   group: pipeline.1eedaegon.github.io
   names:
-    kind: Pipeline
-    listKind: PipelineList
-    plural: pipelines
-    singular: pipeline
+    kind: Run
+    listKind: RunList
+    plural: runs
+    singular: run
   scope: Namespaced
   versions:
-  - additionalPrinterColumns:
-    - description: State
-      jsonPath: .status.state
-      name: State
-      type: string
-    - description: Start date
-      jsonPath: .status.startDate
-      name: StartDate
-      type: string
-    - description: Finish date
-      jsonPath: .status.finishDate
-      name: FinishDate
-      type: string
-    - description: initializing
-      jsonPath: .status.initializing
-      name: Initializing
-      type: number
-    - description: running
-      jsonPath: .status.running
-      name: running
-      type: number
-    - description: completed
-      jsonPath: .status.completed
-      name: completed
-      type: number
-    name: v1
+  - name: v1
     schema:
       openAPIV3Schema:
-        description: Pipeline is the Schema for the pipelines API
+        description: Run is the Schema for the runs API
         properties:
           apiVersion:
             description: |-
@@ -62,30 +37,21 @@ spec:
           metadata:
             type: object
           spec:
-            description: PipelineSpec defines the desired state of Pipeline
+            description: RunSpec defines the desired state of Run
             properties:
               inputs:
                 items:
                   type: string
                 type: array
+              name:
+                description: |-
+                  INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                  Important: Run "make" to regenerate code after modifying this file
+                type: string
               outputs:
                 items:
                   type: string
                 type: array
-              resource:
-                properties:
-                  cpu:
-                    type: integer
-                  gpu:
-                    properties:
-                      amount:
-                        type: integer
-                      type:
-                        type: string
-                    type: object
-                  memory:
-                    type: string
-                type: object
               runAfter:
                 items:
                   type: string
@@ -205,43 +171,10 @@ spec:
                   type: object
                 type: array
               volumeName:
-                description: |-
-                  INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-                  Important: Run "make" to regenerate code after modifying this file
-                  Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
                 type: string
             type: object
           status:
-            description: PipelineStatus defines the observed state of Pipeline
-            properties:
-              completed:
-                type: integer
-              createDate:
-                format: date-time
-                type: string
-              currentJobs:
-                items:
-                  type: string
-                type: array
-              finishDate:
-                description: |-
-                  INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-                  Important: Run "make" to regenerate code after modifying this file
-                format: date-time
-                type: string
-              initializing:
-                type: integer
-              jobs:
-                items:
-                  type: string
-                type: array
-              lastUpdateDate:
-                format: date-time
-                type: string
-              running:
-                type: integer
-              runs:
-                type: integer
+            description: RunStatus defines the observed state of Run
             type: object
         type: object
     served: true

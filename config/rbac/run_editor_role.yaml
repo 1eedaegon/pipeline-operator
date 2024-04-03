@@ -1,0 +1,31 @@
+# permissions for end users to edit runs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: run-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: pipeline-operator
+    app.kubernetes.io/part-of: pipeline-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: run-editor-role
+rules:
+- apiGroups:
+  - pipeline.1eedaegon.github.io
+  resources:
+  - runs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - pipeline.1eedaegon.github.io
+  resources:
+  - runs/status
+  verbs:
+  - get

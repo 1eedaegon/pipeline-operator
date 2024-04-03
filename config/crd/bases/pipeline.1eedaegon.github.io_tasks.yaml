@@ -14,24 +14,7 @@ spec:
     singular: task
   scope: Namespaced
   versions:
-  - additionalPrinterColumns:
-    - description: ProjectName
-      jsonPath: .spec.projectName
-      name: ProjectName
-      type: string
-    - description: PipelineName
-      jsonPath: .spec.pipelineName
-      name: PipelineName
-      type: string
-    - description: currentStep
-      jsonPath: .status.currentStep
-      name: CurrentStep
-      type: string
-    - description: State
-      jsonPath: .status.state
-      name: State
-      type: string
-    name: v1
+  - name: v1
     schema:
       openAPIV3Schema:
         description: Task is the Schema for the tasks API
@@ -56,73 +39,80 @@ spec:
           spec:
             description: TaskSpec defines the desired state of Task
             properties:
-              children:
+              args:
                 items:
                   type: string
                 type: array
+              command:
+                items:
+                  type: string
+                type: array
+              image:
+                description: |-
+                  INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                  Important: Run "make" to regenerate code after modifying this file
+                  Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
+                type: string
               inputs:
                 items:
                   type: string
                 type: array
-              name:
+              mode:
                 type: string
               outputs:
                 items:
                   type: string
                 type: array
-              parents:
-                items:
-                  type: string
-                type: array
-              pipelineName:
-                type: string
-              projectName:
-                description: |-
-                  INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-                  Important: Run "make" to regenerate code after modifying this file
-                type: string
               resource:
                 properties:
                   cpu:
-                    type: string
+                    type: integer
                   gpu:
-                    items:
-                      type: string
-                    type: array
+                    properties:
+                      amount:
+                        type: integer
+                      type:
+                        type: string
+                    type: object
                   memory:
                     type: string
                 type: object
-              steps:
+              runAfter:
                 items:
-                  description: |-
-                    EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-                    NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-                  properties:
-                    args:
-                      items:
-                        type: string
-                      type: array
-                    command:
-                      items:
-                        type: string
-                      type: array
-                    image:
-                      type: string
-                    name:
-                      type: string
-                  type: object
+                  type: string
                 type: array
+              runBefore:
+                items:
+                  type: string
+                type: array
+              schedule:
+                properties:
+                  endDate:
+                    type: string
+                  scheduleDate:
+                    type: string
+                  scheduleType:
+                    type: string
+                type: object
             type: object
           status:
             description: TaskStatus defines the observed state of Task
             properties:
-              currentStep:
+              createDate:
                 description: |-
                   INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
                   Important: Run "make" to regenerate code after modifying this file
+                format: date-time
                 type: string
-              state:
+              lastUpdateDate:
+                format: date-time
                 type: string
+              usedByJobs:
+                type: integer
+              usedByPipelines:
+                items:
+                  type: string
+                type: array
             type: object
         type: object
     served: true

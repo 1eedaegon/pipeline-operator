@@ -34,8 +34,8 @@ var (
 )
 
 const (
-	cheduledTimeAnnotation = "pipeline.1eedaegon.github.io/scheduled-at"
-	jobOwnerKey            = ".metadata.controller"
+	scheduledTimeAnnotation = "pipeline.1eedaegon.github.io/scheduled-at"
+	jobOwnerKey             = ".metadata.controller"
 )
 
 type realClock struct{}
@@ -65,9 +65,16 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 		log.Error(err, "unable to fetch Pipeline")
 		return ctrl.Result{}, err
 	}
-	// 2. pipeline이 있으니 상태 업데이트
+
+	// 2. pipeline이 있으면 상태 업데이트
 	if err := r.SyncPipelineResourceStatus(ctx, req, tasks); err != nil {
 		log.Error(err, "unable to list child jobs")
+		return ctrl.Result{}, err
+	}
+
+	// 3. pipeline이 없으면 생성한다.
+	pipeline, err := r.ConstructPipeline(ctx, req, &pipeline)
+	if err != nil {
 		return ctrl.Result{}, err
 	}
 
@@ -79,27 +86,6 @@ func (r *PipelineReconciler) ValidatePipelineRequest(ctx context.Context, req ct
 		return err
 	}
 	return nil
-	// var wg sync.WaitGroup
-	// reqNamespace := req.Namespace
-	// reqName := req.Name
-	// runAfter := pipeline.Spec.RunAfter
-	// runBefore := pipeline.Spec.RunBefore
-	// g, ctx := errgroup.WithContext(ctx)
-	// if len(pipeline.Spec.RunAfter) > 0 {
-	// 	for ra := range runAfter {
-	// 		g.Go(func() error {
-	// 			requestType := types.NamespacedName{Namespace: req.Namespace, Name: string(ra)}
-	// 			if err := r.Get(ctx, requestType, pipeline); err != nil {
-	// 				return err
-	// 			}
-	// 			return nil
-	// 		})
-	// 	}
-	// 	if err := g.Wait(); err != nil {
-	// 		log.V(1).Error(err, "Failed to get pipeline")
-	// 	}
-	// }
-	// return nil
 }
 
 func (r *PipelineReconciler) SyncPipelineResourceStatus(ctx context.Context, req ctrl.Request, tasks kbatchv1.JobList) error {
@@ -110,8 +96,8 @@ func (r *PipelineReconciler) SyncPipelineResourceStatus(ctx context.Context, req
 	return nil
 }
 
-func (r *PipelineReconciler) ConstructPipeline(ctx context.Context, req ctrl.Request) (pipelinev1.Pipeline, error) {
-
+func (r *PipelineReconciler) ConstructPipeline(ctx context.Context, req ctrl.Request, pipeline *pipelinev1.Pipeline) (pipelinev1.Pipeline, error) {
+	ConstructJobsFromPipelineTasks(ctx, pipeline)
 	return pipelinev1.Pipeline{}, nil
 }
 

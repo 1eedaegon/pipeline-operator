@@ -2,4 +2,5 @@
 resources:
 - pipeline_v1_pipeline.yaml
 - pipeline_v1_task.yaml
+- pipeline_v1_run.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

@@ -20,90 +20,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-/*
-# Pipeline/Run:
-# - Create/Update: Initializing|Running|Completed
-# - Delete: Stopping|Deleting|Deleted
-# Task/Job: pipeline의 하위에 존재한다.
-# - Create: Initializing|Waiting|Running|Completed
-# - Update/Delete: Initializing|Waiting|Running|Completed 새로운 pipeline을 통해 run을 만드는 개념
-
-apiVersion: pipeline.1eedaegon.github.io/v1
-kind: Pipeline
-metadata:
-  projectName: test-project
-  name: pipeline-chain-test
-spec:
-  schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-    type: cron
-    interval: "5 * * * * *"
-  # schedule:
-  #   type: date
-  #   startAt: "2024-06-30:16:00:00"
-  runAfter: []
-  runBefore: [] # runBefore를 걸었을 때 tasks/pipeline에 해당 이름이 없으면 경고를 띄운다.
-  tasks:
-  - name: load-data
-  	image: s3
-	command:
-	- echo
-	args:
-	- "hello 1eedaegon.github tasks"
-    # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-    # cron일 때 pipeline에 schedule이 걸려있으면 경고를 띄운다.
-    schedule:
-      type: date
-      startAt: "2024-06-30:16:00:00"
-    runBefore: []
-    runAfter:
-    - transform-data
-    inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    outputs: []
-
-    resource:
-      cpu: 1
-      memory: 2Mi
-      gpu:
-        gpuType: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
-        amount: 2
-  - name: transform-data
-    runBefore:
-    - load-data
-    runAfter: []
-    inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    outputs: []
-    steps:
-    - name: from-s3
-      image: nginx
-      command:
-      - echo
-      args:
-      - "hello 1eedaegon.github tasks"
-    resource:
-      cpu: 1
-      memory: 2Mi
-
-status:
-  # name 뒤에 postfix가 붙어야한다.
-  state: running
-  currentTask:
-  - load-data-1
-  - load-data-2
-  startDate: 2024-05-13:16:00:00
-  finishDate: 2024-05-13:17:00:00
-  initializing: 1
-  running: 2
-  completed: 1
-  jobs:
-  - name: initialize-data
-    state: completed
-    runAfter:
-	  - load-data-1
-	  - load-data-2
-    startDate: 2024-05-13:16:00:00
-    finishDate: 2024-05-13:17:00:00S
-*/
-
 // Pipeline/Run:
 // - Create/Update: Initializing|Running|Completed
 // - Delete: Stopping|Deleting|Deleted
@@ -154,63 +70,59 @@ const (
 )
 
 type Schedule struct {
-	ScheduleType ScheduleType `json:"type,omitempty"`
-	StartAt      string       `json:"startAt,omitempty"`
+	ScheduleType ScheduleType `json:"scheduleType,omitempty"`
+	ScheduleDate string       `json:"scheduleDate,omitempty"`
+	EndDate      string       `json:"endDate,omitempty"`
 }
 
-// TaskSpec defines the desired state of Task
-type Task struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	Name      string   `json:"name,omitempty"`
-	Image     string   `json:"image,omitempty"`
-	Command   []string `json:"command,omitempty"` // image의 entrypoint/command를 덮어 쓴다.
-	Args      []string `json:"args,omitempty"`    // image의 command는 두고 arg만 추가한다.
-	Resource  Resource `json:"resource,omitempty"`
-	Schedule  Schedule `json:"schedule,omitempty"`
-	RunBefore []string `json:"runBefore,omitempty"`
-	RunAfter  []string `json:"runAfter,omitempty"`
-	Inputs    []string `json:"inputs,omitempty"`
-	Outputs   []string `json:"outputs,omitempty"`
-}
+type ModeType string
+
+const (
+	Auto   ModeType = "auto"
+	Manual ModeType = "manual"
+)
 
 // PipelineSpec defines the desired state of Pipeline
 type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Name       string   `json:"name,omitempty"`
-	VolumeName string   `json:"volumeName,omitempty"`
-	Schedule   Schedule `json:"schedule,omitempty"`
-	RunAfter   []string `json:"runAfter,omitempty"`
-	RunBefore  []string `json:"runBefore,omitempty"`
-	Inputs     []string `json:"inputs,omitempty"`
-	Outputs    []string `json:"outputs,omitempty"`
-	Tasks      []Task   `json:"tasks,omitempty"`
+	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
+	VolumeName      string   `json:"volumeName,omitempty"`
+	Schedule        Schedule `json:"schedule,omitempty"`
+	DefaultResource Resource `json:"resource,omitempty"`
+	RunAfter        []string `json:"runAfter,omitempty"`
+	RunBefore       []string `json:"runBefore,omitempty"`
+	Inputs          []string `json:"inputs,omitempty"`
+	Outputs         []string `json:"outputs,omitempty"`
+	Tasks           []Task   `json:"tasks,omitempty"`
 }
 
 // PipelineStatus defines the observed state of Pipeline
 type PipelineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	State        RunState     `json:"state,omitempty"`
-	StartDate    *metav1.Time `json:"startDate,omitempty"`
 	FinishDate   *metav1.Time `json:"finishDate,omitempty"`
 	Initailizing int          `json:"initializing,omitempty"`
 	Running      int          `json:"running,omitempty"`
 	Completed    int          `json:"completed,omitempty"`
 	CurrentJobs  []string     `json:"currentJobs,omitempty"`
 	Jobs         []string     `json:"jobs,omitempty"`
+
+	CreateDate     *metav1.Time `json:"createDate,omitempty"`
+	LastUpdateDate *metav1.Time `json:"lastUpdateDate,omitempty"`
+	Runs           int          `json:"runs,omitempty"`
 }
 
 type JobStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Name       string   `json:"name,omitempty"`
-	State      JobState `json:"state,omitempty"`
-	RunAfter   []string `json:"runAfter,omitempty"`
-	RunBefore  []string `json:"runBefore,omitempty"`
-	StartDate  string   `json:"startDate,omitempty"`
-	FinishDate string   `json:"finishDate,omitempty"`
+	Name           string       `json:"name,omitempty"`
+	State          JobState     `json:"state,omitempty"`
+	RunAfter       []string     `json:"runAfter,omitempty"`
+	RunBefore      []string     `json:"runBefore,omitempty"`
+	StartDate      *metav1.Time `json:"startDate,omitempty"`
+	LastUpdateDate *metav1.Time `json:"lastUpdateDate,omitempty"`
+	FinishDate     *metav1.Time `json:"finishDate,omitempty"`
 }
 
 // +kubebuilder:object:root=true

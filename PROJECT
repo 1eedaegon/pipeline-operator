@@ -26,4 +26,13 @@ resources:
   kind: Task
   path: github.com/1eedaegon/pipeline-operator/api/v1
   version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: 1eedaegon.github.io
+  group: pipeline
+  kind: Run
+  path: github.com/1eedaegon/pipeline-operator/api/v1
+  version: v1
 version: "3"
