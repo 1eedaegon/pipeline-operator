@@ -28,16 +28,17 @@ type TaskSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
-	Image     string   `json:"image,omitempty"`
-	Mode      ModeType `json:"mode,omitempty"`    // Schedule와 Manual mode가 상충할 수 없다.
-	Command   []string `json:"command,omitempty"` // image의 entrypoint/command를 덮어 쓴다.
-	Args      []string `json:"args,omitempty"`    // image의 command는 두고 arg만 추가한다.
-	Resource  Resource `json:"resource,omitempty"`
-	Schedule  Schedule `json:"schedule,omitempty"`
-	RunAfter  []string `json:"runAfter,omitempty"`
-	RunBefore []string `json:"runBefore,omitempty"`
-	Inputs    []string `json:"inputs,omitempty"`
-	Outputs   []string `json:"outputs,omitempty"`
+	Image   string   `json:"image,omitempty"`
+	Mode    ModeType `json:"mode,omitempty"`    // Schedule와 Manual mode가 상충할 수 없다.
+	Command []string `json:"command,omitempty"` // image의 entrypoint/command를 덮어 쓴다.
+	Args    []string `json:"args,omitempty"`    // image의 command는 두고 arg만 추가한다.
+	// 밑의 6가지 내용은 pipeline에서 유동적으로 넣어줄 수 있는 타입
+	// Resource  Resource `json:"resource,omitempty"`
+	// Schedule  Schedule `json:"schedule,omitempty"`
+	// RunAfter  []string `json:"runAfter,omitempty"`
+	// RunBefore []string `json:"runBefore,omitempty"`
+	// Inputs    []string `json:"inputs,omitempty"`
+	// Outputs   []string `json:"outputs,omitempty"`
 }
 
 // TaskStatus defines the observed state of Task

@@ -26,25 +26,6 @@ import (
 // Task/Job: pipeline의 하위에 존재한다.
 // - Create: Initializing|Waiting|Running|Completed
 // - Update/Delete: Initializing|Waiting|Running|Completed 새로운 pipeline을 통해 run을 만드는 개념
-type RunState string
-
-const (
-	RunStateInit      RunState = "Initializing"
-	RunStateRun       RunState = "Running"
-	RunStateCompleted RunState = "Completed"
-	RunStateStop      RunState = "Stopping"
-	RunStateDeleting  RunState = "Deleting"
-	RunStateDeleted   RunState = "Deleted"
-)
-
-type JobState string
-
-const (
-	JobStateInit      JobState = "Initializing"
-	JobStateWait      JobState = "Wating"
-	JobStateRun       JobState = "Running"
-	JobStateCompleted JobState = "Completed"
-)
 
 type Resource struct {
 	Cpu    int         `json:"cpu,omitempty"`
@@ -70,9 +51,9 @@ const (
 )
 
 type Schedule struct {
-	ScheduleType ScheduleType `json:"scheduleType,omitempty"`
-	ScheduleDate string       `json:"scheduleDate,omitempty"`
-	EndDate      string       `json:"endDate,omitempty"`
+	ScheduleType ScheduleType `json:"scheduleType,omitempty"` // ScheduleType이 cron이면 cron의 최초 도달시점, date면 시스템 시간에 시작
+	ScheduleDate string       `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
+	EndDate      string       `json:"endDate,omitempty"`      //
 }
 
 type ModeType string
@@ -82,47 +63,46 @@ const (
 	Manual ModeType = "manual"
 )
 
+type PipelineTaskType string
+
+const (
+	Inline  PipelineTaskType = "inline"
+	ToolBox PipelineTaskType = "toolbox"
+)
+
+type PipelineTask struct {
+	Type      PipelineTaskType `json:"pipelineTaskType,omitempty"`
+	Task      TaskSpec         `json:"task,omitempty"`
+	Resource  Resource         `json:"resource,omitempty"`
+	Schedule  Schedule         `json:"schedule,omitempty"`
+	RunAfter  []string         `json:"runAfter,omitempty"`
+	RunBefore []string         `json:"runBefore,omitempty"`
+	Inputs    []string         `json:"inputs,omitempty"`
+	Outputs   []string         `json:"outputs,omitempty"`
+}
+
 // PipelineSpec defines the desired state of Pipeline
 type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
-	VolumeName      string   `json:"volumeName,omitempty"`
-	Schedule        Schedule `json:"schedule,omitempty"`
-	DefaultResource Resource `json:"resource,omitempty"`
-	RunAfter        []string `json:"runAfter,omitempty"`
-	RunBefore       []string `json:"runBefore,omitempty"`
-	Inputs          []string `json:"inputs,omitempty"`
-	Outputs         []string `json:"outputs,omitempty"`
-	Tasks           []Task   `json:"tasks,omitempty"`
+	VolumeName      string             `json:"volumeName,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Schedule        Schedule           `json:"schedule,omitempty"`
+	DefaultResource Resource           `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
+	RunAfter        []string           `json:"runAfter,omitempty"`
+	RunBefore       []string           `json:"runBefore,omitempty"`
+	Inputs          []string           `json:"inputs,omitempty"`
+	Outputs         []string           `json:"outputs,omitempty"`
+	Tasks           []PipelineTaskType `json:"tasks,omitempty"`
 }
 
 // PipelineStatus defines the observed state of Pipeline
 type PipelineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	FinishDate   *metav1.Time `json:"finishDate,omitempty"`
-	Initailizing int          `json:"initializing,omitempty"`
-	Running      int          `json:"running,omitempty"`
-	Completed    int          `json:"completed,omitempty"`
-	CurrentJobs  []string     `json:"currentJobs,omitempty"`
-	Jobs         []string     `json:"jobs,omitempty"`
-
 	CreateDate     *metav1.Time `json:"createDate,omitempty"`
 	LastUpdateDate *metav1.Time `json:"lastUpdateDate,omitempty"`
 	Runs           int          `json:"runs,omitempty"`
-}
-
-type JobStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	Name           string       `json:"name,omitempty"`
-	State          JobState     `json:"state,omitempty"`
-	RunAfter       []string     `json:"runAfter,omitempty"`
-	RunBefore      []string     `json:"runBefore,omitempty"`
-	StartDate      *metav1.Time `json:"startDate,omitempty"`
-	LastUpdateDate *metav1.Time `json:"lastUpdateDate,omitempty"`
-	FinishDate     *metav1.Time `json:"finishDate,omitempty"`
 }
 
 // +kubebuilder:object:root=true
