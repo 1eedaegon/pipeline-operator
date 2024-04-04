@@ -17,6 +17,12 @@ limitations under the License.
 package v1
 
 import (
+	"fmt"
+	"regexp"
+	"strconv"
+	"time"
+
+	"github.com/robfig/cron/v3"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -41,17 +47,76 @@ type StorageResource struct {
 	Capacity string `json: capacity`
 }
 
-type ScheduleType string
+// Duration parser가 cron과 date string을
+// 모두 변환할 수 있기 때문에 타입이 필요없어졌다.
+// type ScheduleType string
 
-const (
-	Cron ScheduleType = "cron"
-	Date ScheduleType = "date"
-)
+// const (
+// 	Cron ScheduleType = "cron"
+// 	Date ScheduleType = "date"
+// )
+
+type ScheduleDate string
+
+func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
+	var duration time.Duration
+	// date string parser
+	scheduleDatePattern := `(\d+)([smhdMy])`
+	re := regexp.MustCompile(scheduleDatePattern)
+	matcheSlice := re.FindAllStringSubmatch(string(sd), -1)
+	for _, match := range matcheSlice {
+		value, err := strconv.Atoi(match[1])
+		if err != nil {
+			return 0, err
+		}
+		dateRune := match[2]
+		switch dateRune {
+		case "s":
+			duration += time.Duration(value) * time.Second
+		case "m":
+			duration += time.Duration(value) * time.Minute
+		case "h":
+			duration += time.Duration(value) * time.Hour
+		case "d":
+			duration += time.Duration(value) * 24 * time.Hour
+		case "w":
+			duration += time.Duration(value) * 7 * 24 * time.Hour
+		case "M":
+			duration += time.Duration(value) * 30 * 24 * time.Hour // 간단화를 위해 모든 달을 30일로 가정
+		case "y":
+			duration += time.Duration(value) * 365 * 24 * time.Hour // 윤년은 고려하지 않음
+		default:
+			return 0, fmt.Errorf("unknown date string: %s", unit)
+		}
+	}
+	return duration, nil
+}
+
+func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
+	// cron parser
+	cronExpr, err := cron.ParseStandard(sd)
+	duration := cronExpr.Next(time.Now()).Sub(time.Now())
+	if err != nil {
+		return 0, err
+	}
+	return duration, nil
+}
+func (sd ScheduleDate) Duration() (time.Duration, error) {
+	cronDuration, err := sd.durationFromCron()
+	dateDuration, err2 := sd.durationFromDateString()
+	if err != nil && err2 != nil {
+		return 0, fmt.Errorf("Unknown format schedule")
+	}
+	if err != nil {
+		return dateDuration, nil
+	}
+	return cronDuration, nil
+}
 
 type Schedule struct {
-	ScheduleType ScheduleType `json:"type,omitempty"`         // ScheduleType이 cron이면 cron의 최초 도달시점, date면 시스템 시간에 시작
-	ScheduleDate string       `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
-	EndDate      string       `json:"endDate,omitempty"`      // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
+	// ScheduleType ScheduleType `json:"type,omitempty"`         // ScheduleType이 cron이면 cron의 최초 도달시점, date면 시스템 시간에 시작
+	ScheduleDate string `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
+	EndDate      string `json:"endDate,omitempty"`      // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
 }
 
 type ModeType string

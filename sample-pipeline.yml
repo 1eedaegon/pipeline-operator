@@ -17,14 +17,13 @@ spec:
   historyLimit:
     amount: 10
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-    type: date
     scheduleDate: "1d"
     endDate: "2024-08-30" # "2024-06-30:00:00:00+0900"
     # (입력 받을 때)UTC+9를 기본으로 하며, 플랫폼 위치(리전)을 기준으로 표출하되, 입력하는 시간은 변환되어 저장되어야한다.
   runBefore: [] # runBefore를 걸었을 때 tasks/pipeline에 해당 이름이 없으면 경고를 띄운다.
   tasks:
-  - task:
-      name: pipeline-init-pipeline
+  - task: # import task type because not use image
+    name: pipeline-init-pipeline
     resource:
       cpu: 1
       memory: 2Mi
@@ -37,7 +36,7 @@ spec:
     - init-input
     outputs:
     - init-output
-  - task:
+  - task: # inline task type because define image
       name: import-s3
       image: amazon/aws-cli
     resource:
@@ -51,7 +50,7 @@ spec:
     - init-output
     outputs:
     - import-output
-  - task:
+  - task: # inline task type because define image 
       name: transform-data
       image: amazon/aws-cli
     resource:
