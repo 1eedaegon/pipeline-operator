@@ -37,7 +37,9 @@ spec:
           metadata:
             type: object
           spec:
-            description: TaskSpec defines the desired state of Task
+            description: |-
+              ToolBox의 개념으로 바라본다.
+              TaskSpec defines the desired state of Task
             properties:
               args:
                 items:
@@ -53,47 +55,8 @@ spec:
                   Important: Run "make" to regenerate code after modifying this file
                   Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
                 type: string
-              inputs:
-                items:
-                  type: string
-                type: array
               mode:
                 type: string
-              outputs:
-                items:
-                  type: string
-                type: array
-              resource:
-                properties:
-                  cpu:
-                    type: integer
-                  gpu:
-                    properties:
-                      amount:
-                        type: integer
-                      type:
-                        type: string
-                    type: object
-                  memory:
-                    type: string
-                type: object
-              runAfter:
-                items:
-                  type: string
-                type: array
-              runBefore:
-                items:
-                  type: string
-                type: array
-              schedule:
-                properties:
-                  endDate:
-                    type: string
-                  scheduleDate:
-                    type: string
-                  scheduleType:
-                    type: string
-                type: object
             type: object
           status:
             description: TaskStatus defines the observed state of Task

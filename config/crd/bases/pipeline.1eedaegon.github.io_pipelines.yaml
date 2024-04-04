@@ -64,6 +64,9 @@ spec:
           spec:
             description: PipelineSpec defines the desired state of Pipeline
             properties:
+              historyLimit:
+                format: date-time
+                type: string
               inputs:
                 items:
                   type: string
@@ -104,143 +107,29 @@ spec:
                     type: string
                 type: object
               tasks:
-                items:
-                  description: Task is the Schema for the tasks API
-                  properties:
-                    apiVersion:
-                      description: |-
-                        APIVersion defines the versioned schema of this representation of an object.
-                        Servers should convert recognized schemas to the latest internal value, and
-                        may reject unrecognized values.
-                        More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-                      type: string
-                    kind:
-                      description: |-
-                        Kind is a string value representing the REST resource this object represents.
-                        Servers may infer this from the endpoint the client submits requests to.
-                        Cannot be updated.
-                        In CamelCase.
-                        More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-                      type: string
-                    metadata:
-                      type: object
-                    spec:
-                      description: TaskSpec defines the desired state of Task
-                      properties:
-                        args:
-                          items:
-                            type: string
-                          type: array
-                        command:
-                          items:
-                            type: string
-                          type: array
-                        image:
-                          description: |-
-                            INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-                            Important: Run "make" to regenerate code after modifying this file
-                            Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
-                          type: string
-                        inputs:
-                          items:
-                            type: string
-                          type: array
-                        mode:
-                          type: string
-                        outputs:
-                          items:
-                            type: string
-                          type: array
-                        resource:
-                          properties:
-                            cpu:
-                              type: integer
-                            gpu:
-                              properties:
-                                amount:
-                                  type: integer
-                                type:
-                                  type: string
-                              type: object
-                            memory:
-                              type: string
-                          type: object
-                        runAfter:
-                          items:
-                            type: string
-                          type: array
-                        runBefore:
-                          items:
-                            type: string
-                          type: array
-                        schedule:
-                          properties:
-                            endDate:
-                              type: string
-                            scheduleDate:
-                              type: string
-                            scheduleType:
-                              type: string
-                          type: object
-                      type: object
-                    status:
-                      description: TaskStatus defines the observed state of Task
-                      properties:
-                        createDate:
-                          description: |-
-                            INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-                            Important: Run "make" to regenerate code after modifying this file
-                          format: date-time
-                          type: string
-                        lastUpdateDate:
-                          format: date-time
-                          type: string
-                        usedByJobs:
-                          type: integer
-                        usedByPipelines:
-                          items:
-                            type: string
-                          type: array
-                      type: object
-                  type: object
-                type: array
-              volumeName:
                 description: |-
                   INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                   Important: Run "make" to regenerate code after modifying this file
                   Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
+                items:
+                  type: string
+                type: array
+              volumeName:
                 type: string
             type: object
           status:
             description: PipelineStatus defines the observed state of Pipeline
             properties:
-              completed:
-                type: integer
               createDate:
                 format: date-time
                 type: string
-              currentJobs:
-                items:
-                  type: string
-                type: array
-              finishDate:
-                description: |-
-                  INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-                  Important: Run "make" to regenerate code after modifying this file
-                format: date-time
-                type: string
-              initializing:
-                type: integer
-              jobs:
-                items:
-                  type: string
-                type: array
               lastUpdateDate:
                 format: date-time
                 type: string
-              running:
-                type: integer
               runs:
+                description: |-
+                  INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
+                  Important: Run "make" to regenerate code after modifying this file
                 type: integer
             type: object
         type: object
