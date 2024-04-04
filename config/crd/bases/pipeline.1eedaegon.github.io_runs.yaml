@@ -40,8 +40,12 @@ spec:
             description: RunSpec defines the desired state of Run
             properties:
               historyLimit:
-                format: date-time
-                type: string
+                properties:
+                  amount:
+                    type: integer
+                  date:
+                    type: string
+                type: object
               inputs:
                 items:
                   type: string
@@ -86,7 +90,7 @@ spec:
                     type: string
                   scheduleDate:
                     type: string
-                  scheduleType:
+                  type:
                     type: string
                 type: object
               volumeName:

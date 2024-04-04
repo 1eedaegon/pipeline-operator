@@ -13,73 +13,59 @@ metadata:
   # projectName: test-project
   name: pipeline-chain-test
 spec:
+  volumeName: pipeline-chain-volume
+  historyLimit:
+    amount: 10
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-    type: cron
-    scheduleDate: "5 * * * * *"
-    endDate: "2024-06-30" # "2024-06-30:00:00:00+0900"
+    type: date
+    scheduleDate: "1d"
+    endDate: "2024-08-30" # "2024-06-30:00:00:00+0900"
     # (입력 받을 때)UTC+9를 기본으로 하며, 플랫폼 위치(리전)을 기준으로 표출하되, 입력하는 시간은 변환되어 저장되어야한다.
-  runAfter: []
   runBefore: [] # runBefore를 걸었을 때 tasks/pipeline에 해당 이름이 없으면 경고를 띄운다.
   tasks:
-  - name: init-pipeline # 이미 해당 task 이름이 있다면 에러
-  - name: load-data
-    image: nginx
-    command:
-    - aws s3
-    args:
-    - "cp s3://something"
-    # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-    # cron일 때 pipeline에 schedule이 걸려있으면 경고를 띄운다.
-    schedule:
-      type: date
-      startAt: "2024-06-30:16:00:00"
-      # "2024-06-30:16:00:00+0900"
-      # (입력 받을 때)UTC+9를 기본으로 하며, 플랫폼 위치(리전)을 기준으로 표출하되, 입력하는 시간은 변환되어 저장되어야한다.
-    runBefore: []
-    runAfter:
-    - transform-data
-    inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    outputs: []
+  - task:
+      name: pipeline-init-pipeline
     resource:
       cpu: 1
       memory: 2Mi
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
         amount: 2
-  - name: transform-data
-    image: nginx
     runBefore:
-    - load-data
-    args:
-    - "aws cp s3://something"
-    runAfter: []
-    inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    outputs: []
+    - pipeline-init-pipeline
+    inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
+    - init-input
+    outputs:
+    - init-output
+  - task:
+      name: import-s3
+      image: amazon/aws-cli
     resource:
       cpu: 1
       memory: 2Mi
-
-status: # pipeline의 status, run이 되었을때 
-  # name 뒤에 postfix가 붙어야한다.
-  state: running
-  startDate: 2024-05-13:16:00:00
-  finishDate: 2024-05-13:17:00:00
-  initializing: 1
-  running: 1
-  completed: 0
-  currentJobs:
-  - load-data
-  jobs:
-  - name: load-data
-    state: running
-    runAfter: []
+      gpu:
+        type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
+        amount: 2
     runBefore: []
-    startDate: 2024-05-13:16:00:00
-    finishDate: 2024-05-13:17:00:00
-  - name: transform-data
-    state: waiting
-    runAfter: []
+    inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
+    - init-output
+    outputs:
+    - import-output
+  - task:
+      name: transform-data
+      image: amazon/aws-cli
+    resource:
+      cpu: 1
+      memory: 2Mi
+      gpu:
+        type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
+        amount: 2
     runBefore:
-    - transform-data
-    startDate: 2024-05-13:16:00:00
-    finishDate: 2024-05-13:17:00:00
+    - import-s3
+    inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
+    outputs: []
+status:
+  runs: 10
+  createDate: 2024-05-13:16:00:00
+  lastUpdateDate: 2024-05-13:17:00:00
+

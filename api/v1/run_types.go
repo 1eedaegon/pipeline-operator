@@ -84,7 +84,7 @@ type RunSpec struct {
 // pre-run: waiting, initializing, stopping
 // run: running, deleting
 // post-run: completed, failed, deleted
-// deleted는 뭐냐, run시킬 수 없지만 보존기간동안 volume이 보관되는 상태
+// deleted: run시킬 수 없지만 보존기간동안 volume이 보관되는 상태
 
 // RunState order: run > pre-run > post-run
 // Running으로 한번 진입하면 completed 아니면 Failed이다.
@@ -117,8 +117,7 @@ type Run struct {
 	Status RunStatus `json:"status,omitempty"`
 }
 
-//+kubebuilder:object:root=true
-
+// +kubebuilder:object:root=true
 // RunList contains a list of Run
 type RunList struct {
 	metav1.TypeMeta `json:",inline"`

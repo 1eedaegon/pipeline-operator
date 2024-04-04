@@ -40,22 +40,22 @@ spec:
             description: |-
               ToolBox의 개념으로 바라본다.
               TaskSpec defines the desired state of Task
+              metadata에도 name이 있고, spec에도 name이 있다. 이유는 inline task 때문에
             properties:
               args:
                 items:
                   type: string
                 type: array
               command:
-                items:
-                  type: string
-                type: array
+                type: string
               image:
+                type: string
+              mode:
+                type: string
+              name:
                 description: |-
                   INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                   Important: Run "make" to regenerate code after modifying this file
-                  Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
-                type: string
-              mode:
                 type: string
             type: object
           status:

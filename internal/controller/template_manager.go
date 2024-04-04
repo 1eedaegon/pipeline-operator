@@ -76,7 +76,7 @@ func JobTemplate(ctx context.Context, namespace, volumeName string, task pipelin
 	}
 	job := &kbatchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      task.Spec.Name,
+			Name:      task.Name,
 			Namespace: namespace,
 		},
 		Spec: kbatchv1.JobSpec{

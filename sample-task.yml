@@ -1,0 +1,9 @@
+apiVersion: pipeline.1eedaegon.github.io/v1
+kind: Task
+spec:
+  name: pipeline-init-pipeline
+  image: atlassian/pipelines-awscli:1.18.146
+  command: aws
+  args:
+  - --version
+

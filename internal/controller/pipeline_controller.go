@@ -90,6 +90,7 @@ func (r *PipelineReconciler) ValidatePipelineRequest(ctx context.Context, req ct
 
 func (r *PipelineReconciler) SyncPipelineResourceStatus(ctx context.Context, req ctrl.Request, tasks kbatchv1.JobList) error {
 	var childJobs kbatchv1.JobList
+	kbatchv1.JobS
 	if err := r.List(ctx, &childJobs, client.InNamespace(req.Namespace), client.MatchingFields{jobOwnerKey: req.Name}); err != nil {
 		return err
 	}
