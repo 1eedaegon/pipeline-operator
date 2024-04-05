@@ -89,8 +89,8 @@ spec:
                   endDate:
                     type: string
                   scheduleDate:
-                    type: string
-                  type:
+                    description: ScheduleType ScheduleType `json:"type,omitempty"`         //
+                      ScheduleType이 cron이면 cron의 최초 도달시점, date면 시스템 시간에 시작
                     type: string
                 type: object
               volumeName:

@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/robfig/cron/v3"
@@ -86,7 +87,7 @@ func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
 		case "y":
 			duration += time.Duration(value) * 365 * 24 * time.Hour // 윤년은 고려하지 않음
 		default:
-			return 0, fmt.Errorf("unknown date string: %s", unit)
+			return 0, fmt.Errorf("unknown date string: %s", strings.Join(match, ""))
 		}
 	}
 	return duration, nil
@@ -94,7 +95,7 @@ func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
 
 func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
 	// cron parser
-	cronExpr, err := cron.ParseStandard(sd)
+	cronExpr, err := cron.ParseStandard(string(sd))
 	duration := cronExpr.Next(time.Now()).Sub(time.Now())
 	if err != nil {
 		return 0, err

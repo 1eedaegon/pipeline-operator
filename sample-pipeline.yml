@@ -9,15 +9,15 @@
 apiVersion: pipeline.1eedaegon.github.io/v1
 kind: Pipeline
 metadata:
-  namespace: sample
+  namespace: pipeline
   # projectName: test-project
   name: pipeline-chain-test
 spec:
-  volumeName: pipeline-chain-volume
+  volumeName: pipeline-chain-volume # 이미 있으면 생성하지 않고 사용
   historyLimit:
     amount: 10
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-    scheduleDate: "1d"
+    scheduleDate: "1d" # */1 * * * * 또는 1d, 1w, 1M
     endDate: "2024-08-30" # "2024-06-30:00:00:00+0900"
     # (입력 받을 때)UTC+9를 기본으로 하며, 플랫폼 위치(리전)을 기준으로 표출하되, 입력하는 시간은 변환되어 저장되어야한다.
   runBefore: [] # runBefore를 걸었을 때 tasks/pipeline에 해당 이름이 없으면 경고를 띄운다.

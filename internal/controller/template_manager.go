@@ -108,6 +108,7 @@ func JobTemplate(ctx context.Context, namespace, volumeName string, task pipelin
 	return job, nil
 }
 
+// 1. pipeline 조립
 func ConstructJobsFromPipelineTasks(ctx context.Context, pipeline *pipelinev1.Pipeline) ([]*kbatchv1.Job, error) {
 	log := log.FromContext(ctx)
 	var jobs []*kbatchv1.Job
@@ -120,4 +121,11 @@ func ConstructJobsFromPipelineTasks(ctx context.Context, pipeline *pipelinev1.Pi
 		jobs = append(jobs, job)
 	}
 	return jobs, nil
+}
+
+// 1. runs 조립
+func ConstructRunsFromPipeline(ctx context.Context, pipieline *pipelinev1.Pipeline) (*pipelinev1.Run, error) {
+	log := log.FromContext(ctx)
+	log.V(1).Info("Can't generate Job from request")
+	return nil, nil
 }
