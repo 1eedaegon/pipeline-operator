@@ -10,8 +10,8 @@ apiVersion: pipeline.1eedaegon.github.io/v1
 kind: Pipeline
 metadata:
   namespace: pipeline
-  # projectName: test-project
   name: pipeline-chain-test
+  annotations:
 spec:
   volumeName: pipeline-chain-volume # 이미 있으면 생성하지 않고 사용
   historyLimit:
@@ -26,7 +26,7 @@ spec:
     name: pipeline-init-pipeline
     resource:
       cpu: 1
-      memory: 2Mi
+      memory: 200Mi
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
         amount: 2
@@ -41,7 +41,7 @@ spec:
       image: amazon/aws-cli
     resource:
       cpu: 1
-      memory: 2Mi
+      memory: 200Mi
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
         amount: 2
@@ -55,7 +55,7 @@ spec:
       image: amazon/aws-cli
     resource:
       cpu: 1
-      memory: 2Mi
+      memory: 200Mi
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
         amount: 2

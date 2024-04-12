@@ -57,27 +57,24 @@ type PipelineReconciler struct {
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=pipelines/finalizers,verbs=update
 func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
-	var pipeline pipelinev1.Pipeline
-	var tasks kbatchv1.JobList
+	pipeline := &pipelinev1.Pipeline{}
+	// 하나의 파이프라인에게 동작한다고 생각하자.
 
-	// 1. pipeline 있는 지 확인
-	if err := r.ValidatePipelineRequest(ctx, req, &pipeline); err != nil {
-		log.Error(err, "unable to fetch Pipeline")
-		return ctrl.Result{}, err
+	// 1. pipeline yaml이 하나라도 있는지 확인
+	log.Info("Reconciling pipeline.")
+	if err := r.Get(ctx, req.NamespacedName, pipeline); err != nil {
+		log.Error(err, "unable to fetch pipeline")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	// 2. pipeline이 있으면 상태 업데이트
-	if err := r.SyncPipelineResourceStatus(ctx, req, tasks); err != nil {
-		log.Error(err, "unable to list child jobs")
-		return ctrl.Result{}, err
-	}
+	// 2. enduring volume name
+	volume := pipeline.Spec.VolumeName
+	log.Info("Ensuring volume", "volume", volume)
+	r.ensureVolume(pipeline.Spec.VolumeName)
 
-	// 3. pipeline이 없으면 생성한다.
-	pipeline, err := r.ConstructPipeline(ctx, req, &pipeline)
-	if err != nil {
-		return ctrl.Result{}, err
-	}
-
+	// 3. enduring history limit
+	runList := &pipelinev1.RunList{}
+	err := r.Get(ctx, client.ObjectKey{Name: })
 	return ctrl.Result{}, nil
 }
 
@@ -90,7 +87,7 @@ func (r *PipelineReconciler) ValidatePipelineRequest(ctx context.Context, req ct
 
 func (r *PipelineReconciler) SyncPipelineResourceStatus(ctx context.Context, req ctrl.Request, tasks kbatchv1.JobList) error {
 	var childJobs kbatchv1.JobList
-	kbatchv1.JobS
+
 	if err := r.List(ctx, &childJobs, client.InNamespace(req.Namespace), client.MatchingFields{jobOwnerKey: req.Name}); err != nil {
 		return err
 	}

@@ -139,6 +139,14 @@ type PipelineTask struct {
 }
 
 // PipelineSpec defines the desired state of Pipeline
+/*
+	Need Annotations:
+	- pipeline.1eedaegon.github.io/schedule-at
+	- pipeline.1eedaegon.github.io/created-at
+	- pipeline.1eedaegon.github.io/created-by
+	- pipeline.1eedaegon.github.io/updated-at
+
+*/
 type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file

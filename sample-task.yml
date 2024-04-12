@@ -1,9 +1,14 @@
 apiVersion: pipeline.1eedaegon.github.io/v1
 kind: Task
-spec:
+metadata:
   name: pipeline-init-pipeline
+  namespace: pipeline
+spec:
   image: atlassian/pipelines-awscli:1.18.146
   command: aws
   args:
   - --version
-
+status:
+  jobs: 10
+  createDate: 2024-05-13:16:00:00
+  lastUpdateDate: 2024-05-13:17:00:00

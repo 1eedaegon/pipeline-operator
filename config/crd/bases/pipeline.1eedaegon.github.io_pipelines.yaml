@@ -62,7 +62,15 @@ spec:
           metadata:
             type: object
           spec:
-            description: PipelineSpec defines the desired state of Pipeline
+            description: |-
+              PipelineSpec defines the desired state of Pipeline
+
+
+              Need Annotations:
+              - pipeline.1eedaegon.github.io/schedule-at
+              - pipeline.1eedaegon.github.io/created-at
+              - pipeline.1eedaegon.github.io/created-by
+              - pipeline.1eedaegon.github.io/updated-at
             properties:
               historyLimit:
                 properties:

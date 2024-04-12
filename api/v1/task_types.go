@@ -23,27 +23,21 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// ToolBox의 개념으로 바라본다.
 // TaskSpec defines the desired state of Task
-// metadata에도 name이 있고, spec에도 name이 있다. 이유는 inline task 때문에
 type TaskSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Name    string   `json:"name,omitempty"`
-	Image   string   `json:"image,omitempty"`
-	Mode    ModeType `json:"mode,omitempty"`    // Schedule와 Manual mode가 상충할 수 없다.
-	Command string   `json:"command,omitempty"` // image의 entrypoint/command를 덮어 쓴다.
-	Args    []string `json:"args,omitempty"`    // image의 command는 두고 arg만 추가한다.
+
+	// Foo is an example field of Task. Edit task_types.go to remove/update
+	Image   string `json:"image,omitempty"`
+	Command string `json:"command,omitempty"`
+	Args    string `json:"args,omitempty"`
 }
 
 // TaskStatus defines the observed state of Task
 type TaskStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	CreateDate      *metav1.Time `json:"createDate,omitempty"`
-	LastUpdateDate  *metav1.Time `json:"lastUpdateDate,omitempty"`
-	UsedByPipelines []string     `json:"usedByPipelines,omitempty"`
-	UsedByJobs      int          `json:"usedByJobs,omitempty"`
 }
 
 //+kubebuilder:object:root=true
