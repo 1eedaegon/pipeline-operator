@@ -33,7 +33,7 @@ type HistoryLimit struct {
 }
 
 type Resource struct {
-	Cpu    int         `json:"cpu,omitempty"`
+	Cpu    string      `json:"cpu,omitempty"`
 	Memory string      `json:"memory,omitempty"`
 	Gpu    GpuResource `json:"gpu,omitempty"`
 }
@@ -43,19 +43,11 @@ type GpuResource struct {
 	Amount  int    `json:"amount,omitempty"`
 }
 
-type StorageResource struct {
-	Name     string `json: name`
-	Capacity string `json: capacity`
+type VolumeResource struct {
+	Name     string `json:"name,omitempty"`
+	Capacity string `json:"capacity,omitempty"`
+	Storage  string `json:"storage,omitempty"`
 }
-
-// Duration parser가 cron과 date string을
-// 모두 변환할 수 있기 때문에 타입이 필요없어졌다.
-// type ScheduleType string
-
-// const (
-// 	Cron ScheduleType = "cron"
-// 	Date ScheduleType = "date"
-// )
 
 type ScheduleDate string
 
@@ -130,31 +122,31 @@ const (
 type PipelineTask struct {
 	// Inline 타입이면 Task를 수동으로 기입해줘야한다. inline에서 정의한 task가 task 템플릿으로 들어가진 않는다.
 	// Import 타입이면 이미있는 Task를 기준으로 Task가 채워진다.
-	Task      TaskSpec `json:"task,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
-	Resource  Resource `json:"resource,omitempty"`
-	Schedule  Schedule `json:"schedule,omitempty"`
-	RunBefore []string `json:"runBefore,omitempty"`
-	Inputs    []string `json:"inputs,omitempty"`
-	Outputs   []string `json:"outputs,omitempty"`
+	TaskSpec  `json:"task,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
+	Resource  Resource                `json:"resource,omitempty"`
+	Schedule  Schedule                `json:"schedule,omitempty"`
+	RunBefore []string                `json:"runBefore,omitempty"`
+	Inputs    []string                `json:"inputs,omitempty"`
+	Outputs   []string                `json:"outputs,omitempty"`
 }
 
-// PipelineSpec defines the desired state of Pipeline
 /*
 	Need Annotations:
 	- pipeline.1eedaegon.github.io/schedule-at
 	- pipeline.1eedaegon.github.io/created-at
 	- pipeline.1eedaegon.github.io/created-by
 	- pipeline.1eedaegon.github.io/updated-at
-
 */
+
+// PipelineSpec defines the desired state of Pipeline
 type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
-	Tasks        []PipelineTask `json:"tasks,omitempty"`
 	Schedule     Schedule       `json:"schedule,omitempty"`
-	VolumeName   string         `json:"volumeName,omitempty"`   // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Volume       VolumeResource `json:"volume,omitempty"`       // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
 	HistoryLimit HistoryLimit   `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
+	Tasks        []PipelineTask `json:"tasks,omitempty"`
 	RunBefore    []string       `json:"runBefore,omitempty"`
 	Inputs       []string       `json:"inputs,omitempty"`   // RX
 	Outputs      []string       `json:"outputs,omitempty"`  // RWX

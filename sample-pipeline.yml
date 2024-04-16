@@ -12,8 +12,13 @@ metadata:
   namespace: pipeline
   name: pipeline-chain-test
   annotations:
+    pipeline.1eedaegon.github.io/schedule-at: "2024-04-04T01:50:31Z"
+    pipeline.1eedaegon.github.io/created-by: "2024-04-04T01:50:31Z"
 spec:
-  volumeName: pipeline-chain-volume # 이미 있으면 생성하지 않고 사용
+  volume: 
+    name: pipeline-chain-volume # 이미 있으면 생성하지 않고 사용
+    capacity: 1Gi
+    storage: ceph-block
   historyLimit:
     amount: 10
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시

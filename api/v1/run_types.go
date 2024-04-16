@@ -17,7 +17,13 @@ limitations under the License.
 package v1
 
 import (
+	"context"
+
+	kbatchv1 "k8s.io/api/batch/v1"
+	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -55,32 +61,32 @@ const (
 	RunStateInit JobState = "initializing"
 	RunStateWait JobState = "waiting"
 	RunStateStop JobState = "stopping"
-	// run
+	// Run
 	RunStateRun      JobState = "running"
 	RunStateDeleting JobState = "deleting"
-	// post run
+	// Post run
 	RunStateCompleted JobState = "completed"
 	RunStateDeleted   JobState = "deleted"
 	RunStateFailed    JobState = "failed"
 )
 
 // RunSpec defines the desired state of Run
+/*
+ */
 type RunSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
-	Schedule     Schedule     `json:"schedule,omitempty"`
-	VolumeName   string       `json:"volumeName,omitempty"`   // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
-	HistoryLimit HistoryLimit `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
-	RunAfter     []string     `json:"runAfter,omitempty"`
-	RunBefore    []string     `json:"runBefore,omitempty"`
-	Inputs       []string     `json:"inputs,omitempty"`   // RX
-	Outputs      []string     `json:"outputs,omitempty"`  // RWX
-	Resource     Resource     `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
-	Jobs         []string     `json:"jobs,omitempty"`
+	Schedule     Schedule       `json:"schedule,omitempty"`
+	Volume       VolumeResource `json:"volume,omitempty"`       // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	HistoryLimit HistoryLimit   `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
+	Jobs         []kbatchv1.Job `json:"jobs,omitempty"`
+	RunBefore    []string       `json:"runBefore,omitempty"`
+	Inputs       []string       `json:"inputs,omitempty"`   // RX
+	Outputs      []string       `json:"outputs,omitempty"`  // RWX
+	Resource     Resource       `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
 }
 
-// RunStatus defines the observed state of Run
 // pre-run: waiting, initializing, stopping
 // run: running, deleting
 // post-run: completed, failed, deleted
@@ -89,6 +95,8 @@ type RunSpec struct {
 // RunState order: run > pre-run > post-run
 // Running으로 한번 진입하면 completed 아니면 Failed이다.
 // Deleting으로 한번 진입하면 deleted 아니면 failed이다.
+
+// RunStatus defines the observed state of Run
 type RunStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
@@ -117,6 +125,158 @@ type Run struct {
 	Status RunStatus `json:"status,omitempty"`
 }
 
+func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline) *Run {
+	log := log.FromContext(ctx)
+
+	jobs := []kbatchv1.Job{}
+	for _, task := range pipeline.Spec.Tasks {
+		job, err := newJobFromPipelineTask(ctx, &task, pipeline.Spec.Volume)
+		if err != nil {
+			log.V(1).Error(err, "Can't generate Job from request")
+		}
+		jobs = append(jobs, *job)
+	}
+
+	run := &Run{
+		ObjectMeta: metav1.ObjectMeta{
+			Labels:      make(map[string]string),
+			Annotations: make(map[string]string),
+			Name:        pipeline.Name,
+			Namespace:   pipeline.Namespace,
+		},
+		Spec: RunSpec{
+			Schedule:     pipeline.Spec.Schedule,
+			Volume:       pipeline.Spec.Volume,
+			HistoryLimit: pipeline.Spec.HistoryLimit,
+			RunBefore:    pipeline.Spec.RunBefore,
+			Inputs:       pipeline.Spec.Inputs,
+			Outputs:      pipeline.Spec.Outputs,
+			Resource:     pipeline.Spec.Resource,
+			Jobs:         jobs,
+		},
+	}
+
+	return run
+}
+
+func newJobFromPipelineTask(ctx context.Context, ptask *PipelineTask, volumeResource VolumeResource) (*kbatchv1.Job, error) {
+
+	volume, err := parseVolume(ctx, volumeResource)
+	container, err := parseContainer(ctx, ptask, volumeResource)
+	if err != nil {
+		return nil, err
+	}
+	job := kbatchv1.Job{
+		Spec: kbatchv1.JobSpec{
+			Template: corev1.PodTemplateSpec{
+				Spec: corev1.PodSpec{
+					Containers:    container,
+					RestartPolicy: "Never",
+					Volumes:       volume,
+				},
+			},
+		},
+	}
+	return &job, nil
+}
+
+func ParseComputingResource(ctx context.Context, computingResource Resource) (*corev1.ResourceList, error) {
+	cpu, err := resource.ParseQuantity(string(computingResource.Cpu))
+	if err != nil {
+		return nil, err
+	}
+	mem, err := resource.ParseQuantity(string(computingResource.Memory))
+	if err != nil {
+		return nil, err
+	}
+	resourceList := corev1.ResourceList{
+		corev1.ResourceCPU:    cpu,
+		corev1.ResourceMemory: mem,
+	}
+
+	return &resourceList, nil
+}
+
+func ParseVolumeResource(ctx context.Context, volumeResource VolumeResource) (*corev1.ResourceList, error) {
+	volume, err := resource.ParseQuantity(string(volumeResource.Capacity))
+	if err != nil {
+		return nil, err
+	}
+	resourceList := corev1.ResourceList{
+		corev1.ResourceStorage: volume,
+	}
+	return &resourceList, nil
+}
+
+func parseContainer(ctx context.Context, ptask *PipelineTask, volumeResource VolumeResource) ([]corev1.Container, error) {
+	requests, err := ParseComputingResource(ctx, ptask.Resource)
+	limits, err := ParseComputingResource(ctx, ptask.Resource)
+	if err != nil {
+		return nil, err
+	}
+
+	mountVolumeList := []corev1.VolumeMount{}
+	inputVolumeMountList, err := parseVolumeMountList(ctx, ptask.Inputs, volumeResource)
+	outputVolumeMountList, err := parseVolumeMountList(ctx, ptask.Outputs, volumeResource)
+	if err != nil {
+		return nil, err
+	}
+	mountVolumeList = append(mountVolumeList, inputVolumeMountList...)
+	mountVolumeList = append(mountVolumeList, outputVolumeMountList...)
+
+	containers := []corev1.Container{
+		{
+			Name:  ptask.Name,
+			Image: ptask.Image,
+			Command: []string{
+				ptask.TaskSpec.Command,
+			},
+			Args: ptask.Args,
+			Resources: corev1.ResourceRequirements{
+				Requests: *requests,
+				Limits:   *limits,
+			},
+			VolumeMounts: mountVolumeList,
+		},
+	}
+
+	return containers, nil
+}
+
+// TODO: PVC
+func parseVolume(ctx context.Context, volumeResource VolumeResource) ([]corev1.Volume, error) {
+	volumes := []corev1.Volume{
+		{
+			Name: volumeResource.Name,
+			VolumeSource: corev1.VolumeSource{
+				PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSource{
+					ClaimName: volumeResource.Name,
+				},
+			},
+		},
+	}
+	return volumes, nil
+}
+
+const (
+	mountPathPrefix string = "/data/pipeline"
+)
+
+func parseVolumeMountList(ctx context.Context, mountNameList []string, volumeResource VolumeResource) ([]corev1.VolumeMount, error) {
+	volumeMounts := []corev1.VolumeMount{}
+	for _, mountName := range mountNameList {
+		if mountName == "" {
+			continue
+		}
+		volumeMounts = append(volumeMounts, corev1.VolumeMount{
+			Name:      volumeResource.Name,
+			MountPath: mountPathPrefix + volumeResource.Name,
+			SubPath:   string(mountName),
+		})
+	}
+	return volumeMounts, nil
+}
+
 // +kubebuilder:object:root=true
 // RunList contains a list of Run
 type RunList struct {
@@ -127,4 +287,26 @@ type RunList struct {
 
 func init() {
 	SchemeBuilder.Register(&Run{}, &RunList{})
+}
+
+// 1. pipeline 조립
+func ConstructJobsFromPipelineTasks(ctx context.Context, pipeline *pipelinev1.Pipeline) ([]*kbatchv1.Job, error) {
+	log := log.FromContext(ctx)
+	var jobs []*kbatchv1.Job
+	for _, task := range pipeline.Spec.Tasks {
+		job, err := JobTemplate(ctx, pipeline.Namespace, pipeline.Spec.VolumeName, task)
+		if err != nil {
+			log.V(1).Error(err, "Can't generate Job from request")
+			continue
+		}
+		jobs = append(jobs, job)
+	}
+	return jobs, nil
+}
+
+func ConstructRunsFromPipeline(ctx context.Context, pipieline *pipelinev1.Pipeline) (*pipelinev1.Run, error) {
+	log := log.FromContext(ctx)
+	log.V(1).Info("Can't generate Job from request")
+
+	return nil, nil
 }

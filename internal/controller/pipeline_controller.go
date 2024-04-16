@@ -34,8 +34,11 @@ var (
 )
 
 const (
-	scheduledTimeAnnotation = "pipeline.1eedaegon.github.io/scheduled-at"
 	jobOwnerKey             = ".metadata.controller"
+	updatedByAnnotation     = "pipeline.1eedaegon.github.io/updated-at"
+	createdByAnnotation     = "pipeline.1eedaegon.github.io/created-by"
+	createdTimeAnnotation   = "pipeline.1eedaegon.github.io/created-at"
+	scheduledTimeAnnotation = "pipeline.1eedaegon.github.io/schedule-at"
 )
 
 type realClock struct{}
@@ -67,14 +70,13 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	// 2. enduring volume name
+	// TODO: 2. enduring volume name
 	volume := pipeline.Spec.VolumeName
 	log.Info("Ensuring volume", "volume", volume)
-	r.ensureVolume(pipeline.Spec.VolumeName)
 
-	// 3. enduring history limit
-	runList := &pipelinev1.RunList{}
-	err := r.Get(ctx, client.ObjectKey{Name: })
+	// TODO: 3. enduring history limit
+	// runList := &pipelinev1.RunList{}
+	// err := r.Get(ctx, client.ObjectKey{})
 	return ctrl.Result{}, nil
 }
 

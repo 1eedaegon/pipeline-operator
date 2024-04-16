@@ -7,7 +7,7 @@ rules:
 - apiGroups:
   - pipeline.1eedaegon.github.io
   resources:
-  - runs
+  - tasks
   verbs:
   - create
   - delete
@@ -19,13 +19,13 @@ rules:
 - apiGroups:
   - pipeline.1eedaegon.github.io
   resources:
-  - runs/finalizers
+  - tasks/finalizers
   verbs:
   - update
 - apiGroups:
   - pipeline.1eedaegon.github.io
   resources:
-  - runs/status
+  - tasks/status
   verbs:
   - get
   - patch

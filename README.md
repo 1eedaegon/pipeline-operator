@@ -2,6 +2,13 @@
 
 > Pipeline operator for k8s native
 
+## TODOS
+
+- [ ] Pipeline reconciler
+- [ ] Task reconciler
+- [ ] Run reconciler
+- [ ] Job reconciler(Choose natively)
+
 ## Description
 
 If you want to excitedly create a pipeline with YAML, deploy it all at once and define it with YAML at once
