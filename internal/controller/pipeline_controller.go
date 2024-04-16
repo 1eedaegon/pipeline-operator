@@ -18,14 +18,15 @@ package controller
 
 import (
 	"context"
+	"strconv"
 	"time"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/handler"
 
 	pipelinev1 "github.com/1eedaegon/pipeline-operator/api/v1"
-	kbatchv1 "k8s.io/api/batch/v1"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
@@ -39,6 +40,7 @@ const (
 	createdByAnnotation     = "pipeline.1eedaegon.github.io/created-by"
 	createdTimeAnnotation   = "pipeline.1eedaegon.github.io/created-at"
 	scheduledTimeAnnotation = "pipeline.1eedaegon.github.io/schedule-at"
+	pipelineNameLabel       = "pipeline.1eedaegon.github.io/pipeline-name"
 )
 
 type realClock struct{}
@@ -63,48 +65,63 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 	pipeline := &pipelinev1.Pipeline{}
 	// 하나의 파이프라인에게 동작한다고 생각하자.
 
-	// 1. pipeline yaml이 하나라도 있는지 확인
+	// Checking pipeline CRD
 	log.Info("Reconciling pipeline.")
 	if err := r.Get(ctx, req.NamespacedName, pipeline); err != nil {
-		log.Error(err, "unable to fetch pipeline")
+		log.V(1).Error(err, "unable to fetch pipeline")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	// TODO: 2. enduring volume name
-	volume := pipeline.Spec.VolumeName
-	log.Info("Ensuring volume", "volume", volume)
+	// Update pipeline status(with sum)
+	if err := r.ensurePipeline(ctx, pipeline); err != nil {
+		log.V(1).Error(err, "unable to ensure pipeline")
+		return ctrl.Result{}, err
+	}
+	// Construct run(CRD) from pipeline template
+	run := &pipelinev1.Run{}
+	if err := pipelinev1.NewRunFromPipeline(ctx, pipeline, run); err != nil {
+		log.V(1).Error(err, "Unable to parse from pipeline")
+		return ctrl.Result{}, err
+	}
+	// Relation owner run -> pipeline(owner)
+	if err := ctrl.SetControllerReference(pipeline, run, r.Scheme); err != nil {
+		log.V(1).Error(err, "Unable to reference between pipeline and new run")
+		return ctrl.Result{}, err
+	}
+	// Create run
+	if err := r.Create(ctx, run); err != nil {
+		log.V(1).Error(err, "Unable to create run")
+		return ctrl.Result{}, err
+	}
 
-	// TODO: 3. enduring history limit
-	// runList := &pipelinev1.RunList{}
-	// err := r.Get(ctx, client.ObjectKey{})
 	return ctrl.Result{}, nil
 }
 
-func (r *PipelineReconciler) ValidatePipelineRequest(ctx context.Context, req ctrl.Request, pipeline *pipelinev1.Pipeline) error {
-	if err := r.Get(ctx, req.NamespacedName, pipeline); err != nil {
-		return err
+func (r *PipelineReconciler) ensurePipeline(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
+	if _, find := pipeline.ObjectMeta.Labels["pipeline.1eedaegon.github.io/pipeline-name"]; !find {
+		pipeline.ObjectMeta.Labels["pipeline.1eedaegon.github.io/pipeline-name"] = pipeline.Name
 	}
-	return nil
-}
-
-func (r *PipelineReconciler) SyncPipelineResourceStatus(ctx context.Context, req ctrl.Request, tasks kbatchv1.JobList) error {
-	var childJobs kbatchv1.JobList
-
-	if err := r.List(ctx, &childJobs, client.InNamespace(req.Namespace), client.MatchingFields{jobOwnerKey: req.Name}); err != nil {
-		return err
+	if pipeline.Spec.Schedule.ScheduleDate != "" {
+		pipeline.ObjectMeta.Annotations["pipeline.1eedaegon.github.io/schedule-date"] = string(pipeline.Spec.Schedule.ScheduleDate)
+		// TODO: 아래 타입은 runs로
+		// pipeline.ObjectMeta.Annotations["pipeline.1eedaegon.github.io/scheduled-at"] = duration
 	}
-	return nil
-}
+	if pipeline.Spec.Trigger {
+		pipeline.ObjectMeta.Annotations["pipeline.1eedaegon.github.io/trigger"] = strconv.FormatBool(pipeline.Spec.Trigger)
+	}
 
-func (r *PipelineReconciler) ConstructPipeline(ctx context.Context, req ctrl.Request, pipeline *pipelinev1.Pipeline) (pipelinev1.Pipeline, error) {
-	ConstructJobsFromPipelineTasks(ctx, pipeline)
-	return pipelinev1.Pipeline{}, nil
+	return nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *PipelineReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&pipelinev1.Pipeline{}).
-		Owns(&kbatchv1.Job{}).
+		Named("Pipeline").
+		Watches(
+			&pipelinev1.Pipeline{},
+			handler.EnqueueRequestForOwner(mgr.GetScheme(), mgr.GetRESTMapper(), &pipelinev1.Run{}),
+		).
+		Owns(&pipelinev1.Run{}).
 		Complete(r)
 }

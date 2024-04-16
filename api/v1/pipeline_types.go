@@ -108,8 +108,8 @@ func (sd ScheduleDate) Duration() (time.Duration, error) {
 
 type Schedule struct {
 	// ScheduleType ScheduleType `json:"type,omitempty"`         // ScheduleType이 cron이면 cron의 최초 도달시점, date면 시스템 시간에 시작
-	ScheduleDate string `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
-	EndDate      string `json:"endDate,omitempty"`      // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
+	ScheduleDate ScheduleDate `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
+	EndDate      string       `json:"endDate,omitempty"`      // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
 }
 
 type ModeType string
@@ -123,8 +123,9 @@ type PipelineTask struct {
 	// Inline 타입이면 Task를 수동으로 기입해줘야한다. inline에서 정의한 task가 task 템플릿으로 들어가진 않는다.
 	// Import 타입이면 이미있는 Task를 기준으로 Task가 채워진다.
 	TaskSpec  `json:"task,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
-	Resource  Resource                `json:"resource,omitempty"`
 	Schedule  Schedule                `json:"schedule,omitempty"`
+	Resource  Resource                `json:"resource,omitempty"`
+	Trigger   bool                    `json:"trigger,omitempty"`
 	RunBefore []string                `json:"runBefore,omitempty"`
 	Inputs    []string                `json:"inputs,omitempty"`
 	Outputs   []string                `json:"outputs,omitempty"`
@@ -132,7 +133,7 @@ type PipelineTask struct {
 
 /*
 	Need Annotations:
-	- pipeline.1eedaegon.github.io/schedule-at
+	- pipeline.1eedaegon.github.io/scheduled-at
 	- pipeline.1eedaegon.github.io/created-at
 	- pipeline.1eedaegon.github.io/created-by
 	- pipeline.1eedaegon.github.io/updated-at
@@ -144,7 +145,8 @@ type PipelineSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
 	Schedule     Schedule       `json:"schedule,omitempty"`
-	Volume       VolumeResource `json:"volume,omitempty"`       // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Volume       VolumeResource `json:"volume,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Trigger      bool           `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit   `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
 	Tasks        []PipelineTask `json:"tasks,omitempty"`
 	RunBefore    []string       `json:"runBefore,omitempty"`
@@ -164,12 +166,9 @@ type PipelineStatus struct {
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +kubebuilder:printcolumn:name="State",type="string",JSONPath=".status.state",description="State"
-// +kubebuilder:printcolumn:name="StartDate",type="string",JSONPath=".status.startDate",description="Start date"
-// +kubebuilder:printcolumn:name="FinishDate",type="string",JSONPath=".status.finishDate",description="Finish date"
-// +kubebuilder:printcolumn:name="Initializing",type="number",JSONPath=".status.initializing",description="initializing"
-// +kubebuilder:printcolumn:name="running",type="number",JSONPath=".status.running",description="running"
-// +kubebuilder:printcolumn:name="completed",type="number",JSONPath=".status.completed",description="completed"
+// +kubebuilder:printcolumn:name="Runs",type="uint",JSONPath=".status.runs",description="Number of executed run"
+// +kubebuilder:printcolumn:name="CreatedDate",type="string",JSONPath=".status.createdDate",description="Time of when created pipeline"
+// +kubebuilder:printcolumn:name="LastUpdateDate",type="string",JSONPath=".status.lastUpdateDate",description="Lastest tiem when pipeline updated it."
 // Pipeline is the Schema for the pipelines API
 type Pipeline struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -178,8 +177,7 @@ type Pipeline struct {
 	Status            PipelineStatus `json:"status,omitempty"`
 }
 
-//+kubebuilder:object:root=true
-
+// +kubebuilder:object:root=true
 // PipelineList contains a list of Pipeline
 type PipelineList struct {
 	metav1.TypeMeta `json:",inline"`

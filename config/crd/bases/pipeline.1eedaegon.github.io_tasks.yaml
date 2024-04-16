@@ -38,6 +38,15 @@ spec:
                 type: string
             type: object
           status:
+            properties:
+              createDate:
+                format: date-time
+                type: string
+              jobs:
+                type: integer
+              lastUpdateDate:
+                format: date-time
+                type: string
             type: object
         type: object
     served: true

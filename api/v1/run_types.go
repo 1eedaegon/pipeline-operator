@@ -18,16 +18,14 @@ package v1
 
 import (
 	"context"
+	"fmt"
+	"hash/fnv"
 
 	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"sigs.k8s.io/controller-runtime/pkg/log"
 )
-
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // RunStatus defines the observed state of Run
 // pre-run: initializing, stopping, waiting
@@ -53,7 +51,23 @@ const (
 	JobStateFailed    JobState = "failed"
 )
 
-// JobState를 참고해서 작성되었다.
+/*
+RunState order: run > pre-run > post-run
+
+Running으로 한번 진입하면 completed 아니면 Failed이다.
+
+Deleting으로 한번 진입하면 deleted 아니면 failed이다.
+
+JobState를 참고해서 작성되었다.
+
+pre-run: waiting, initializing, stoppin
+
+run: running, deleting
+
+post-run: completed, failed, deleted
+
+deleted	: run시킬 수 없지만 보존기간동안 volume이 보관되는 상태
+*/
 type RunState string
 
 const (
@@ -70,9 +84,19 @@ const (
 	RunStateFailed    JobState = "failed"
 )
 
-// RunSpec defines the desired state of Run
+//
 /*
- */
+RunSpec defines the desired state of Run
+
+metadata:
+  namespace: pipeline
+  name: pipeline-chain-test
+  annotations:
+    pipeline.1eedaegon.github.io/schedule-at: "2024-04-04T01:50:31Z"
+  labels:
+    pipeline.1eedaegon.github.io/pipeline-name: pipeline-chain-test
+
+*/
 type RunSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
@@ -80,27 +104,21 @@ type RunSpec struct {
 	Schedule     Schedule       `json:"schedule,omitempty"`
 	Volume       VolumeResource `json:"volume,omitempty"`       // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
 	HistoryLimit HistoryLimit   `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
-	Jobs         []kbatchv1.Job `json:"jobs,omitempty"`
 	RunBefore    []string       `json:"runBefore,omitempty"`
 	Inputs       []string       `json:"inputs,omitempty"`   // RX
 	Outputs      []string       `json:"outputs,omitempty"`  // RWX
 	Resource     Resource       `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
+	Jobs         []kbatchv1.Job `json:"jobs,omitempty"`
 }
 
-// pre-run: waiting, initializing, stopping
-// run: running, deleting
-// post-run: completed, failed, deleted
-// deleted: run시킬 수 없지만 보존기간동안 volume이 보관되는 상태
-
-// RunState order: run > pre-run > post-run
-// Running으로 한번 진입하면 completed 아니면 Failed이다.
-// Deleting으로 한번 진입하면 deleted 아니면 failed이다.
-
 // RunStatus defines the observed state of Run
+// +kubebuilder:printcolumn:name="RunState",type="string",JSONPath=".status.runState",description="Current state of runs"
+// +kubebuilder:printcolumn:name="CreatedDate",type="string",JSONPath=".status.createdDate",description="Time of when created pipeline"
+// +kubebuilder:printcolumn:name="LastUpdateDate",type="string",JSONPath=".status.lastUpdateDate",description="Lastest tiem when pipeline updated it."
 type RunStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	RunState          RunState     `json:"runState,omitempty"`          // run > pre-run > post-run
+	RunState          RunState     `json:"runState,omitempty"` // run > pre-run > post-run
+	CreateDate        *metav1.Time `json:"createDate,omitempty"`
+	LastUpdateDate    *metav1.Time `json:"lastUpdateDate,omitempty"`
 	CurrentWorkingJob string       `json:"currentWorkingJob,omitempty"` // current-working-job-name(string)
 	Initializing      uint         `json:"initializing,omitempty"`      // initializing/total
 	Waiting           uint         `json:"waiting,omitempty"`           // waiting/total
@@ -110,8 +128,6 @@ type RunStatus struct {
 	Completed         uint         `json:"completed,omitempty"`         // completed/total
 	Deleted           uint         `json:"deleted,omitempty"`           // deleted/total
 	Failed            uint         `json:"failed,omitempty"`            // failed/total
-	CreateDate        *metav1.Time `json:"createDate,omitempty"`
-	LastUpdateDate    *metav1.Time `json:"lastUpdateDate,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -125,44 +141,54 @@ type Run struct {
 	Status RunStatus `json:"status,omitempty"`
 }
 
-func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline) *Run {
-	log := log.FromContext(ctx)
+// +kubebuilder:object:root=true
+// RunList contains a list of Run
+type RunList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []Run `json:"items"`
+}
 
+func init() {
+	SchemeBuilder.Register(&Run{}, &RunList{})
+}
+
+// Construct Run template from pipeline
+func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error {
 	jobs := []kbatchv1.Job{}
 	for _, task := range pipeline.Spec.Tasks {
 		job, err := newJobFromPipelineTask(ctx, &task, pipeline.Spec.Volume)
 		if err != nil {
-			log.V(1).Error(err, "Can't generate Job from request")
+			return err
 		}
+		job.ObjectMeta.Name = getShortHashPostFix(task.Name)
 		jobs = append(jobs, *job)
 	}
-
-	run := &Run{
-		ObjectMeta: metav1.ObjectMeta{
-			Labels:      make(map[string]string),
-			Annotations: make(map[string]string),
-			Name:        pipeline.Name,
-			Namespace:   pipeline.Namespace,
-		},
-		Spec: RunSpec{
-			Schedule:     pipeline.Spec.Schedule,
-			Volume:       pipeline.Spec.Volume,
-			HistoryLimit: pipeline.Spec.HistoryLimit,
-			RunBefore:    pipeline.Spec.RunBefore,
-			Inputs:       pipeline.Spec.Inputs,
-			Outputs:      pipeline.Spec.Outputs,
-			Resource:     pipeline.Spec.Resource,
-			Jobs:         jobs,
-		},
+	runName := getShortHashPostFix(pipeline.Name)
+	run.ObjectMeta = metav1.ObjectMeta{
+		Labels:      make(map[string]string),
+		Annotations: make(map[string]string),
+		Name:        runName,
+		Namespace:   pipeline.Namespace,
+	}
+	run.Spec = RunSpec{
+		Schedule:     pipeline.Spec.Schedule,
+		Volume:       pipeline.Spec.Volume,
+		HistoryLimit: pipeline.Spec.HistoryLimit,
+		RunBefore:    pipeline.Spec.RunBefore,
+		Inputs:       pipeline.Spec.Inputs,
+		Outputs:      pipeline.Spec.Outputs,
+		Resource:     pipeline.Spec.Resource,
+		Jobs:         jobs,
 	}
 
-	return run
+	return nil
 }
 
+// Construct job template using pipieline task and pipeline volume resource
 func newJobFromPipelineTask(ctx context.Context, ptask *PipelineTask, volumeResource VolumeResource) (*kbatchv1.Job, error) {
-
 	volume, err := parseVolume(ctx, volumeResource)
-	container, err := parseContainer(ctx, ptask, volumeResource)
+	container, err := ParseContainer(ctx, ptask, volumeResource)
 	if err != nil {
 		return nil, err
 	}
@@ -180,6 +206,7 @@ func newJobFromPipelineTask(ctx context.Context, ptask *PipelineTask, volumeReso
 	return &job, nil
 }
 
+// Parsing computing resouce: cpu: 500m / memory: 5GiB
 func ParseComputingResource(ctx context.Context, computingResource Resource) (*corev1.ResourceList, error) {
 	cpu, err := resource.ParseQuantity(string(computingResource.Cpu))
 	if err != nil {
@@ -197,6 +224,7 @@ func ParseComputingResource(ctx context.Context, computingResource Resource) (*c
 	return &resourceList, nil
 }
 
+// Parsing Volume resouce: capacity: 5GiB / storageClass: ceph-fs
 func ParseVolumeResource(ctx context.Context, volumeResource VolumeResource) (*corev1.ResourceList, error) {
 	volume, err := resource.ParseQuantity(string(volumeResource.Capacity))
 	if err != nil {
@@ -208,7 +236,8 @@ func ParseVolumeResource(ctx context.Context, volumeResource VolumeResource) (*c
 	return &resourceList, nil
 }
 
-func parseContainer(ctx context.Context, ptask *PipelineTask, volumeResource VolumeResource) ([]corev1.Container, error) {
+// Parsing Container specs
+func ParseContainer(ctx context.Context, ptask *PipelineTask, volumeResource VolumeResource) ([]corev1.Container, error) {
 	requests, err := ParseComputingResource(ctx, ptask.Resource)
 	limits, err := ParseComputingResource(ctx, ptask.Resource)
 	if err != nil {
@@ -243,7 +272,7 @@ func parseContainer(ctx context.Context, ptask *PipelineTask, volumeResource Vol
 	return containers, nil
 }
 
-// TODO: PVC
+// Parsing Volume with PVC
 func parseVolume(ctx context.Context, volumeResource VolumeResource) ([]corev1.Volume, error) {
 	volumes := []corev1.Volume{
 		{
@@ -262,6 +291,7 @@ const (
 	mountPathPrefix string = "/data/pipeline"
 )
 
+// Parsing Volume mount for using containers
 func parseVolumeMountList(ctx context.Context, mountNameList []string, volumeResource VolumeResource) ([]corev1.VolumeMount, error) {
 	volumeMounts := []corev1.VolumeMount{}
 	for _, mountName := range mountNameList {
@@ -277,36 +307,16 @@ func parseVolumeMountList(ctx context.Context, mountNameList []string, volumeRes
 	return volumeMounts, nil
 }
 
-// +kubebuilder:object:root=true
-// RunList contains a list of Run
-type RunList struct {
-	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Run `json:"items"`
+// Get hash64a
+// https://cs.opensource.google/go/go/+/refs/tags/go1.22.2:src/hash/fnv/fnv.go;drc=527829a7cba4ded29f98fae97f8bab9de247d5fe;l=129
+func hashString(s string) uint64 {
+	h := fnv.New64a()
+	h.Write([]byte(s))
+	return h.Sum64()
 }
 
-func init() {
-	SchemeBuilder.Register(&Run{}, &RunList{})
-}
-
-// 1. pipeline 조립
-func ConstructJobsFromPipelineTasks(ctx context.Context, pipeline *pipelinev1.Pipeline) ([]*kbatchv1.Job, error) {
-	log := log.FromContext(ctx)
-	var jobs []*kbatchv1.Job
-	for _, task := range pipeline.Spec.Tasks {
-		job, err := JobTemplate(ctx, pipeline.Namespace, pipeline.Spec.VolumeName, task)
-		if err != nil {
-			log.V(1).Error(err, "Can't generate Job from request")
-			continue
-		}
-		jobs = append(jobs, job)
-	}
-	return jobs, nil
-}
-
-func ConstructRunsFromPipeline(ctx context.Context, pipieline *pipelinev1.Pipeline) (*pipelinev1.Run, error) {
-	log := log.FromContext(ctx)
-	log.V(1).Info("Can't generate Job from request")
-
-	return nil, nil
+// Generate unique resource ID with short hash
+func getShortHashPostFix(s string) string {
+	hs := hashString(s)
+	return fmt.Sprintf("%s-%x", s, hs)
 }

@@ -15,30 +15,18 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - description: State
-      jsonPath: .status.state
-      name: State
+    - description: Number of executed run
+      jsonPath: .status.runs
+      name: Runs
+      type: uint
+    - description: Time of when created pipeline
+      jsonPath: .status.createdDate
+      name: CreatedDate
       type: string
-    - description: Start date
-      jsonPath: .status.startDate
-      name: StartDate
+    - description: Lastest tiem when pipeline updated it.
+      jsonPath: .status.lastUpdateDate
+      name: LastUpdateDate
       type: string
-    - description: Finish date
-      jsonPath: .status.finishDate
-      name: FinishDate
-      type: string
-    - description: initializing
-      jsonPath: .status.initializing
-      name: Initializing
-      type: number
-    - description: running
-      jsonPath: .status.running
-      name: running
-      type: number
-    - description: completed
-      jsonPath: .status.completed
-      name: completed
-      type: number
     name: v1
     schema:
       openAPIV3Schema:
@@ -140,8 +128,12 @@ spec:
                         name:
                           type: string
                       type: object
+                    trigger:
+                      type: boolean
                   type: object
                 type: array
+              trigger:
+                type: boolean
               volume:
                 properties:
                   capacity:
