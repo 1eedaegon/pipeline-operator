@@ -14,7 +14,20 @@ spec:
     singular: run
   scope: Namespaced
   versions:
-  - name: v1
+  - additionalPrinterColumns:
+    - description: Number of executed runs
+      jsonPath: .status.runs
+      name: Runs
+      type: integer
+    - description: Creation time of the pipeline
+      jsonPath: .status.createdDate
+      name: CreatedDate
+      type: string
+    - description: Last update time of the pipeline
+      jsonPath: .status.lastUpdateDate
+      name: LastUpdateDate
+      type: string
+    name: v1
     schema:
       openAPIV3Schema:
         properties:

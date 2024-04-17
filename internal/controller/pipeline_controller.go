@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
@@ -63,7 +64,6 @@ type PipelineReconciler struct {
 func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
 	pipeline := &pipelinev1.Pipeline{}
-	// 하나의 파이프라인에게 동작한다고 생각하자.
 
 	// Checking pipeline CRD
 	log.Info("Reconciling pipeline.")
@@ -72,32 +72,28 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	// Update pipeline status(with sum)
-	if err := r.ensurePipeline(ctx, pipeline); err != nil {
+	// Update pipeline with status(with sum)
+	if err := r.ensurePipelineMetadata(ctx, pipeline); err != nil {
 		log.V(1).Error(err, "unable to ensure pipeline")
 		return ctrl.Result{}, err
 	}
-	// Construct run(CRD) from pipeline template
+
+	// Check the list of runs and create one if there are changes or none
 	run := &pipelinev1.Run{}
-	if err := pipelinev1.NewRunFromPipeline(ctx, pipeline, run); err != nil {
-		log.V(1).Error(err, "Unable to parse from pipeline")
+	if err := r.ensureRunExists(ctx, req.NamespacedName, pipeline, run); err != nil {
+		log.V(1).Error(err, "Unable to ensure run exists for pipeline")
 		return ctrl.Result{}, err
 	}
-	// Relation owner run -> pipeline(owner)
-	if err := ctrl.SetControllerReference(pipeline, run, r.Scheme); err != nil {
-		log.V(1).Error(err, "Unable to reference between pipeline and new run")
-		return ctrl.Result{}, err
-	}
-	// Create run
-	if err := r.Create(ctx, run); err != nil {
-		log.V(1).Error(err, "Unable to create run")
+
+	if err := r.updatePipelineStatus(ctx, pipeline); err != nil {
+		log.V(1).Error(err, "Unable to update pipeline status")
 		return ctrl.Result{}, err
 	}
 
 	return ctrl.Result{}, nil
 }
 
-func (r *PipelineReconciler) ensurePipeline(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
+func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
 	if _, find := pipeline.ObjectMeta.Labels["pipeline.1eedaegon.github.io/pipeline-name"]; !find {
 		pipeline.ObjectMeta.Labels["pipeline.1eedaegon.github.io/pipeline-name"] = pipeline.Name
 	}
@@ -113,7 +109,37 @@ func (r *PipelineReconciler) ensurePipeline(ctx context.Context, pipeline *pipel
 	return nil
 }
 
+func (r *PipelineReconciler) ensureRunExists(ctx context.Context, nn types.NamespacedName, pipeline *pipelinev1.Pipeline, run *pipelinev1.Run) error {
+	log := log.FromContext(ctx)
+	if err := pipelinev1.NewRunFromPipeline(ctx, pipeline, run); err != nil {
+		log.V(1).Error(err, "Unable to parse from pipeline")
+		return err
+	}
+
+	err := r.Get(ctx, client.ObjectKey{Name: nn}, run)
+	if err != nil {
+		log.V(1).Error(err, "unable to fetch pipeline")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+	// Relation owner run -> pipeline(owner)
+	if err := ctrl.SetControllerReference(pipeline, run, r.Scheme); err != nil {
+		log.V(1).Error(err, "Unable to reference between pipeline and new run")
+		return err
+	}
+	// Create run
+	if err := r.Create(ctx, run); err != nil {
+		log.V(1).Error(err, "Unable to create run")
+		return err
+	}
+	return nil
+}
+
+func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
+	return nil
+}
+
 // SetupWithManager sets up the controller with the Manager.
+// TODO: testing pipieline watcher queue
 func (r *PipelineReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&pipelinev1.Pipeline{}).

@@ -18,7 +18,7 @@ spec:
     - description: Number of executed run
       jsonPath: .status.runs
       name: Runs
-      type: uint
+      type: integer
     - description: Time of when created pipeline
       jsonPath: .status.createdDate
       name: CreatedDate
@@ -82,10 +82,20 @@ spec:
               tasks:
                 items:
                   properties:
+                    args:
+                      items:
+                        type: string
+                      type: array
+                    command:
+                      type: string
+                    image:
+                      type: string
                     inputs:
                       items:
                         type: string
                       type: array
+                    name:
+                      type: string
                     outputs:
                       items:
                         type: string
@@ -113,19 +123,6 @@ spec:
                         endDate:
                           type: string
                         scheduleDate:
-                          type: string
-                      type: object
-                    task:
-                      properties:
-                        args:
-                          items:
-                            type: string
-                          type: array
-                        command:
-                          type: string
-                        image:
-                          type: string
-                        name:
                           type: string
                       type: object
                     trigger:

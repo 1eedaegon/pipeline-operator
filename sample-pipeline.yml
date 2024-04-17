@@ -36,11 +36,10 @@ spec:
     cpu: 500m
     memory: 200Mi
   tasks:
-  - task: # import task type because not use image
-    name: pipeline-init-pipeline
+  - name: pipeline-init-pipeline
     trigger: false
     resource:
-      cpu: 1
+      cpu: 600m
       memory: 200Mi
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
@@ -51,11 +50,11 @@ spec:
     - init-input
     outputs:
     - init-output
-  - task: # inline task type because define image
-      name: import-s3
-      image: amazon/aws-cli
+  -  # inline task type because define image
+    name: import-s3
+    image: amazon/aws-cli
     resource:
-      cpu: 1
+      cpu: 500m
       memory: 200Mi
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
@@ -65,11 +64,10 @@ spec:
     - init-output
     outputs:
     - import-output
-  - task: # inline task type because define image 
-      name: transform-data
-      image: amazon/aws-cli
+  - name: transform-data
+    image: amazon/aws-cli
     resource:
-      cpu: 1
+      cpu: 500m
       memory: 200Mi
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.

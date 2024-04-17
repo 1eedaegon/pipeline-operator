@@ -112,26 +112,26 @@ type RunSpec struct {
 }
 
 // RunStatus defines the observed state of Run
-// +kubebuilder:printcolumn:name="RunState",type="string",JSONPath=".status.runState",description="Current state of runs"
-// +kubebuilder:printcolumn:name="CreatedDate",type="string",JSONPath=".status.createdDate",description="Time of when created pipeline"
-// +kubebuilder:printcolumn:name="LastUpdateDate",type="string",JSONPath=".status.lastUpdateDate",description="Lastest tiem when pipeline updated it."
 type RunStatus struct {
 	RunState          RunState     `json:"runState,omitempty"` // run > pre-run > post-run
 	CreateDate        *metav1.Time `json:"createDate,omitempty"`
 	LastUpdateDate    *metav1.Time `json:"lastUpdateDate,omitempty"`
 	CurrentWorkingJob string       `json:"currentWorkingJob,omitempty"` // current-working-job-name(string)
-	Initializing      uint         `json:"initializing,omitempty"`      // initializing/total
-	Waiting           uint         `json:"waiting,omitempty"`           // waiting/total
-	Stopping          uint         `json:"stopping,omitempty"`          // stopping/total
-	Running           uint         `json:"running,omitempty"`           // running/total
-	Deleting          uint         `json:"deleting,omitempty"`          // deleting/total
-	Completed         uint         `json:"completed,omitempty"`         // completed/total
-	Deleted           uint         `json:"deleted,omitempty"`           // deleted/total
-	Failed            uint         `json:"failed,omitempty"`            // failed/total
+	Initializing      int          `json:"initializing,omitempty"`      // initializing/total
+	Waiting           int          `json:"waiting,omitempty"`           // waiting/total
+	Stopping          int          `json:"stopping,omitempty"`          // stopping/total
+	Running           int          `json:"running,omitempty"`           // running/total
+	Deleting          int          `json:"deleting,omitempty"`          // deleting/total
+	Completed         int          `json:"completed,omitempty"`         // completed/total
+	Deleted           int          `json:"deleted,omitempty"`           // deleted/total
+	Failed            int          `json:"failed,omitempty"`            // failed/total
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="Runs",type="integer",JSONPath=".status.runs",description="Number of executed runs"
+// +kubebuilder:printcolumn:name="CreatedDate",type="string",JSONPath=".status.createdDate",description="Creation time of the pipeline"
+// +kubebuilder:printcolumn:name="LastUpdateDate",type="string",JSONPath=".status.lastUpdateDate",description="Last update time of the pipeline"
 // Run is the Schema for the runs API
 type Run struct {
 	metav1.TypeMeta   `json:",inline"`
