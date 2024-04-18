@@ -150,7 +150,6 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 			log.V(1).Error(err, "Unknown error")
 			return err
 		}
-
 		// Relation owner run -> pipeline(owner)
 		if err := ctrl.SetControllerReference(pipeline, run, r.Scheme); err != nil {
 			log.V(1).Error(err, "Unable to reference between pipeline and new run")

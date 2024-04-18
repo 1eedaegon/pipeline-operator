@@ -22,6 +22,8 @@ import (
 	"reflect"
 	"strconv"
 
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
+
 	kbatchv1 "k8s.io/api/batch/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -62,8 +64,8 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 		return ctrl.Result{}, err
 	}
 
-	if err := r.ensureRunExists(ctx, run); err != nil {
-		log.V(1).Error(err, "Unable to ensure run exists for pipeline")
+	if err := r.ensureJobList(ctx, run); err != nil {
+		log.V(1).Error(err, "Unable to ensure job list for pipeline")
 		return ctrl.Result{}, err
 	}
 
@@ -128,34 +130,36 @@ func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.R
 	return nil
 }
 
-// func (r *RunReconciler) ensureRunExists(ctx context.Context, run *pipelinev1.Run) error {
-// 	if err := pipelinev1.NewJobFromRun(ctx, run); err != nil {
-// 		log.V(1).Error(err, "Unable to parse from pipeline")
-// 		return err
-// 	}
-// 	objKey := client.ObjectKey{
-// 		Name:      run.ObjectMeta.Name,
-// 		Namespace: run.ObjectMeta.Namespace,
-// 	}
-// 	log.V(1).Info(fmt.Sprintf("Obj key %v", objKey))
-// 	if err := r.Get(ctx, objKey, run); err != nil {
-// 		if !apierrors.IsNotFound(err) {
-// 			log.V(1).Error(err, "Unknown error")
-// 			return err
-// 		}
+func (r *RunReconciler) ensureJobList(ctx context.Context, run *pipelinev1.Run) error {
+	if err := pipelinev1.NewJobFromRun(ctx, run); err != nil {
+		log.V(1).Error(err, "Unable to parse from pipeline")
+		return err
+	}
+	objKey := client.ObjectKey{
+		Name:      run.ObjectMeta.Name,
+		Namespace: run.ObjectMeta.Namespace,
+	}
 
-//			// Relation owner run -> pipeline(owner)
-//			if err := ctrl.SetControllerReference(pipeline, run, r.Scheme); err != nil {
-//				log.V(1).Error(err, "Unable to reference between pipeline and new run")
-//				return err
-//			}
-//			if err := r.Create(ctx, run); err != nil {
-//				log.V(1).Error(err, "Unable to create run")
-//				return err
-//			}
-//		}
-//		return nil
-//	}
+	log.V(1).Info(fmt.Sprintf("Obj key %v", objKey))
+
+	if err := r.Get(ctx, objKey, run); err != nil {
+		if !apierrors.IsNotFound(err) {
+			log.V(1).Error(err, "Unknown error")
+			return err
+		}
+
+		// Relation owner run -> pipeline(owner)
+		if err := ctrl.SetControllerReference(run, job, r.Scheme); err != nil {
+			log.V(1).Error(err, "Unable to reference between pipeline and new run")
+			return err
+		}
+		if err := r.Create(ctx, run); err != nil {
+			log.V(1).Error(err, "Unable to create run")
+			return err
+		}
+	}
+	return nil
+}
 func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run) error {
 	return nil
 }

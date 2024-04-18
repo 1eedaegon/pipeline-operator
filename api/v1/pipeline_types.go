@@ -129,6 +129,7 @@ type PipelineTask struct {
 	RunBefore []string                   `json:"runBefore,omitempty"`
 	Inputs    []string                   `json:"inputs,omitempty"`
 	Outputs   []string                   `json:"outputs,omitempty"`
+	Env       map[string]string          `json:"env,omitempty"`
 }
 
 /*
@@ -144,15 +145,16 @@ type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
-	Schedule     Schedule       `json:"schedule,omitempty"`
-	Volume       VolumeResource `json:"volume,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
-	Trigger      bool           `json:"trigger,omitempty"`
-	HistoryLimit HistoryLimit   `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
-	Tasks        []PipelineTask `json:"tasks,omitempty"`
-	RunBefore    []string       `json:"runBefore,omitempty"`
-	Inputs       []string       `json:"inputs,omitempty"`   // RX
-	Outputs      []string       `json:"outputs,omitempty"`  // RWX
-	Resource     Resource       `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
+	Schedule     Schedule          `json:"schedule,omitempty"`
+	Volume       VolumeResource    `json:"volume,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Trigger      bool              `json:"trigger,omitempty"`
+	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
+	Tasks        []PipelineTask    `json:"tasks,omitempty"`
+	RunBefore    []string          `json:"runBefore,omitempty"`
+	Inputs       []string          `json:"inputs,omitempty"`   // RX
+	Outputs      []string          `json:"outputs,omitempty"`  // RWX
+	Resource     Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
+	Env          map[string]string `json:"env,omitempty"`
 }
 
 // PipelineStatus defines the observed state of Pipeline

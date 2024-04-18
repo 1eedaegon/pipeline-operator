@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"hash/fnv"
 
+	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -102,32 +103,34 @@ metadata:
 */
 
 type Job struct {
-	Name      string   `json:"name,omitempty"`
-	Namespace string   `json:"namespace,omitempty"`
-	Image     string   `json:"image,omitempty"`
-	Command   string   `json:"command,omitempty"`
-	Args      []string `json:"args,omitempty"`
-	Schedule  Schedule `json:"schedule,omitempty"`
-	Resource  Resource `json:"resource,omitempty"`
-	Trigger   bool     `json:"trigger,omitempty"`
-	RunBefore []string `json:"runBefore,omitempty"`
-	Inputs    []string `json:"inputs,omitempty"`
-	Outputs   []string `json:"outputs,omitempty"`
+	Name      string            `json:"name,omitempty"`
+	Namespace string            `json:"namespace,omitempty"`
+	Image     string            `json:"image,omitempty"`
+	Command   string            `json:"command,omitempty"`
+	Args      []string          `json:"args,omitempty"`
+	Schedule  Schedule          `json:"schedule,omitempty"`
+	Resource  Resource          `json:"resource,omitempty"`
+	Trigger   bool              `json:"trigger,omitempty"`
+	RunBefore []string          `json:"runBefore,omitempty"`
+	Inputs    []string          `json:"inputs,omitempty"`
+	Outputs   []string          `json:"outputs,omitempty"`
+	Env       map[string]string `json:"env,omitempty"`
 }
 
 type RunSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
-	Schedule     Schedule       `json:"schedule,omitempty"`
-	Volume       VolumeResource `json:"volume,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
-	Trigger      bool           `json:"trigger,omitempty"`
-	HistoryLimit HistoryLimit   `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
-	RunBefore    []string       `json:"runBefore,omitempty"`
-	Inputs       []string       `json:"inputs,omitempty"`   // RX
-	Outputs      []string       `json:"outputs,omitempty"`  // RWX
-	Resource     Resource       `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
-	Jobs         []Job          `json:"jobs,omitempty"`
+	Schedule     Schedule          `json:"schedule,omitempty"`
+	Volume       VolumeResource    `json:"volume,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Trigger      bool              `json:"trigger,omitempty"`
+	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
+	Jobs         []Job             `json:"jobs,omitempty"`
+	RunBefore    []string          `json:"runBefore,omitempty"`
+	Inputs       []string          `json:"inputs,omitempty"`   // RX
+	Outputs      []string          `json:"outputs,omitempty"`  // RWX
+	Resource     Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
+	Env          map[string]string `json:"env,omitempty"`
 }
 
 // RunStatus defines the observed state of Run
@@ -223,12 +226,12 @@ func newRunJobFromPipelineTask(ctx context.Context, namespace string, ptask Pipe
 	}, nil
 }
 
-func NewJobFromRun(ctx context.Context, run *Run) error {
+func NewJobListFromRun(ctx context.Context, run *Run) ([]kbatchv1.Job, error) {
 	jobMeta := metav1.ObjectMeta{
 		Labels:      make(map[string]string),
 		Annotations: make(map[string]string),
 		Namespace:   namespace,
-		Name:        getShortHashPostFix(ptask.Name, ptask.name + ),
+		// Name:        getShortHashPostFix(ptask.Name, ptask.name + ),
 	}
 	volume, err := parseVolume(ctx, volumeResource)
 	container, err := ParseContainer(ctx, ptask, volumeResource)
