@@ -21,10 +21,13 @@ import (
 	"fmt"
 	"hash/fnv"
 
-	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+const (
+	pipelineNameLabel = "pipeline.1eedaegon.github.io/pipeline-name"
 )
 
 // RunStatus defines the observed state of Run
@@ -97,18 +100,34 @@ metadata:
     pipeline.1eedaegon.github.io/pipeline-name: pipeline-chain-test
 
 */
+
+type Job struct {
+	Name      string   `json:"name,omitempty"`
+	Namespace string   `json:"namespace,omitempty"`
+	Image     string   `json:"image,omitempty"`
+	Command   string   `json:"command,omitempty"`
+	Args      []string `json:"args,omitempty"`
+	Schedule  Schedule `json:"schedule,omitempty"`
+	Resource  Resource `json:"resource,omitempty"`
+	Trigger   bool     `json:"trigger,omitempty"`
+	RunBefore []string `json:"runBefore,omitempty"`
+	Inputs    []string `json:"inputs,omitempty"`
+	Outputs   []string `json:"outputs,omitempty"`
+}
+
 type RunSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
 	Schedule     Schedule       `json:"schedule,omitempty"`
-	Volume       VolumeResource `json:"volume,omitempty"`       // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Volume       VolumeResource `json:"volume,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Trigger      bool           `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit   `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
 	RunBefore    []string       `json:"runBefore,omitempty"`
 	Inputs       []string       `json:"inputs,omitempty"`   // RX
 	Outputs      []string       `json:"outputs,omitempty"`  // RWX
 	Resource     Resource       `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
-	Jobs         []kbatchv1.Job `json:"jobs,omitempty"`
+	Jobs         []Job          `json:"jobs,omitempty"`
 }
 
 // RunStatus defines the observed state of Run
@@ -155,21 +174,24 @@ func init() {
 
 // Construct Run template from pipeline
 func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error {
-	jobs := []kbatchv1.Job{}
+	// jobs := []kbatchv1.Job{}
+	jobs := []Job{}
 	for _, task := range pipeline.Spec.Tasks {
-		job, err := newJobFromPipelineTask(ctx, &task, pipeline.Spec.Volume)
+		job, err := newRunJobFromPipelineTask(ctx, pipeline.ObjectMeta.Namespace, task)
 		if err != nil {
 			return err
 		}
-		job.ObjectMeta.Name = getShortHashPostFix(task.Name)
 		jobs = append(jobs, *job)
 	}
-	runName := getShortHashPostFix(pipeline.Name)
+	hsByString := pipeline.ObjectMeta.Name + fmt.Sprintf("%v", pipeline.Spec)
+	runName := getShortHashPostFix(pipeline.ObjectMeta.Name, hsByString)
 	run.ObjectMeta = metav1.ObjectMeta{
-		Labels:      make(map[string]string),
 		Annotations: make(map[string]string),
-		Name:        runName,
-		Namespace:   pipeline.Namespace,
+		Labels: map[string]string{
+			pipelineNameLabel: pipeline.ObjectMeta.Name,
+		},
+		Name:      runName,
+		Namespace: pipeline.ObjectMeta.Namespace,
 	}
 	run.Spec = RunSpec{
 		Schedule:     pipeline.Spec.Schedule,
@@ -181,20 +203,43 @@ func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error
 		Resource:     pipeline.Spec.Resource,
 		Jobs:         jobs,
 	}
-
 	return nil
 }
 
 // Construct job template using pipieline task and pipeline volume resource
-func newJobFromPipelineTask(ctx context.Context, ptask *PipelineTask, volumeResource VolumeResource) (*kbatchv1.Job, error) {
+func newRunJobFromPipelineTask(ctx context.Context, namespace string, ptask PipelineTask) (*Job, error) {
+	return &Job{
+		Name:      ptask.Name,
+		Namespace: namespace,
+		Image:     ptask.Image,
+		Command:   ptask.Command,
+		Args:      ptask.Args,
+		Schedule:  ptask.Schedule,
+		Resource:  ptask.Resource,
+		Trigger:   ptask.Trigger,
+		RunBefore: ptask.RunBefore,
+		Inputs:    ptask.Inputs,
+		Outputs:   ptask.Outputs,
+	}, nil
+}
+
+func NewJobFromRun(ctx context.Context, run *Run) error {
+	jobMeta := metav1.ObjectMeta{
+		Labels:      make(map[string]string),
+		Annotations: make(map[string]string),
+		Namespace:   namespace,
+		Name:        getShortHashPostFix(ptask.Name, ptask.name + ),
+	}
 	volume, err := parseVolume(ctx, volumeResource)
 	container, err := ParseContainer(ctx, ptask, volumeResource)
 	if err != nil {
 		return nil, err
 	}
 	job := kbatchv1.Job{
+		ObjectMeta: jobMeta,
 		Spec: kbatchv1.JobSpec{
 			Template: corev1.PodTemplateSpec{
+				ObjectMeta: jobMeta,
 				Spec: corev1.PodSpec{
 					Containers:    container,
 					RestartPolicy: "Never",
@@ -237,7 +282,7 @@ func ParseVolumeResource(ctx context.Context, volumeResource VolumeResource) (*c
 }
 
 // Parsing Container specs
-func ParseContainer(ctx context.Context, ptask *PipelineTask, volumeResource VolumeResource) ([]corev1.Container, error) {
+func ParseContainer(ctx context.Context, ptask PipelineTask, volumeResource VolumeResource) ([]corev1.Container, error) {
 	requests, err := ParseComputingResource(ctx, ptask.Resource)
 	limits, err := ParseComputingResource(ctx, ptask.Resource)
 	if err != nil {
@@ -258,7 +303,7 @@ func ParseContainer(ctx context.Context, ptask *PipelineTask, volumeResource Vol
 			Name:  ptask.Name,
 			Image: ptask.Image,
 			Command: []string{
-				ptask.TaskSpec.Command,
+				ptask.Command,
 			},
 			Args: ptask.Args,
 			Resources: corev1.ResourceRequirements{
@@ -316,7 +361,7 @@ func hashString(s string) uint64 {
 }
 
 // Generate unique resource ID with short hash
-func getShortHashPostFix(s string) string {
-	hs := hashString(s)
-	return fmt.Sprintf("%s-%x", s, hs)
+func getShortHashPostFix(name, hashBy string) string {
+	hs := hashString(hashBy)
+	return fmt.Sprintf("%s-%x", name, hs)
 }

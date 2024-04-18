@@ -24,8 +24,8 @@ spec:
       name: CreatedDate
       type: string
     - description: Lastest tiem when pipeline updated it.
-      jsonPath: .status.lastUpdateDate
-      name: LastUpdateDate
+      jsonPath: .status.lastUpdatedDate
+      name: LastUpdatedDate
       type: string
     name: v1
     schema:
@@ -143,10 +143,10 @@ spec:
             type: object
           status:
             properties:
-              createDate:
+              createdDate:
                 format: date-time
                 type: string
-              lastUpdateDate:
+              lastUpdatedDate:
                 format: date-time
                 type: string
               runs:

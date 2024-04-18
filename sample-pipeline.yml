@@ -11,21 +11,16 @@ kind: Pipeline
 metadata:
   namespace: pipeline
   name: pipeline-chain-test
-  annotations:
-    pipeline.1eedaegon.github.io/schedule-date: "2024-04-04T01:50:31Z"
-    pipeline.1eedaegon.github.io/schedule-end: "2024-04-04T01:50:31Z"
-    pipeline.1eedaegon.github.io/trigger: false
-  labels:
-    pipeline.1eedaegon.github.io/pipeline-name: pipeline-chain-test
 spec:
-  schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. => after는 하위 시간 무시, before는 상위가 나를 무시
-    scheduleDate: "1d" # */1 * * * * 또는 1d, 1w, 1M
+  schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. 
+  # => after는 하위 시간 무시, before는 상위가 나를 무시
+    scheduleDate: "*/1 * * * * *" # */1 * * * * 또는 1d, 1w, 1M
     endDate: "2024-08-30" # "2024-06-30:00:00:00+0900"
     # (입력 받을 때)UTC+9를 기본으로 하며, 플랫폼 위치(리전)을 기준으로 표출하되, 입력하는 시간은 변환되어 저장되어야한다.
   volume: 
-    name: pipeline-chain-volume # 이미 있으면 생성하지 않고 사용
-    capacity: 1Gi
-    storage: ceph-block
+    name: yennefer-something # 이미 있으면 생성하지 않고 사용
+    capacity: 1Gi # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
+    storage: ceph-fs
   trigger: false
   historyLimit:
     amount: 10
@@ -36,8 +31,13 @@ spec:
     cpu: 500m
     memory: 200Mi
   tasks:
-  - name: pipeline-init-pipeline
+  - name: pipeline-init-pipeline # import task type without image version
+    image: amazon/aws-cli
+    schedule:
+      scheduleDate: 1d
     trigger: false
+    command:
+      python aanla.py --args=anayiss --input=init-input --output=init-output
     resource:
       cpu: 600m
       memory: 200Mi
@@ -47,9 +47,9 @@ spec:
     runBefore:
     - pipeline-init-pipeline
     inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    - init-input
+    - input # RO
     outputs:
-    - init-output
+    - init-output # RWX
   -  # inline task type because define image
     name: import-s3
     image: amazon/aws-cli
@@ -77,8 +77,8 @@ spec:
     inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
     outputs: []
   
-status:
-  runs: 10
-  createDate: 2024-05-13:16:00:00
-  lastUpdateDate: 2024-05-13:17:00:00
-
+      # status:
+      #   runs: 10
+      #   createDate: 2024-05-13:16:00:00
+      #   lastUpdateDate: 2024-05-13:17:00:00
+      # 

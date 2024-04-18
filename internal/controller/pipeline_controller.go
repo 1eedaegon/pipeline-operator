@@ -18,11 +18,16 @@ package controller
 
 import (
 	"context"
+	"fmt"
+	"reflect"
 	"strconv"
 	"time"
 
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/client-go/util/retry"
+
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
@@ -36,12 +41,14 @@ var (
 )
 
 const (
-	jobOwnerKey             = ".metadata.controller"
 	updatedByAnnotation     = "pipeline.1eedaegon.github.io/updated-at"
 	createdByAnnotation     = "pipeline.1eedaegon.github.io/created-by"
 	createdTimeAnnotation   = "pipeline.1eedaegon.github.io/created-at"
+	scheduleDateAnnotation  = "pipeline.1eedaegon.github.io/schedule-date"
 	scheduledTimeAnnotation = "pipeline.1eedaegon.github.io/schedule-at"
+	triggerAnnotation       = "pipeline.1eedaegon.github.io/trigger"
 	pipelineNameLabel       = "pipeline.1eedaegon.github.io/pipeline-name"
+	runOwnerKey             = ".metadata." + pipelineNameLabel
 )
 
 type realClock struct{}
@@ -79,8 +86,7 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 	}
 
 	// Check the list of runs and create one if there are changes or none
-	run := &pipelinev1.Run{}
-	if err := r.ensureRunExists(ctx, req.NamespacedName, pipeline, run); err != nil {
+	if err := r.ensureRunExists(ctx, pipeline); err != nil {
 		log.V(1).Error(err, "Unable to ensure run exists for pipeline")
 		return ctrl.Result{}, err
 	}
@@ -94,56 +100,114 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 }
 
 func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
-	if _, find := pipeline.ObjectMeta.Labels["pipeline.1eedaegon.github.io/pipeline-name"]; !find {
-		pipeline.ObjectMeta.Labels["pipeline.1eedaegon.github.io/pipeline-name"] = pipeline.Name
+	objKey := client.ObjectKey{
+		Name:      pipeline.ObjectMeta.Name,
+		Namespace: pipeline.ObjectMeta.Namespace,
 	}
-	if pipeline.Spec.Schedule.ScheduleDate != "" {
-		pipeline.ObjectMeta.Annotations["pipeline.1eedaegon.github.io/schedule-date"] = string(pipeline.Spec.Schedule.ScheduleDate)
-		// TODO: 아래 타입은 runs로
-		// pipeline.ObjectMeta.Annotations["pipeline.1eedaegon.github.io/scheduled-at"] = duration
+	if err := r.Get(ctx, objKey, pipeline); err != nil {
+		return err
 	}
-	if pipeline.Spec.Trigger {
-		pipeline.ObjectMeta.Annotations["pipeline.1eedaegon.github.io/trigger"] = strconv.FormatBool(pipeline.Spec.Trigger)
+	objectMeta := pipeline.ObjectMeta
+	if objectMeta.Annotations == nil {
+		objectMeta.Annotations = map[string]string{
+			scheduleDateAnnotation: string(pipeline.Spec.Schedule.ScheduleDate),
+			triggerAnnotation:      strconv.FormatBool(pipeline.Spec.Trigger),
+		}
 	}
+	if objectMeta.Labels == nil {
+		objectMeta.Labels = map[string]string{
+			pipelineNameLabel: pipeline.ObjectMeta.Name,
+		}
+	}
+	objectMeta.Annotations[scheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
+	objectMeta.Annotations[triggerAnnotation] = strconv.FormatBool(pipeline.Spec.Trigger)
+	objectMeta.Labels[pipelineNameLabel] = pipeline.ObjectMeta.Name
 
+	if !reflect.DeepEqual(pipeline.ObjectMeta, objectMeta) {
+		pipeline.ObjectMeta = objectMeta
+	}
+	if err := r.Update(ctx, pipeline); err != nil {
+		return err
+	}
 	return nil
 }
 
-func (r *PipelineReconciler) ensureRunExists(ctx context.Context, nn types.NamespacedName, pipeline *pipelinev1.Pipeline, run *pipelinev1.Run) error {
+func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
 	log := log.FromContext(ctx)
+	run := &pipelinev1.Run{}
+
 	if err := pipelinev1.NewRunFromPipeline(ctx, pipeline, run); err != nil {
 		log.V(1).Error(err, "Unable to parse from pipeline")
 		return err
 	}
+	objKey := client.ObjectKey{
+		Name:      run.ObjectMeta.Name,
+		Namespace: run.ObjectMeta.Namespace,
+	}
+	log.V(1).Info(fmt.Sprintf("Obj key %v", objKey))
+	if err := r.Get(ctx, objKey, run); err != nil {
+		if !apierrors.IsNotFound(err) {
+			log.V(1).Error(err, "Unknown error")
+			return err
+		}
 
-	err := r.Get(ctx, client.ObjectKey{Name: nn}, run)
-	if err != nil {
-		log.V(1).Error(err, "unable to fetch pipeline")
-		return ctrl.Result{}, client.IgnoreNotFound(err)
-	}
-	// Relation owner run -> pipeline(owner)
-	if err := ctrl.SetControllerReference(pipeline, run, r.Scheme); err != nil {
-		log.V(1).Error(err, "Unable to reference between pipeline and new run")
-		return err
-	}
-	// Create run
-	if err := r.Create(ctx, run); err != nil {
-		log.V(1).Error(err, "Unable to create run")
-		return err
+		// Relation owner run -> pipeline(owner)
+		if err := ctrl.SetControllerReference(pipeline, run, r.Scheme); err != nil {
+			log.V(1).Error(err, "Unable to reference between pipeline and new run")
+			return err
+		}
+		if err := r.Create(ctx, run); err != nil {
+			log.V(1).Error(err, "Unable to create run")
+			return err
+		}
 	}
 	return nil
 }
 
 func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
+	runList := pipelinev1.RunList{}
+
+	listQueryOpts := []client.ListOption{
+		client.InNamespace(pipeline.ObjectMeta.Namespace),
+		client.MatchingLabels(map[string]string{pipelineNameLabel: pipeline.ObjectMeta.Name}),
+	}
+
+	objKey := client.ObjectKey{
+		Name:      pipeline.ObjectMeta.Name,
+		Namespace: pipeline.ObjectMeta.Namespace,
+	}
+	if err := r.List(ctx, &runList, listQueryOpts...); err != nil {
+		return err
+	}
+	// Retry backoff
+	if err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
+
+		err := r.Get(ctx, objKey, pipeline)
+		if err != nil {
+			return err
+		}
+		pipeline.Status.Runs = len(runList.Items)
+		pipeline.Status.CreatedDate = &pipeline.ObjectMeta.CreationTimestamp
+		pipeline.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
+
+		return r.Status().Update(ctx, pipeline)
+	}); err != nil {
+		return err
+	}
 	return nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
 // TODO: testing pipieline watcher queue
 func (r *PipelineReconciler) SetupWithManager(mgr ctrl.Manager) error {
+	if err := mgr.GetFieldIndexer().IndexField(context.Background(), &pipelinev1.Run{}, runOwnerKey, func(rawObj client.Object) []string {
+		run := rawObj.(*pipelinev1.Run)
+		return []string{run.ObjectMeta.Labels[pipelineNameLabel]}
+	}); err != nil {
+		return err
+	}
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&pipelinev1.Pipeline{}).
-		Named("Pipeline").
 		Watches(
 			&pipelinev1.Pipeline{},
 			handler.EnqueueRequestForOwner(mgr.GetScheme(), mgr.GetRESTMapper(), &pipelinev1.Run{}),

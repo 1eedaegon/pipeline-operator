@@ -122,13 +122,13 @@ const (
 type PipelineTask struct {
 	// Inline 타입이면 Task를 수동으로 기입해줘야한다. inline에서 정의한 task가 task 템플릿으로 들어가진 않는다.
 	// Import 타입이면 이미있는 Task를 기준으로 Task가 채워진다.
-	TaskSpec  `json:"task,inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
-	Schedule  Schedule                       `json:"schedule,omitempty"`
-	Resource  Resource                       `json:"resource,omitempty"`
-	Trigger   bool                           `json:"trigger,omitempty"`
-	RunBefore []string                       `json:"runBefore,omitempty"`
-	Inputs    []string                       `json:"inputs,omitempty"`
-	Outputs   []string                       `json:"outputs,omitempty"`
+	TaskSpec  `json:",inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
+	Schedule  Schedule                   `json:"schedule,omitempty"`
+	Resource  Resource                   `json:"resource,omitempty"`
+	Trigger   bool                       `json:"trigger,omitempty"`
+	RunBefore []string                   `json:"runBefore,omitempty"`
+	Inputs    []string                   `json:"inputs,omitempty"`
+	Outputs   []string                   `json:"outputs,omitempty"`
 }
 
 /*
@@ -159,16 +159,16 @@ type PipelineSpec struct {
 type PipelineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Runs           int          `json:"runs,omitempty"`           // Number of run
-	CreateDate     *metav1.Time `json:"createDate,omitempty"`     // Date of created pipeline
-	LastUpdateDate *metav1.Time `json:"lastUpdateDate,omitempty"` // Last modified date pipeline
+	Runs            int          `json:"runs,omitempty"`            // Number of run
+	CreatedDate     *metav1.Time `json:"createdDate,omitempty"`     // Date of created pipeline
+	LastUpdatedDate *metav1.Time `json:"lastUpdatedDate,omitempty"` // Last modified date pipeline
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Runs",type="integer",JSONPath=".status.runs",description="Number of executed run"
 // +kubebuilder:printcolumn:name="CreatedDate",type="string",JSONPath=".status.createdDate",description="Time of when created pipeline"
-// +kubebuilder:printcolumn:name="LastUpdateDate",type="string",JSONPath=".status.lastUpdateDate",description="Lastest tiem when pipeline updated it."
+// +kubebuilder:printcolumn:name="LastUpdatedDate",type="string",JSONPath=".status.lastUpdatedDate",description="Lastest tiem when pipeline updated it."
 // Pipeline is the Schema for the pipelines API
 type Pipeline struct {
 	metav1.TypeMeta   `json:",inline"`
