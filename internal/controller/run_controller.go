@@ -22,9 +22,11 @@ import (
 	"reflect"
 	"strconv"
 
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
-
 	kbatchv1 "k8s.io/api/batch/v1"
+	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -64,6 +66,11 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 		return ctrl.Result{}, err
 	}
 
+	if err := r.ensureVolumeList(ctx, run); err != nil {
+		log.V(1).Error(err, "unable to ensure volume list")
+		return ctrl.Result{}, err
+	}
+
 	if err := r.ensureJobList(ctx, run); err != nil {
 		log.V(1).Error(err, "Unable to ensure job list for pipeline")
 		return ctrl.Result{}, err
@@ -96,30 +103,28 @@ func (r *RunReconciler) SetupWithManager(mgr ctrl.Manager) error {
 
 func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.Run) error {
 	log := log.FromContext(ctx)
+	log.Info("ensure run metadata.")
+
 	objKey := client.ObjectKey{
 		Name:      run.ObjectMeta.Name,
 		Namespace: run.ObjectMeta.Namespace,
 	}
-	if err := r.Get(ctx, objKey, run); err != nil {
+	runQuery := pipelinev1.Run{}
+	if err := r.Get(ctx, objKey, &runQuery); err != nil {
 		return err
 	}
 	objectMeta := run.ObjectMeta
 	if objectMeta.Annotations == nil {
-		log.V(1).Info(fmt.Sprintf("annotations is empty"))
-		objectMeta.Annotations = map[string]string{
-			scheduleDateAnnotation: string(run.Spec.Schedule.ScheduleDate),
-			triggerAnnotation:      strconv.FormatBool(run.Spec.Trigger),
-		}
+		log.V(1).Info(fmt.Sprintf("run annotations is empty"))
+		objectMeta.Annotations = make(map[string]string)
 	}
 	if objectMeta.Labels == nil {
-		log.V(1).Info(fmt.Sprintf("labels is empty"))
-		objectMeta.Labels = map[string]string{
-			pipelineNameLabel: run.ObjectMeta.Name,
-		}
+		log.V(1).Info(fmt.Sprintf("run labels is empty"))
+		objectMeta.Labels = make(map[string]string)
 	}
-	objectMeta.Annotations[scheduleDateAnnotation] = string(run.Spec.Schedule.ScheduleDate)
-	objectMeta.Annotations[triggerAnnotation] = strconv.FormatBool(run.Spec.Trigger)
-	objectMeta.Labels[pipelineNameLabel] = run.ObjectMeta.Name
+	objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(run.Spec.Schedule.ScheduleDate)
+	objectMeta.Annotations[pipelinev1.TriggerAnnotation] = strconv.FormatBool(run.Spec.Trigger)
+	objectMeta.Labels[pipelinev1.PipelineNameLabel] = run.ObjectMeta.Name
 
 	if !reflect.DeepEqual(run.ObjectMeta, objectMeta) {
 		run.ObjectMeta = objectMeta
@@ -130,34 +135,90 @@ func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.R
 	return nil
 }
 
+func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Run) error {
+	log := log.FromContext(ctx)
+	for _, volume := range run.Spec.Volumes {
+
+		objKey := client.ObjectKey{
+			Name:      volume.Name,
+			Namespace: run.ObjectMeta.Namespace,
+		}
+		pvcQuery := &corev1.PersistentVolumeClaim{}
+		if err := r.Get(ctx, objKey, pvcQuery); err != nil {
+			// If network error, return unknown
+			if !apierrors.IsNotFound(err) {
+				log.V(1).Error(err, "Unknown error")
+				return err
+			}
+
+			// Construct pvc template
+			log.V(1).Info(fmt.Sprintf("Creating pvc %v", objKey))
+			meta := metav1.ObjectMeta{
+				Name:      volume.Name,
+				Namespace: run.ObjectMeta.Namespace,
+			}
+			pvc, err := pipelinev1.ParsePvcFromVolumeResourceWithMeta(ctx, meta, volume)
+			if err != nil {
+				log.V(1).Error(err, "Unable to parse pvc from run")
+			}
+
+			// Relation owner run -> pvc(owner)
+			log.V(1).Info(fmt.Sprintf("Referencing pvc %v", objKey))
+			if err := ctrl.SetControllerReference(run, pvc, r.Scheme); err != nil {
+				log.V(1).Error(err, "Unable to reference between run and new pvc")
+				return err
+			}
+
+			if err := r.Create(ctx, pvc); err != nil {
+				log.V(1).Error(err, "Unable to create pvc")
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
 func (r *RunReconciler) ensureJobList(ctx context.Context, run *pipelinev1.Run) error {
-	if err := pipelinev1.NewJobFromRun(ctx, run); err != nil {
-		log.V(1).Error(err, "Unable to parse from pipeline")
+	log := log.FromContext(ctx)
+	log.Info("ensure job list.")
+
+	kjobList, err := pipelinev1.NewKjobListFromRun(ctx, run)
+	if err != nil {
+		log.V(1).Error(err, "Unable to parse from job list")
 		return err
 	}
-	objKey := client.ObjectKey{
-		Name:      run.ObjectMeta.Name,
-		Namespace: run.ObjectMeta.Namespace,
+
+	for _, kjob := range kjobList {
+		objKey := client.ObjectKey{
+			Name:      kjob.ObjectMeta.Name,
+			Namespace: kjob.ObjectMeta.Namespace,
+		}
+		log.V(1).Info(fmt.Sprintf("Job obj key %v", objKey))
+		if err := r.Get(ctx, objKey, &kjob); err != nil {
+			log.V(1).Info(fmt.Sprintf("Getting jobs %v", objKey))
+			// If network error, return unknown
+			if !apierrors.IsNotFound(err) {
+				log.V(1).Error(err, "Unknown error: unstable network connection")
+				return err
+			}
+
+			// Relation owner run -> pipeline(owner)
+			log.V(1).Info(fmt.Sprintf("Referencing jobs %v", objKey))
+			if err := ctrl.SetControllerReference(run, &kjob, r.Scheme); err != nil {
+				log.V(1).Error(err, "Unable to reference between run and new job")
+				return err
+			}
+
+			// Create Job
+			log.V(1).Info(fmt.Sprintf("Creating jobs %v", objKey))
+			if err := r.Create(ctx, &kjob); err != nil {
+				log.V(1).Error(err, "Unable to create job")
+				return err
+			}
+		}
 	}
 
-	log.V(1).Info(fmt.Sprintf("Obj key %v", objKey))
-
-	if err := r.Get(ctx, objKey, run); err != nil {
-		if !apierrors.IsNotFound(err) {
-			log.V(1).Error(err, "Unknown error")
-			return err
-		}
-
-		// Relation owner run -> pipeline(owner)
-		if err := ctrl.SetControllerReference(run, job, r.Scheme); err != nil {
-			log.V(1).Error(err, "Unable to reference between pipeline and new run")
-			return err
-		}
-		if err := r.Create(ctx, run); err != nil {
-			log.V(1).Error(err, "Unable to create run")
-			return err
-		}
-	}
 	return nil
 }
 func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run) error {

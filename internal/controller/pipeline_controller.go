@@ -41,14 +41,7 @@ var (
 )
 
 const (
-	updatedByAnnotation     = "pipeline.1eedaegon.github.io/updated-at"
-	createdByAnnotation     = "pipeline.1eedaegon.github.io/created-by"
-	createdTimeAnnotation   = "pipeline.1eedaegon.github.io/created-at"
-	scheduleDateAnnotation  = "pipeline.1eedaegon.github.io/schedule-date"
-	scheduledTimeAnnotation = "pipeline.1eedaegon.github.io/schedule-at"
-	triggerAnnotation       = "pipeline.1eedaegon.github.io/trigger"
-	pipelineNameLabel       = "pipeline.1eedaegon.github.io/pipeline-name"
-	runOwnerKey             = ".metadata." + pipelineNameLabel
+	runOwnerKey = ".metadata." + pipelinev1.PipelineNameLabel
 )
 
 type realClock struct{}
@@ -99,6 +92,7 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 	return ctrl.Result{}, nil
 }
 
+// TODO: Must be implement constraints in pipeline controller
 func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
 	objKey := client.ObjectKey{
 		Name:      pipeline.ObjectMeta.Name,
@@ -110,18 +104,18 @@ func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipelin
 	objectMeta := pipeline.ObjectMeta
 	if objectMeta.Annotations == nil {
 		objectMeta.Annotations = map[string]string{
-			scheduleDateAnnotation: string(pipeline.Spec.Schedule.ScheduleDate),
-			triggerAnnotation:      strconv.FormatBool(pipeline.Spec.Trigger),
+			pipelinev1.ScheduleDateAnnotation: string(pipeline.Spec.Schedule.ScheduleDate),
+			pipelinev1.TriggerAnnotation:      strconv.FormatBool(pipeline.Spec.Trigger),
 		}
 	}
 	if objectMeta.Labels == nil {
 		objectMeta.Labels = map[string]string{
-			pipelineNameLabel: pipeline.ObjectMeta.Name,
+			pipelinev1.PipelineNameLabel: pipeline.ObjectMeta.Name,
 		}
 	}
-	objectMeta.Annotations[scheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
-	objectMeta.Annotations[triggerAnnotation] = strconv.FormatBool(pipeline.Spec.Trigger)
-	objectMeta.Labels[pipelineNameLabel] = pipeline.ObjectMeta.Name
+	objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
+	objectMeta.Annotations[pipelinev1.TriggerAnnotation] = strconv.FormatBool(pipeline.Spec.Trigger)
+	objectMeta.Labels[pipelinev1.PipelineNameLabel] = pipeline.ObjectMeta.Name
 
 	if !reflect.DeepEqual(pipeline.ObjectMeta, objectMeta) {
 		pipeline.ObjectMeta = objectMeta
@@ -144,7 +138,7 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 		Name:      run.ObjectMeta.Name,
 		Namespace: run.ObjectMeta.Namespace,
 	}
-	log.V(1).Info(fmt.Sprintf("Obj key %v", objKey))
+	log.V(1).Info(fmt.Sprintf("pipeline run obj key %v", objKey))
 	if err := r.Get(ctx, objKey, run); err != nil {
 		if !apierrors.IsNotFound(err) {
 			log.V(1).Error(err, "Unknown error")
@@ -168,7 +162,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 
 	listQueryOpts := []client.ListOption{
 		client.InNamespace(pipeline.ObjectMeta.Namespace),
-		client.MatchingLabels(map[string]string{pipelineNameLabel: pipeline.ObjectMeta.Name}),
+		client.MatchingLabels(map[string]string{pipelinev1.PipelineNameLabel: pipeline.ObjectMeta.Name}),
 	}
 
 	objKey := client.ObjectKey{
@@ -201,7 +195,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 func (r *PipelineReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	if err := mgr.GetFieldIndexer().IndexField(context.Background(), &pipelinev1.Run{}, runOwnerKey, func(rawObj client.Object) []string {
 		run := rawObj.(*pipelinev1.Run)
-		return []string{run.ObjectMeta.Labels[pipelineNameLabel]}
+		return []string{run.ObjectMeta.Labels[pipelinev1.PipelineNameLabel]}
 	}); err != nil {
 		return err
 	}

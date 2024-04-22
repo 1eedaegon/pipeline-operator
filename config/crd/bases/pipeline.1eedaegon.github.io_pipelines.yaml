@@ -39,6 +39,10 @@ spec:
             type: object
           spec:
             properties:
+              env:
+                additionalProperties:
+                  type: string
+                type: object
               historyLimit:
                 properties:
                   amount:
@@ -88,6 +92,10 @@ spec:
                       type: array
                     command:
                       type: string
+                    env:
+                      additionalProperties:
+                        type: string
+                      type: object
                     image:
                       type: string
                     inputs:
@@ -131,15 +139,17 @@ spec:
                 type: array
               trigger:
                 type: boolean
-              volume:
-                properties:
-                  capacity:
-                    type: string
-                  name:
-                    type: string
-                  storage:
-                    type: string
-                type: object
+              volumes:
+                items:
+                  properties:
+                    capacity:
+                      type: string
+                    name:
+                      type: string
+                    storage:
+                      type: string
+                  type: object
+                type: array
             type: object
           status:
             properties:

@@ -18,17 +18,17 @@ package v1
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hash/fnv"
+	"strconv"
+	"strings"
 
+	hashset "github.com/1eedaegon/go-hashset"
 	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-)
-
-const (
-	pipelineNameLabel = "pipeline.1eedaegon.github.io/pipeline-name"
 )
 
 // RunStatus defines the observed state of Run
@@ -122,7 +122,7 @@ type RunSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
 	Schedule     Schedule          `json:"schedule,omitempty"`
-	Volume       VolumeResource    `json:"volume,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Volumes      []VolumeResource  `json:"volumes,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
 	Trigger      bool              `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
 	Jobs         []Job             `json:"jobs,omitempty"`
@@ -176,6 +176,10 @@ func init() {
 }
 
 // Construct Run template from pipeline
+// TODO: 여기서 PVC 생성과 인입을 담당해야한다. Job에서 PVC 생성을 담당할 수 없다.
+// TODO: 이곳에서 PVC가 없으면 에러를 뱉는 로직을 추가해야한다.
+// TODO: Pipeline과의 차이는, pipeline은 iuputs의 목록이 volume에 있는지 확인이고
+// 이곳은 실제 get() 함수를 통해 pvc가 존재하는지 확인 후 생성해야한다.
 func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error {
 	// jobs := []kbatchv1.Job{}
 	jobs := []Job{}
@@ -191,14 +195,14 @@ func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error
 	run.ObjectMeta = metav1.ObjectMeta{
 		Annotations: make(map[string]string),
 		Labels: map[string]string{
-			pipelineNameLabel: pipeline.ObjectMeta.Name,
+			PipelineNameLabel: pipeline.ObjectMeta.Name,
 		},
 		Name:      runName,
 		Namespace: pipeline.ObjectMeta.Namespace,
 	}
 	run.Spec = RunSpec{
 		Schedule:     pipeline.Spec.Schedule,
-		Volume:       pipeline.Spec.Volume,
+		Volumes:      pipeline.Spec.Volumes,
 		HistoryLimit: pipeline.Spec.HistoryLimit,
 		RunBefore:    pipeline.Spec.RunBefore,
 		Inputs:       pipeline.Spec.Inputs,
@@ -226,32 +230,104 @@ func newRunJobFromPipelineTask(ctx context.Context, namespace string, ptask Pipe
 	}, nil
 }
 
-func NewJobListFromRun(ctx context.Context, run *Run) ([]kbatchv1.Job, error) {
-	jobMeta := metav1.ObjectMeta{
-		Labels:      make(map[string]string),
-		Annotations: make(map[string]string),
-		Namespace:   namespace,
-		// Name:        getShortHashPostFix(ptask.Name, ptask.name + ),
+func NewKjobListFromRun(ctx context.Context, run *Run) ([]kbatchv1.Job, error) {
+	kjobList := []kbatchv1.Job{}
+	for _, runjob := range run.Spec.Jobs {
+		kjob, err := convertRunJobToKjob(ctx, run.ObjectMeta, runjob)
+		if err != nil {
+			return nil, err
+		}
+		kjobList = append(kjobList, *kjob)
 	}
-	volume, err := parseVolume(ctx, volumeResource)
-	container, err := ParseContainer(ctx, ptask, volumeResource)
+	return kjobList, nil
+}
+
+// TODO: 임의로 리소스를 추가하려고 하는 경우를 방지하기 위해 validationWebhook에서 제한을 걸어야한다.
+// TODO: 리콘실러가 아닌 다른 조작에 의해 리소스가 삭제되지않도록  finalizer 제약을 걸어야한다.
+func convertRunJobToKjob(ctx context.Context, meta metav1.ObjectMeta, job Job) (*kbatchv1.Job, error) {
+	kjobMeta := constructKjobMetaFromJob(ctx, meta.Labels[PipelineNameLabel], job)
+	podSpec, err := ParsePodSpecFromJob(ctx, job)
 	if err != nil {
 		return nil, err
 	}
-	job := kbatchv1.Job{
-		ObjectMeta: jobMeta,
+	kJob := &kbatchv1.Job{
+		ObjectMeta: kjobMeta,
 		Spec: kbatchv1.JobSpec{
-			Template: corev1.PodTemplateSpec{
-				ObjectMeta: jobMeta,
-				Spec: corev1.PodSpec{
-					Containers:    container,
-					RestartPolicy: "Never",
-					Volumes:       volume,
-				},
-			},
+			Template: *podSpec,
 		},
 	}
-	return &job, nil
+	return kJob, nil
+}
+
+func constructKjobMetaFromJob(ctx context.Context, pipelineNameLabel string, job Job) metav1.ObjectMeta {
+	meta := metav1.ObjectMeta{
+		Annotations: make(map[string]string),
+		Labels:      make(map[string]string),
+	}
+	hsByString := job.Name + fmt.Sprintf("%v", job)
+	meta.Name = getShortHashPostFix(job.Name, hsByString)
+	meta.Namespace = job.Namespace
+	meta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
+	meta.Annotations[TriggerAnnotation] = strconv.FormatBool(job.Trigger)
+	meta.Labels[PipelineNameLabel] = pipelineNameLabel
+
+	return meta
+}
+
+func ParsePodSpecFromJob(ctx context.Context, job Job) (*corev1.PodTemplateSpec, error) {
+	container, err := ParseContainerFromJob(ctx, job)
+	if err != nil {
+		return nil, err
+	}
+
+	volumes, err := parseVolumeWithPVCFromJob(ctx, job)
+	if err != nil {
+		return nil, err
+	}
+
+	podTempSpec := corev1.PodTemplateSpec{
+		Spec: corev1.PodSpec{
+			Volumes:       volumes,
+			Containers:    container,
+			RestartPolicy: corev1.RestartPolicyNever,
+		},
+	}
+	return &podTempSpec, nil
+}
+
+// Parsing Container specs
+func ParseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, error) {
+	requests, err := ParseComputingResource(ctx, job.Resource)
+	if err != nil {
+		return nil, err
+	}
+	limits, _ := ParseComputingResource(ctx, job.Resource)
+
+	mountVolumeList, err := parseVolumeMountList(ctx, job)
+	if err != nil {
+		return nil, err
+	}
+
+	envList := parseContainerEnv(ctx, job.Env)
+
+	containers := []corev1.Container{
+		{
+			Name:  job.Name,
+			Image: job.Image,
+			Command: []string{
+				job.Command,
+			},
+			Args: job.Args,
+			Resources: corev1.ResourceRequirements{
+				Requests: *requests,
+				Limits:   *limits,
+			},
+			VolumeMounts: mountVolumeList,
+			Env:          envList,
+		},
+	}
+
+	return containers, nil
 }
 
 // Parsing computing resouce: cpu: 500m / memory: 5GiB
@@ -284,75 +360,129 @@ func ParseVolumeResource(ctx context.Context, volumeResource VolumeResource) (*c
 	return &resourceList, nil
 }
 
-// Parsing Container specs
-func ParseContainer(ctx context.Context, ptask PipelineTask, volumeResource VolumeResource) ([]corev1.Container, error) {
-	requests, err := ParseComputingResource(ctx, ptask.Resource)
-	limits, err := ParseComputingResource(ctx, ptask.Resource)
-	if err != nil {
-		return nil, err
-	}
-
-	mountVolumeList := []corev1.VolumeMount{}
-	inputVolumeMountList, err := parseVolumeMountList(ctx, ptask.Inputs, volumeResource)
-	outputVolumeMountList, err := parseVolumeMountList(ctx, ptask.Outputs, volumeResource)
-	if err != nil {
-		return nil, err
-	}
-	mountVolumeList = append(mountVolumeList, inputVolumeMountList...)
-	mountVolumeList = append(mountVolumeList, outputVolumeMountList...)
-
-	containers := []corev1.Container{
-		{
-			Name:  ptask.Name,
-			Image: ptask.Image,
-			Command: []string{
-				ptask.Command,
-			},
-			Args: ptask.Args,
-			Resources: corev1.ResourceRequirements{
-				Requests: *requests,
-				Limits:   *limits,
-			},
-			VolumeMounts: mountVolumeList,
-		},
-	}
-
-	return containers, nil
-}
-
 // Parsing Volume with PVC
-func parseVolume(ctx context.Context, volumeResource VolumeResource) ([]corev1.Volume, error) {
-	volumes := []corev1.Volume{
-		{
-			Name: volumeResource.Name,
-			VolumeSource: corev1.VolumeSource{
-				PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSource{
-					ClaimName: volumeResource.Name,
+func parseVolumeWithPVCFromJob(ctx context.Context, job Job) ([]corev1.Volume, error) {
+	hashSet := hashset.New()
+
+	volumeList := []corev1.Volume{}
+	// 들어온 volume이름 목록으로 PVC template을 만든다.
+	volumeStringList := []string{}
+	volumeStringList = append(volumeStringList, job.Inputs...)
+	volumeStringList = append(volumeStringList, job.Outputs...)
+
+	for _, volumeString := range volumeStringList {
+		volumeCopus, err := splitVolumeCopus(volumeString)
+		if err != nil {
+			return nil, err
+		}
+		// hsBy := volumeCopus[0] + fmt.Sprintf("%v", job)
+		// volumeName := getShortHashPostFix(volumeCopus[0], hsBy)
+		volumeName := volumeCopus[0]
+		if !hashSet.Contains(volumeName) {
+			hashSet.Add(volumeName)
+			volume := corev1.Volume{
+				Name: volumeName,
+				VolumeSource: corev1.VolumeSource{
+					PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSource{
+						ClaimName: volumeName,
+					},
 				},
-			},
-		},
+			}
+			volumeList = append(volumeList, volume)
+		}
 	}
-	return volumes, nil
+	return volumeList, nil
 }
 
 const (
-	mountPathPrefix string = "/data/pipeline"
+	mountPathPrefix string = "/data/pipeline/"
 )
 
 // Parsing Volume mount for using containers
-func parseVolumeMountList(ctx context.Context, mountNameList []string, volumeResource VolumeResource) ([]corev1.VolumeMount, error) {
+func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, error) {
 	volumeMounts := []corev1.VolumeMount{}
-	for _, mountName := range mountNameList {
-		if mountName == "" {
-			continue
+
+	volumeMountStringList := []string{}
+	volumeMountStringList = append(volumeMountStringList, job.Inputs...)
+	volumeMountStringList = append(volumeMountStringList, job.Outputs...)
+
+	for _, mountString := range volumeMountStringList {
+		mountCopus, err := splitVolumeCopus(mountString)
+		if err != nil {
+			return nil, err
 		}
+		// hsBy := mountCopus[0] + fmt.Sprintf("%v", job)
+		// volumeName := getShortHashPostFix(mountCopus[0], hsBy)
+		volumeName, subPath := mountCopus[0], mountCopus[1]
 		volumeMounts = append(volumeMounts, corev1.VolumeMount{
-			Name:      volumeResource.Name,
-			MountPath: mountPathPrefix + volumeResource.Name,
-			SubPath:   string(mountName),
+			Name:      volumeName,
+			MountPath: mountPathPrefix + volumeName + subPath,
+			SubPath:   subPath,
 		})
 	}
 	return volumeMounts, nil
+}
+
+func parseContainerEnv(ctx context.Context, env map[string]string) []corev1.EnvVar {
+	envList := []corev1.EnvVar{}
+	for key, value := range env {
+		envList = append(envList, corev1.EnvVar{
+			Name:  key,
+			Value: value,
+		})
+	}
+	return envList
+}
+
+func ParsePvcListFromRun(ctx context.Context, run *Run) ([]*corev1.PersistentVolumeClaim, error) {
+	pvcList := []*corev1.PersistentVolumeClaim{}
+
+	for _, volume := range run.Spec.Volumes {
+		meta := metav1.ObjectMeta{
+			Name:      volume.Name,
+			Namespace: run.ObjectMeta.Namespace,
+		}
+		pvc, err := ParsePvcFromVolumeResourceWithMeta(ctx, meta, volume)
+		if err != nil {
+			return nil, err
+		}
+		pvcList = append(pvcList, pvc)
+	}
+
+	return pvcList, nil
+}
+
+func ParsePvcFromVolumeResourceWithMeta(ctx context.Context, meta metav1.ObjectMeta, volumeResource VolumeResource) (*corev1.PersistentVolumeClaim, error) {
+	quota, err := resource.ParseQuantity(volumeResource.Capacity)
+	if err != nil {
+		return nil, err
+	}
+	pvc := &corev1.PersistentVolumeClaim{
+		ObjectMeta: meta,
+		Spec: corev1.PersistentVolumeClaimSpec{
+			VolumeName: volumeResource.Name,
+			AccessModes: []corev1.PersistentVolumeAccessMode{
+				corev1.ReadWriteOnce,
+			},
+			Resources: corev1.VolumeResourceRequirements{
+				Requests: corev1.ResourceList{
+					corev1.ResourceStorage: quota,
+				},
+			},
+			StorageClassName: &volumeResource.Storage,
+		},
+	}
+	return pvc, nil
+}
+
+// volume 이름의 "/"를 기준으로 자른다.(copus)
+// 자른 이름의 좌측을 pvc의 이름으로 사용, 우측을 subpath로 사용한다.
+func splitVolumeCopus(volumeString string) ([]string, error) {
+	volumeCopus := strings.SplitN(volumeString, "/", 2)
+	if len(volumeCopus) == 0 || volumeCopus[1] == "" {
+		return nil, errors.New("Volume has no prefix or postfix like: 'volumeName/filePath'")
+	}
+	return volumeCopus, nil
 }
 
 // Get hash64a

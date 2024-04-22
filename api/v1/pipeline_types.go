@@ -27,6 +27,16 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+const (
+	UpdatedByAnnotation     = "pipeline.1eedaegon.github.io/updated-at"
+	CreatedByAnnotation     = "pipeline.1eedaegon.github.io/created-by"
+	CreatedTimeAnnotation   = "pipeline.1eedaegon.github.io/created-at"
+	ScheduleDateAnnotation  = "pipeline.1eedaegon.github.io/schedule-date"
+	ScheduledTimeAnnotation = "pipeline.1eedaegon.github.io/schedule-at"
+	TriggerAnnotation       = "pipeline.1eedaegon.github.io/trigger"
+	PipelineNameLabel       = "pipeline.1eedaegon.github.io/pipeline-name"
+)
+
 type HistoryLimit struct {
 	Amount uint   `json:"amount,omitempty"`
 	Date   string `json:"date,omitempty"`
@@ -146,7 +156,7 @@ type PipelineSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
 	Schedule     Schedule          `json:"schedule,omitempty"`
-	Volume       VolumeResource    `json:"volume,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Volumes      []VolumeResource  `json:"volumes,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
 	Trigger      bool              `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
 	Tasks        []PipelineTask    `json:"tasks,omitempty"`
