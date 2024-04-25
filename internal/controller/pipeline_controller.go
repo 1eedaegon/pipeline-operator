@@ -25,6 +25,7 @@ import (
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/util/retry"
 
@@ -73,6 +74,12 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 	}
 
 	// Update pipeline with status(with sum)
+	if err := r.updatePipelineStatus(ctx, pipeline); err != nil {
+		log.V(1).Error(err, "Unable to update pipeline status")
+		return ctrl.Result{}, err
+	}
+
+	// Ensure pipeline annotations and labels
 	if err := r.ensurePipelineMetadata(ctx, pipeline); err != nil {
 		log.V(1).Error(err, "unable to ensure pipeline")
 		return ctrl.Result{}, err
@@ -81,11 +88,6 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 	// Check the list of runs and create one if there are changes or none
 	if err := r.ensureRunExists(ctx, pipeline); err != nil {
 		log.V(1).Error(err, "Unable to ensure run exists for pipeline")
-		return ctrl.Result{}, err
-	}
-
-	if err := r.updatePipelineStatus(ctx, pipeline); err != nil {
-		log.V(1).Error(err, "Unable to update pipeline status")
 		return ctrl.Result{}, err
 	}
 
@@ -103,15 +105,10 @@ func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipelin
 	}
 	objectMeta := pipeline.ObjectMeta
 	if objectMeta.Annotations == nil {
-		objectMeta.Annotations = map[string]string{
-			pipelinev1.ScheduleDateAnnotation: string(pipeline.Spec.Schedule.ScheduleDate),
-			pipelinev1.TriggerAnnotation:      strconv.FormatBool(pipeline.Spec.Trigger),
-		}
+		objectMeta.Annotations = make(map[string]string)
 	}
 	if objectMeta.Labels == nil {
-		objectMeta.Labels = map[string]string{
-			pipelinev1.PipelineNameLabel: pipeline.ObjectMeta.Name,
-		}
+		objectMeta.Labels = make(map[string]string)
 	}
 	objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
 	objectMeta.Annotations[pipelinev1.TriggerAnnotation] = strconv.FormatBool(pipeline.Spec.Trigger)
@@ -158,23 +155,27 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 }
 
 func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
-	runList := pipelinev1.RunList{}
+	log := log.FromContext(ctx)
+	runList := &pipelinev1.RunList{}
 
 	listQueryOpts := []client.ListOption{
 		client.InNamespace(pipeline.ObjectMeta.Namespace),
-		client.MatchingLabels(map[string]string{pipelinev1.PipelineNameLabel: pipeline.ObjectMeta.Name}),
+		client.MatchingLabels(labels.Set{pipelinev1.PipelineNameLabel: pipeline.ObjectMeta.Name}),
 	}
 
 	objKey := client.ObjectKey{
 		Name:      pipeline.ObjectMeta.Name,
 		Namespace: pipeline.ObjectMeta.Namespace,
 	}
-	if err := r.List(ctx, &runList, listQueryOpts...); err != nil {
+
+	if err := r.List(ctx, runList, listQueryOpts...); err != nil {
 		return err
 	}
-	// Retry backoff
-	if err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
 
+	// Retry backoff
+	log.V(1).Info(fmt.Sprintf("update pipeline status"))
+	if err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
+		pipeline = &pipelinev1.Pipeline{}
 		err := r.Get(ctx, objKey, pipeline)
 		if err != nil {
 			return err

@@ -19,13 +19,13 @@ spec:
     # (입력 받을 때)UTC+9를 기본으로 하며, 플랫폼 위치(리전)을 기준으로 표출하되, 입력하는 시간은 변환되어 저장되어야한다.
   volumes: 
   - name: yennefer-something # 이미 있으면 생성하지 않고 사용
-    capacity: 1Gi # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
+    capacity: 1G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
       #storage: ceph-fs
-    storage: local-path
+    storage: standard
   - name: other-something # 이미 있으면 생성하지 않고 사용
     capacity: 1Gi # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
       #storage: ceph-fs
-    storage: local-path
+    storage: standard
   trigger: false
   historyLimit:
     amount: 10
@@ -37,7 +37,7 @@ spec:
     memory: 200Mi
   tasks:
   - name: pipeline-init-pipeline # import task type without image version
-    image: amazon/aws-cli
+    image: gcr.io/amazon/aws-cli
     schedule:
       scheduleDate: 1d
     trigger: false
@@ -49,6 +49,9 @@ spec:
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
         amount: 2
+    env:
+      SAMPLE: hello
+      SAMPLE2: world
     runBefore:
     - pipeline-init-pipeline
     inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
@@ -65,6 +68,9 @@ spec:
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
         amount: 2
+    env:
+      SAMPLE: hello
+      SAMPLE2: world
     runBefore: []
     inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
     - yennefer-something/init-output
@@ -79,6 +85,9 @@ spec:
       gpu:
         type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
         amount: 2
+    env:
+      SAMPLE: hello
+      SAMPLE2: world
     runBefore:
     - import-s3
     inputs: [] # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.

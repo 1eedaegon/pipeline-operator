@@ -21,10 +21,13 @@ import (
 	"fmt"
 	"reflect"
 	"strconv"
+	"time"
 
 	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/client-go/util/retry"
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -115,11 +118,9 @@ func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.R
 	}
 	objectMeta := run.ObjectMeta
 	if objectMeta.Annotations == nil {
-		log.V(1).Info(fmt.Sprintf("run annotations is empty"))
 		objectMeta.Annotations = make(map[string]string)
 	}
 	if objectMeta.Labels == nil {
-		log.V(1).Info(fmt.Sprintf("run labels is empty"))
 		objectMeta.Labels = make(map[string]string)
 	}
 	objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(run.Spec.Schedule.ScheduleDate)
@@ -168,7 +169,6 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				log.V(1).Error(err, "Unable to reference between run and new pvc")
 				return err
 			}
-
 			if err := r.Create(ctx, pvc); err != nil {
 				log.V(1).Error(err, "Unable to create pvc")
 				return err
@@ -221,6 +221,39 @@ func (r *RunReconciler) ensureJobList(ctx context.Context, run *pipelinev1.Run) 
 
 	return nil
 }
+
+// TODO: Job내 pod의 상태를 보고 run job의 상태를 결정지어야한다.
 func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run) error {
+	log := log.FromContext(ctx)
+	jobList := kbatchv1.JobList{}
+
+	listQueryOpts := []client.ListOption{
+		client.InNamespace(run.ObjectMeta.Namespace),
+		client.MatchingLabels(labels.Set{pipelinev1.PipelineNameLabel: run.ObjectMeta.Name}),
+	}
+
+	objKey := client.ObjectKey{
+		Name:      run.ObjectMeta.Name,
+		Namespace: run.ObjectMeta.Namespace,
+	}
+	if err := r.List(ctx, &jobList, listQueryOpts...); err != nil {
+		return err
+	}
+	// Retry backoff
+	if err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
+		log.V(1).Info("update run status")
+		run = &pipelinev1.Run{}
+		err := r.Get(ctx, objKey, run)
+		if err != nil {
+			return err
+		}
+		run.Status.Initializing = len(jobList.Items)
+		run.Status.CreatedDate = &run.ObjectMeta.CreationTimestamp
+		run.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
+
+		return r.Status().Update(ctx, run)
+	}); err != nil {
+		return err
+	}
 	return nil
 }

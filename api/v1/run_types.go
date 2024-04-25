@@ -64,7 +64,7 @@ Deleting으로 한번 진입하면 deleted 아니면 failed이다.
 
 JobState를 참고해서 작성되었다.
 
-pre-run: waiting, initializing, stoppin
+pre-run: waiting, initializing, stopping
 
 run: running, deleting
 
@@ -99,7 +99,6 @@ metadata:
     pipeline.1eedaegon.github.io/schedule-at: "2024-04-04T01:50:31Z"
   labels:
     pipeline.1eedaegon.github.io/pipeline-name: pipeline-chain-test
-
 */
 
 type Job struct {
@@ -136,8 +135,8 @@ type RunSpec struct {
 // RunStatus defines the observed state of Run
 type RunStatus struct {
 	RunState          RunState     `json:"runState,omitempty"` // run > pre-run > post-run
-	CreateDate        *metav1.Time `json:"createDate,omitempty"`
-	LastUpdateDate    *metav1.Time `json:"lastUpdateDate,omitempty"`
+	CreatedDate       *metav1.Time `json:"createDate,omitempty"`
+	LastUpdatedDate   *metav1.Time `json:"lastUpdateDate,omitempty"`
 	CurrentWorkingJob string       `json:"currentWorkingJob,omitempty"` // current-working-job-name(string)
 	Initializing      int          `json:"initializing,omitempty"`      // initializing/total
 	Waiting           int          `json:"waiting,omitempty"`           // waiting/total
@@ -176,7 +175,6 @@ func init() {
 }
 
 // Construct Run template from pipeline
-// TODO: 여기서 PVC 생성과 인입을 담당해야한다. Job에서 PVC 생성을 담당할 수 없다.
 // TODO: 이곳에서 PVC가 없으면 에러를 뱉는 로직을 추가해야한다.
 // TODO: Pipeline과의 차이는, pipeline은 iuputs의 목록이 volume에 있는지 확인이고
 // 이곳은 실제 get() 함수를 통해 pvc가 존재하는지 확인 후 생성해야한다.
@@ -302,18 +300,17 @@ func ParseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, er
 		return nil, err
 	}
 	limits, _ := ParseComputingResource(ctx, job.Resource)
-
 	mountVolumeList, err := parseVolumeMountList(ctx, job)
 	if err != nil {
 		return nil, err
 	}
 
 	envList := parseContainerEnv(ctx, job.Env)
-
+	image := defaultImageRegistry(job.Image)
 	containers := []corev1.Container{
 		{
 			Name:  job.Name,
-			Image: job.Image,
+			Image: image,
 			Command: []string{
 				job.Command,
 			},
@@ -395,7 +392,7 @@ func parseVolumeWithPVCFromJob(ctx context.Context, job Job) ([]corev1.Volume, e
 }
 
 const (
-	mountPathPrefix string = "/data/pipeline/"
+	mountPathPrefix string = "/data/pipeline"
 )
 
 // Parsing Volume mount for using containers
@@ -416,7 +413,7 @@ func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, e
 		volumeName, subPath := mountCopus[0], mountCopus[1]
 		volumeMounts = append(volumeMounts, corev1.VolumeMount{
 			Name:      volumeName,
-			MountPath: mountPathPrefix + volumeName + subPath,
+			MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
 			SubPath:   subPath,
 		})
 	}
@@ -460,13 +457,13 @@ func ParsePvcFromVolumeResourceWithMeta(ctx context.Context, meta metav1.ObjectM
 	pvc := &corev1.PersistentVolumeClaim{
 		ObjectMeta: meta,
 		Spec: corev1.PersistentVolumeClaimSpec{
-			VolumeName: volumeResource.Name,
 			AccessModes: []corev1.PersistentVolumeAccessMode{
 				corev1.ReadWriteOnce,
+				corev1.ReadWriteMany,
 			},
 			Resources: corev1.VolumeResourceRequirements{
 				Requests: corev1.ResourceList{
-					corev1.ResourceStorage: quota,
+					corev1.ResourceName(corev1.ResourceStorage): quota,
 				},
 			},
 			StorageClassName: &volumeResource.Storage,
@@ -475,12 +472,21 @@ func ParsePvcFromVolumeResourceWithMeta(ctx context.Context, meta metav1.ObjectM
 	return pvc, nil
 }
 
+func defaultImageRegistry(imagePath string) string {
+	imagePathCopus := strings.SplitN(imagePath, "/", 2)
+	url := strings.Split(imagePathCopus[0], ".")
+	if len(url) == 1 {
+		return "docker.io/" + imagePath
+	}
+	return imagePath
+}
+
 // volume 이름의 "/"를 기준으로 자른다.(copus)
 // 자른 이름의 좌측을 pvc의 이름으로 사용, 우측을 subpath로 사용한다.
 func splitVolumeCopus(volumeString string) ([]string, error) {
 	volumeCopus := strings.SplitN(volumeString, "/", 2)
 	if len(volumeCopus) == 0 || volumeCopus[1] == "" {
-		return nil, errors.New("Volume has no prefix or postfix like: 'volumeName/filePath'")
+		return nil, errors.New("volume has no prefix or postfix like: 'volumeName/filePath'")
 	}
 	return volumeCopus, nil
 }

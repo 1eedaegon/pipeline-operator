@@ -2,16 +2,39 @@
 
 > Pipeline operator for k8s native
 
-## TODOS
-
-- [ ] Pipeline reconciler
-- [ ] Task reconciler
-- [ ] Run reconciler
-- [ ] Job reconciler(Choose natively)
-
 ## Description
 
 If you want to excitedly create a pipeline with YAML, deploy it all at once and define it with YAML at once
+
+## Loadmaps
+
+- All of pipeline from yaml
+- import task from CRD
+- UI
+- RBAC
+- Notification webhook handler
+- Advanced environments
+  - From file
+  - Secret
+
+## TODOS
+
+- [x] Pipeline reconciler
+  - [ ] Task use import/inline
+  - [ ] Status: run counting
+  - [ ] Validation: volume with input/outputs
+  - [ ] Validation: runBefore
+- [ ] Task reconciler
+  - [ ] Status: job counting
+- [x] Run reconciler
+  - [ ] runBefore sequential process
+  - [ ] scheduling
+  - [ ] Status: Job status counting
+- [x] Job reconciler(Choose natively)
+- [ ] Finalizer
+  - [ ] resource deletion protection
+- [ ] Validation webhook
+  - [ ] pipieline resource validation
 
 ## Getting Started
 
