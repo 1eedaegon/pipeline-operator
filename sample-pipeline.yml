@@ -41,14 +41,16 @@ spec:
     schedule:
       scheduleDate: 1d
     trigger: false
-    command:
-      python aanla.py --args=anayis --input=init-input --output=init-output
-    resource:
-      cpu: 600m
-      memory: 200Mi
-      gpu:
-        type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
-        amount: 2
+    args:
+    - --version
+    - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
+
+    # resource:
+    #   cpu: 600m
+    #   memory: 200Mi
+    #   gpu:
+    #     type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
+    #     amount: 2
     env:
       SAMPLE: hello
       SAMPLE2: world
@@ -62,29 +64,31 @@ spec:
   -  # inline task type because define image
     name: import-s3
     image: amazon/aws-cli
-    resource:
-      cpu: 500m
-      memory: 200Mi
-      gpu:
-        type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
-        amount: 2
+    args:
+    - --version
+    - echo $SAMPLE
+    - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
+    # resource:
+    #   cpu: 500m
+    #   memory: 200Mi
+    #   gpu:
+    #     type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
+    #     amount: 2
     env:
       SAMPLE: hello
       SAMPLE2: world
     runBefore: []
-    inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    - yennefer-something/init-output
-    outputs:
-    - yennefer-something/import-output
-    - other-something/other-output
   - name: transform-data
     image: amazon/aws-cli
-    resource:
-      cpu: 500m
-      memory: 200Mi
-      gpu:
-        type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
-        amount: 2
+    args:
+    - --version
+    - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
+    # resource:
+    #   cpu: 500m
+    #   memory: 200Mi
+    #   gpu:
+    #     type: nvidia # gpu를 걸고 타입을 걸었을 때 node label에 없으면 경고를 띄운다.
+    #     amount: 2
     env:
       SAMPLE: hello
       SAMPLE2: world

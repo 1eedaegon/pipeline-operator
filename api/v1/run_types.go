@@ -206,6 +206,7 @@ func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error
 		Inputs:       pipeline.Spec.Inputs,
 		Outputs:      pipeline.Spec.Outputs,
 		Resource:     pipeline.Spec.Resource,
+		Env:          pipeline.Spec.Env,
 		Jobs:         jobs,
 	}
 	return nil
@@ -225,6 +226,7 @@ func newRunJobFromPipelineTask(ctx context.Context, namespace string, ptask Pipe
 		RunBefore: ptask.RunBefore,
 		Inputs:    ptask.Inputs,
 		Outputs:   ptask.Outputs,
+		Env:       ptask.Env,
 	}, nil
 }
 
@@ -295,11 +297,12 @@ func ParsePodSpecFromJob(ctx context.Context, job Job) (*corev1.PodTemplateSpec,
 
 // Parsing Container specs
 func ParseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, error) {
-	requests, err := ParseComputingResource(ctx, job.Resource)
+
+	requests, err := ParseComputingResource(ctx, &job.Resource)
 	if err != nil {
 		return nil, err
 	}
-	limits, _ := ParseComputingResource(ctx, job.Resource)
+	limits, _ := ParseComputingResource(ctx, &job.Resource)
 	mountVolumeList, err := parseVolumeMountList(ctx, job)
 	if err != nil {
 		return nil, err
@@ -307,14 +310,14 @@ func ParseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, er
 
 	envList := parseContainerEnv(ctx, job.Env)
 	image := defaultImageRegistry(job.Image)
+	command := parseCommand(job.Command)
+
 	containers := []corev1.Container{
 		{
-			Name:  job.Name,
-			Image: image,
-			Command: []string{
-				job.Command,
-			},
-			Args: job.Args,
+			Name:    job.Name,
+			Image:   image,
+			Command: command,
+			Args:    job.Args,
 			Resources: corev1.ResourceRequirements{
 				Requests: *requests,
 				Limits:   *limits,
@@ -328,18 +331,27 @@ func ParseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, er
 }
 
 // Parsing computing resouce: cpu: 500m / memory: 5GiB
-func ParseComputingResource(ctx context.Context, computingResource Resource) (*corev1.ResourceList, error) {
-	cpu, err := resource.ParseQuantity(string(computingResource.Cpu))
-	if err != nil {
-		return nil, err
+func ParseComputingResource(ctx context.Context, computingResource *Resource) (*corev1.ResourceList, error) {
+	resourceList := corev1.ResourceList{}
+
+	if computingResource == nil {
+		return &resourceList, nil
 	}
-	mem, err := resource.ParseQuantity(string(computingResource.Memory))
-	if err != nil {
-		return nil, err
+
+	if computingResource.Cpu != "" {
+		cpu, err := resource.ParseQuantity(string(computingResource.Cpu))
+		if err != nil {
+			return nil, err
+		}
+		resourceList[corev1.ResourceCPU] = cpu
 	}
-	resourceList := corev1.ResourceList{
-		corev1.ResourceCPU:    cpu,
-		corev1.ResourceMemory: mem,
+
+	if computingResource.Memory != "" {
+		mem, err := resource.ParseQuantity(string(computingResource.Memory))
+		if err != nil {
+			return nil, err
+		}
+		resourceList[corev1.ResourceMemory] = mem
 	}
 
 	return &resourceList, nil
@@ -470,6 +482,14 @@ func ParsePvcFromVolumeResourceWithMeta(ctx context.Context, meta metav1.ObjectM
 		},
 	}
 	return pvc, nil
+}
+
+func parseCommand(command string) []string {
+	commandString := []string{}
+	if command != "" {
+		commandString = append(commandString, command)
+	}
+	return commandString
 }
 
 func defaultImageRegistry(imagePath string) string {
