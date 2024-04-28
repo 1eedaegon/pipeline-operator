@@ -28,13 +28,11 @@ import (
 )
 
 const (
-	UpdatedByAnnotation     = "pipeline.1eedaegon.github.io/updated-at"
-	CreatedByAnnotation     = "pipeline.1eedaegon.github.io/created-by"
-	CreatedTimeAnnotation   = "pipeline.1eedaegon.github.io/created-at"
-	ScheduleDateAnnotation  = "pipeline.1eedaegon.github.io/schedule-date"
-	ScheduledTimeAnnotation = "pipeline.1eedaegon.github.io/schedule-at"
-	TriggerAnnotation       = "pipeline.1eedaegon.github.io/trigger"
-	PipelineNameLabel       = "pipeline.1eedaegon.github.io/pipeline-name"
+	ScheduleDateAnnotation = "pipeline.1eedaegon.github.io/schedule-date"
+	EndDateAnnotation      = "pipeline.1eedaegon.github.io/end-date"
+	ScheduledAtAnnotation  = "pipeline.1eedaegon.github.io/scheduled-at"
+	TriggerAnnotation      = "pipeline.1eedaegon.github.io/trigger"
+	PipelineNameLabel      = "pipeline.1eedaegon.github.io/pipeline-name"
 )
 
 type HistoryLimit struct {

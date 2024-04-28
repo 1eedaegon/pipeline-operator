@@ -15,18 +15,36 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - description: Number of executed runs
-      jsonPath: .status.runs
-      name: Runs
+    - jsonPath: .status.runState
+      name: RunState
+      type: string
+    - jsonPath: .status.currentJob
+      name: CurrentJob
+      type: string
+    - jsonPath: .status.initializing
+      name: Initializing
       type: integer
-    - description: Creation time of the pipeline
-      jsonPath: .status.createdDate
-      name: CreatedDate
-      type: string
-    - description: Last update time of the pipeline
-      jsonPath: .status.lastUpdateDate
-      name: LastUpdateDate
-      type: string
+    - jsonPath: .status.waiting
+      name: Waiting
+      type: integer
+    - jsonPath: .status.stopping
+      name: Stopping
+      type: integer
+    - jsonPath: .status.running
+      name: Running
+      type: integer
+    - jsonPath: .status.deleting
+      name: Deleting
+      type: integer
+    - jsonPath: .status.completed
+      name: Completed
+      type: integer
+    - jsonPath: .status.deleted
+      name: Deleted
+      type: integer
+    - jsonPath: .status.failed
+      name: Failed
+      type: integer
     name: v1
     schema:
       openAPIV3Schema:
@@ -107,7 +125,7 @@ spec:
                           type: string
                       type: object
                     trigger:
-                      type: boolean
+                      type: string
                   type: object
                 type: array
               outputs:
@@ -155,12 +173,19 @@ spec:
             type: object
           status:
             properties:
+              JobStates:
+                items:
+                  properties:
+                    jobState:
+                      type: string
+                    name:
+                      type: string
+                  type: object
+                type: array
               completed:
                 type: integer
               createDate:
                 format: date-time
-                type: string
-              currentWorkingJob:
                 type: string
               deleted:
                 type: integer

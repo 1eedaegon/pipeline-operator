@@ -20,7 +20,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"strconv"
 	"time"
 
 	kbatchv1 "k8s.io/api/batch/v1"
@@ -40,8 +39,7 @@ import (
 )
 
 const (
-	runNameLabel = "pipeline.1eedaegon.github.io/run-name"
-	jobOwnerKey  = ".metadata." + runNameLabel
+	jobOwnerKey = ".metadata.labels" + pipelinev1.RunNameLabel
 )
 
 // RunReconciler reconciles a Run object
@@ -74,13 +72,13 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 		return ctrl.Result{}, err
 	}
 
-	if err := r.ensureJobList(ctx, run); err != nil {
+	if err := r.ensureKJobList(ctx, run); err != nil {
 		log.V(1).Error(err, "Unable to ensure job list for pipeline")
 		return ctrl.Result{}, err
 	}
 
 	if err := r.updateRunStatus(ctx, run); err != nil {
-		log.V(1).Error(err, "Unable to ensure run exists for pipeline")
+		log.V(1).Error(err, "Unable to update run")
 		return ctrl.Result{}, err
 	}
 	return ctrl.Result{}, nil
@@ -90,7 +88,7 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 func (r *RunReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	if err := mgr.GetFieldIndexer().IndexField(context.Background(), &kbatchv1.Job{}, jobOwnerKey, func(rawObj client.Object) []string {
 		run := rawObj.(*kbatchv1.Job)
-		return []string{run.ObjectMeta.Labels[runNameLabel]}
+		return []string{run.ObjectMeta.Labels[pipelinev1.RunNameLabel]}
 	}); err != nil {
 		return err
 	}
@@ -98,7 +96,7 @@ func (r *RunReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&pipelinev1.Run{}).
 		Watches(
 			&pipelinev1.Run{},
-			handler.EnqueueRequestForOwner(mgr.GetScheme(), mgr.GetRESTMapper(), &kbatchv1.Job{}),
+			handler.EnqueueRequestForOwner(mgr.GetScheme(), mgr.GetRESTMapper(), &kbatchv1.Job{}, handler.OnlyControllerOwner()),
 		).
 		Owns(&kbatchv1.Job{}).
 		Complete(r)
@@ -117,15 +115,7 @@ func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.R
 		return err
 	}
 	objectMeta := run.ObjectMeta
-	if objectMeta.Annotations == nil {
-		objectMeta.Annotations = make(map[string]string)
-	}
-	if objectMeta.Labels == nil {
-		objectMeta.Labels = make(map[string]string)
-	}
-	objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(run.Spec.Schedule.ScheduleDate)
-	objectMeta.Annotations[pipelinev1.TriggerAnnotation] = strconv.FormatBool(run.Spec.Trigger)
-	objectMeta.Labels[pipelinev1.PipelineNameLabel] = run.ObjectMeta.Name
+	objectMeta.Labels[pipelinev1.RunNameLabel] = run.ObjectMeta.Name
 
 	if !reflect.DeepEqual(run.ObjectMeta, objectMeta) {
 		run.ObjectMeta = objectMeta
@@ -138,7 +128,7 @@ func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.R
 
 func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Run) error {
 	log := log.FromContext(ctx)
-	for _, volume := range run.Spec.Volumes {
+	for idx, volume := range run.Spec.Volumes {
 
 		objKey := client.ObjectKey{
 			Name:      volume.Name,
@@ -160,11 +150,11 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 			}
 			pvc, err := pipelinev1.ParsePvcFromVolumeResourceWithMeta(ctx, meta, volume)
 			if err != nil {
-				log.V(1).Error(err, "Unable to parse pvc from run")
+				log.V(1).Error(err, fmt.Sprintf("Unable to parse volume from run(volume not exist): %v", volume))
+				return err
 			}
 
 			// Relation owner run -> pvc(owner)
-			log.V(1).Info(fmt.Sprintf("Referencing pvc %v", objKey))
 			if err := ctrl.SetControllerReference(run, pvc, r.Scheme); err != nil {
 				log.V(1).Error(err, "Unable to reference between run and new pvc")
 				return err
@@ -173,13 +163,26 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				log.V(1).Error(err, "Unable to create pvc")
 				return err
 			}
+		} else {
+			log.V(1).Info("Update run pvc")
+			capacityQuantity := pvcQuery.Spec.Resources.Requests[corev1.ResourceName(corev1.ResourceStorage)]
+			capacity := capacityQuantity.String()
+			run.Spec.Volumes[idx] = pipelinev1.VolumeResource{
+				Name:     pvcQuery.Name,
+				Capacity: capacity,
+				Storage:  *pvcQuery.Spec.StorageClassName,
+			}
+
+			if err := r.Update(ctx, run); err != nil {
+				return err
+			}
 		}
 	}
 
 	return nil
 }
 
-func (r *RunReconciler) ensureJobList(ctx context.Context, run *pipelinev1.Run) error {
+func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run) error {
 	log := log.FromContext(ctx)
 	log.Info("ensure job list.")
 
@@ -188,13 +191,12 @@ func (r *RunReconciler) ensureJobList(ctx context.Context, run *pipelinev1.Run) 
 		log.V(1).Error(err, "Unable to parse from job list")
 		return err
 	}
-
 	for _, kjob := range kjobList {
 		objKey := client.ObjectKey{
 			Name:      kjob.ObjectMeta.Name,
 			Namespace: kjob.ObjectMeta.Namespace,
 		}
-		log.V(1).Info(fmt.Sprintf("Job obj key %v", objKey))
+		// Ensure kjob list after query, if not exists create kjob
 		if err := r.Get(ctx, objKey, &kjob); err != nil {
 			log.V(1).Info(fmt.Sprintf("Getting jobs %v", objKey))
 			// If network error, return unknown
@@ -203,22 +205,47 @@ func (r *RunReconciler) ensureJobList(ctx context.Context, run *pipelinev1.Run) 
 				return err
 			}
 
-			// Relation owner run -> pipeline(owner)
-			log.V(1).Info(fmt.Sprintf("Referencing jobs %v", objKey))
+			// Relation owner kjob -> run(owner)
 			if err := ctrl.SetControllerReference(run, &kjob, r.Scheme); err != nil {
 				log.V(1).Error(err, "Unable to reference between run and new job")
 				return err
 			}
 
-			// Create Job
+			// Create kjob
 			log.V(1).Info(fmt.Sprintf("Creating jobs %v", objKey))
 			if err := r.Create(ctx, &kjob); err != nil {
 				log.V(1).Error(err, "Unable to create job")
 				return err
 			}
+		} else {
+			// Update kjob
+			if err := r.ensureKjobState(ctx, &kjob); err != nil {
+				log.V(1).Error(err, "Unable to update kjob state")
+				return err
+			}
 		}
 	}
 
+	return nil
+}
+
+// TODO: Kjobstate
+func (r *RunReconciler) ensureKjobState(ctx context.Context, kjob *kbatchv1.Job) error {
+	// StatusInitializing = "Initializing"
+	// StatusRunning      = "Running"
+	// StatusCompleted    = "Completed"
+
+	// switch {
+	// case kjob.Status.Active > 0 && pod.Status.Phase == corev1.PodPending:
+	// 	customStatus = StatusInitializing
+	// case kjob.Status.Active > 0 && pod.Status.Phase == corev1.PodRunning:
+	// 	customStatus = StatusRunning
+	// case kjob.Status.Succeeded > 0 || kjob.Status.Failed > 0:
+	// 	customStatus = StatusCompleted
+	// default:
+	// 	customStatus = StatusInitializing // Default to Initializing if conditions are not met
+	// }
+	// return
 	return nil
 }
 

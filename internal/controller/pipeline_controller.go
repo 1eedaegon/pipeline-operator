@@ -42,7 +42,7 @@ var (
 )
 
 const (
-	runOwnerKey = ".metadata." + pipelinev1.PipelineNameLabel
+	runOwnerKey = ".metadata.labels" + pipelinev1.PipelineNameLabel
 )
 
 type realClock struct{}
@@ -81,7 +81,7 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 
 	// Ensure pipeline annotations and labels
 	if err := r.ensurePipelineMetadata(ctx, pipeline); err != nil {
-		log.V(1).Error(err, "unable to ensure pipeline")
+		log.V(1).Error(err, "Unable to ensure pipeline")
 		return ctrl.Result{}, err
 	}
 
@@ -135,7 +135,6 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 		Name:      run.ObjectMeta.Name,
 		Namespace: run.ObjectMeta.Namespace,
 	}
-	log.V(1).Info(fmt.Sprintf("pipeline run obj key %v", objKey))
 	if err := r.Get(ctx, objKey, run); err != nil {
 		if !apierrors.IsNotFound(err) {
 			log.V(1).Error(err, "Unknown error")
@@ -156,6 +155,7 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 
 func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
 	log := log.FromContext(ctx)
+	log.V(1).Info(fmt.Sprintf("Update pipeline status."))
 	runList := &pipelinev1.RunList{}
 
 	listQueryOpts := []client.ListOption{
@@ -173,7 +173,6 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 	}
 
 	// Retry backoff
-	log.V(1).Info(fmt.Sprintf("update pipeline status"))
 	if err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
 		pipeline = &pipelinev1.Pipeline{}
 		err := r.Get(ctx, objKey, pipeline)

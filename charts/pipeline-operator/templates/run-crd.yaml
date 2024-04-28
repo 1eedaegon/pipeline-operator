@@ -19,12 +19,33 @@ spec:
     - jsonPath: .status.runState
       name: RunState
       type: string
-    - jsonPath: .status.createdDate
-      name: CreatedDate
+    - jsonPath: .status.currentJob
+      name: CurrentJob
       type: string
-    - jsonPath: .status.lastUpdateDate
-      name: LastUpdateDate
-      type: string
+    - jsonPath: .status.Initializing
+      name: Initializing
+      type: integer
+    - jsonPath: .status.Waiting
+      name: Waiting
+      type: integer
+    - jsonPath: .status.Stopping
+      name: Stopping
+      type: integer
+    - jsonPath: .status.Running
+      name: Running
+      type: integer
+    - jsonPath: .status.Deleting
+      name: Deleting
+      type: integer
+    - jsonPath: .status.Completed
+      name: Completed
+      type: integer
+    - jsonPath: .status.Deleted
+      name: Deleted
+      type: integer
+    - jsonPath: .status.Failed
+      name: Failed
+      type: integer
     name: v1
     schema:
       openAPIV3Schema:
@@ -158,7 +179,7 @@ spec:
               createDate:
                 format: date-time
                 type: string
-              currentWorkingJob:
+              currentJob:
                 type: string
               deleted:
                 type: integer
