@@ -51,10 +51,9 @@ type RunReconciler struct {
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs/finalizers,verbs=update
-// +kubebuilder:rbac:groups=batch,resources=jobs,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=batch,resources=jobs/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=,resources=pods,verbs=get;list;watch;create;update;patch;delete
-
+// +kubebuilder:rbac:namespace=pipeline,groups=batch,resources=jobs,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:namespace=pipeline,groups=batch,resources=jobs/status,verbs=get;update;patch
+// +kubebuilder:rbac:namespace=pipeline,groups=,resources=pods,verbs=get;list;watch;create;update;patch;delete
 func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
 	run := &pipelinev1.Run{}
@@ -370,6 +369,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 				continue
 			}
 		}
+
 		run.Status.JobStates = runJobStateList
 		run.Status.Initializing = &Init
 		run.Status.Waiting = &Wait
