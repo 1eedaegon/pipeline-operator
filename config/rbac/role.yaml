@@ -4,6 +4,62 @@ kind: ClusterRole
 metadata:
   name: manager-role
 rules:
+- resources:
+  - pods
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - pipeline.1eedaegon.github.io
+  resources:
+  - runs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - pipeline.1eedaegon.github.io
+  resources:
+  - runs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - pipeline.1eedaegon.github.io
+  resources:
+  - runs/status
+  verbs:
+  - get
+  - patch
+  - update
 - apiGroups:
   - pipeline.1eedaegon.github.io
   resources:
