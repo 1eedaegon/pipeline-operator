@@ -127,7 +127,7 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 	log := log.FromContext(ctx)
 	run := &pipelinev1.Run{}
 
-	if err := pipelinev1.NewRunFromPipeline(ctx, pipeline, run); err != nil {
+	if err := pipelinev1.ConstructRunFromPipeline(ctx, pipeline, run); err != nil {
 		log.V(1).Error(err, "Unable to parse from pipeline")
 		return err
 	}

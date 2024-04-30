@@ -74,7 +74,8 @@ spec:
     env:
       SAMPLE: wow!
       SAMPLE2: world
-    runBefore: []
+    runBefore: 
+    - pipeline-init-pipeline
   - name: transform-data
     image: amazon/aws-cli
     trigger: true

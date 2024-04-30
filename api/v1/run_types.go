@@ -41,8 +41,11 @@ const (
 
 const (
 	RunNameLabel         = "pipeline.1eedaegon.github.io/run-name"
-	RunStatusAnnotation  = "pipeline.1eedaegon.github.io/status"
+	JobNameLabel         = "batch.kubernetes.io/job-name"
+	StatusAnnotation     = "pipeline.1eedaegon.github.io/status"
 	RunDeletionFinalizer = "pipeline.1eedaegon.github.io/finalizer"
+	GpuTypeLabel         = "nvidia.com/gpu.product"
+	GpuAmountLabel       = "nvidia.com/gpu.count"
 )
 
 // RunStatus defines the observed state of Run
@@ -53,8 +56,6 @@ const (
 // # - Create/Update: Initializing|Waiting|Running|Completed 새로운 pipeline을 통해 run을 만드는 개념
 // # - Delete: Stopping|Deleting|Deleted
 // # - Failed: Completed상태 대신 failed로 빠지며 가장 우선순위가 높음
-
-DefaultKJobSuspending := true
 
 type JobState string
 
@@ -72,9 +73,21 @@ const (
 	JobStateFailed    JobState = "failed"
 )
 
+var StateOrder = map[JobState]int{
+	JobStateFailed:    8,
+	JobStateRun:       7,
+	JobStateInit:      6,
+	JobStateWait:      5,
+	JobStateCompleted: 4,
+	JobStateDeleting:  3,
+	JobStateStop:      2,
+	JobStateDeleted:   1,
+}
+
 type RunJobState struct {
 	Name     string   `json:"name,omitempty"`
 	JobState JobState `json:"jobState,omitempty"`
+	Reason   string   `json:"reason,omitempty"`
 }
 
 /*
@@ -98,16 +111,16 @@ type RunState string
 
 const (
 	// Pre run
-	RunStateInit JobState = "initializing"
-	RunStateWait JobState = "waiting"
-	RunStateStop JobState = "stopping"
+	RunStateInit RunState = "initializing"
+	RunStateWait RunState = "waiting"
+	RunStateStop RunState = "stopping"
 	// Run
-	RunStateRun      JobState = "running"
-	RunStateDeleting JobState = "deleting"
+	RunStateRun      RunState = "running"
+	RunStateDeleting RunState = "deleting"
 	// Post run
-	RunStateCompleted JobState = "completed"
-	RunStateDeleted   JobState = "deleted"
-	RunStateFailed    JobState = "failed"
+	RunStateCompleted RunState = "completed"
+	RunStateDeleted   RunState = "deleted"
+	RunStateFailed    RunState = "failed"
 )
 
 //
@@ -157,23 +170,22 @@ type RunSpec struct {
 // RunStatus defines the observed state of Run
 type RunStatus struct {
 	RunState        RunState      `json:"runState,omitempty"` // run > pre-run > post-run
-	CreatedDate     *metav1.Time  `json:"createDate,omitempty"`
+	CreatedDate     *metav1.Time  `json:"createdDate,omitempty"`
 	LastUpdatedDate *metav1.Time  `json:"lastUpdateDate,omitempty"`
 	JobStates       []RunJobState `json:"JobStates,omitempty"`    // current-working-job-name(string)
-	Initializing    int           `json:"initializing,omitempty"` // initializing/total
-	Waiting         int           `json:"waiting,omitempty"`      // waiting/total
-	Stopping        int           `json:"stopping,omitempty"`     // stopping/total
-	Running         int           `json:"running,omitempty"`      // running/total
-	Deleting        int           `json:"deleting,omitempty"`     // deleting/total
-	Completed       int           `json:"completed,omitempty"`    // completed/total
-	Deleted         int           `json:"deleted,omitempty"`      // deleted/total
-	Failed          int           `json:"failed,omitempty"`       // failed/total
+	Initializing    *int          `json:"initializing,omitempty"` // initializing/total
+	Waiting         *int          `json:"waiting,omitempty"`      // waiting/total
+	Stopping        *int          `json:"stopping,omitempty"`     // stopping/total
+	Running         *int          `json:"running,omitempty"`      // running/total
+	Deleting        *int          `json:"deleting,omitempty"`     // deleting/total
+	Completed       *int          `json:"completed,omitempty"`    // completed/total
+	Deleted         *int          `json:"deleted,omitempty"`      // deleted/total
+	Failed          *int          `json:"failed,omitempty"`       // failed/total
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="RunState",type="string",JSONPath=".status.runState",description=""
-// +kubebuilder:printcolumn:name="CurrentJob",type="string",JSONPath=".status.currentJob",description=""
 // +kubebuilder:printcolumn:name="Initializing",type="integer",JSONPath=".status.initializing",description=""
 // +kubebuilder:printcolumn:name="Waiting",type="integer",JSONPath=".status.waiting",description=""
 // +kubebuilder:printcolumn:name="Stopping",type="integer",JSONPath=".status.stopping",description=""
@@ -207,7 +219,7 @@ func init() {
 // TODO: 이곳에서 PVC가 없으면 에러를 뱉는 로직을 추가해야한다.
 // TODO: Pipeline과의 차이는, pipeline은 iuputs의 목록이 volume에 있는지 확인이고
 // 이곳은 실제 get() 함수를 통해 pvc가 존재하는지 확인 후 생성해야한다.
-func NewRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error {
+func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error {
 	// Construct run metadata
 	if err := newRunMetaFromPipeline(ctx, run, pipeline); err != nil {
 		return err
@@ -241,7 +253,7 @@ func newRunMetaFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) e
 		Labels:      make(map[string]string),
 	}
 
-	hsByString := pipeline.ObjectMeta.Namespace + "/" + pipeline.ObjectMeta.Name + fmt.Sprintf("%v", pipeline.Spec)
+	hsByString := pipeline.ObjectMeta.Namespace + pipeline.ObjectMeta.Name + fmt.Sprintf("%v", pipeline.Spec)
 	runName := getShortHashPostFix(pipeline.ObjectMeta.Name, hsByString)
 	run.ObjectMeta.Name = runName
 	run.ObjectMeta.Namespace = pipeline.ObjectMeta.Namespace
@@ -278,7 +290,8 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 	jobs := []Job{}
 	namespace := run.ObjectMeta.Namespace
 	for _, task := range pipeline.Spec.Tasks {
-		jobName := getShortHashPostFix(task.Name, fmt.Sprintf("%v", run.ObjectMeta))
+		hsByString := run.ObjectMeta.Name + run.ObjectMeta.Namespace
+		jobName := getShortHashPostFix(task.Name, hsByString)
 		uniqInputs, err := toInsertBetweenFirstPathFromList(task.Inputs, jobName)
 		if err != nil {
 			return err
@@ -286,6 +299,11 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 		uniqOutputs, err := toInsertBetweenFirstPathFromList(task.Outputs, jobName)
 		if err != nil {
 			return err
+		}
+		jobRunBeforeList := []string{}
+		for _, taskRunBefore := range task.RunBefore {
+			jobRunBefore := getShortHashPostFix(taskRunBefore, hsByString)
+			jobRunBeforeList = append(jobRunBeforeList, jobRunBefore)
 		}
 		job := &Job{
 			Name:      jobName,
@@ -296,7 +314,7 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			Schedule:  task.Schedule,
 			Resource:  task.Resource,
 			Trigger:   strconv.FormatBool(task.Trigger),
-			RunBefore: task.RunBefore,
+			RunBefore: jobRunBeforeList,
 			Inputs:    uniqInputs,
 			Outputs:   uniqOutputs,
 			Env:       task.Env,
@@ -333,7 +351,7 @@ func toInsertBetweenFirstPath(pathName string, insertPath string) (string, error
 }
 
 // Construct kuberentes job from run job
-func NewKjobListFromRun(ctx context.Context, run *Run) ([]kbatchv1.Job, error) {
+func ConstructKjobListFromRun(ctx context.Context, run *Run) ([]kbatchv1.Job, error) {
 	kjobList := []kbatchv1.Job{}
 	for _, runjob := range run.Spec.Jobs {
 		kjob, err := constructKjobFromRunJob(ctx, run.ObjectMeta, runjob)
@@ -349,7 +367,7 @@ func NewKjobListFromRun(ctx context.Context, run *Run) ([]kbatchv1.Job, error) {
 // TODO: 리콘실러가 아닌 다른 조작에 의해 리소스가 삭제되지않도록  finalizer 제약을 걸어야한다.
 func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job Job) (*kbatchv1.Job, error) {
 	// Construct container template
-	container, err := ParseContainerFromJob(ctx, job)
+	container, err := parseContainerFromJob(ctx, job)
 	if err != nil {
 		return nil, err
 	}
@@ -359,7 +377,7 @@ func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job
 		return nil, err
 	}
 	// Construct pod Template
-	podTemplateMeta := constructPodMetaFromJob(ctx, runMeta, job)
+	podTemplateMeta := constructKjobPodMetaFromJob(ctx, runMeta, job)
 	podTemplate := corev1.PodTemplateSpec{
 		ObjectMeta: podTemplateMeta,
 		Spec: corev1.PodSpec{
@@ -372,25 +390,33 @@ func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job
 		return nil, err
 	}
 	kjobMeta := constructKjobMetaFromJob(ctx, runMeta, job)
-	DefaultKJobSuspending := true
+
+	trigger, err := strconv.ParseBool(job.Trigger)
+	if err != nil {
+		return nil, err
+	}
+	if len(job.RunBefore) > 0 {
+		trigger = true
+	}
+
 	kJob := &kbatchv1.Job{
 		ObjectMeta: kjobMeta,
 		Spec: kbatchv1.JobSpec{
-			Suspend:  &DefaultKJobSuspending,
+			Suspend:  &trigger,
 			Template: podTemplate,
 		},
 	}
 	return kJob, nil
 }
 
-func constructPodMetaFromJob(ctx context.Context, runMeta metav1.ObjectMeta, job Job) metav1.ObjectMeta {
+func constructKjobPodMetaFromJob(ctx context.Context, runMeta metav1.ObjectMeta, job Job) metav1.ObjectMeta {
 	podTempMeta := metav1.ObjectMeta{
 		Annotations: make(map[string]string),
 		Labels:      make(map[string]string),
 	}
 	podTempMeta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
-	podTempMeta.Annotations[TriggerAnnotation] = job.Trigger
-	podTempMeta.Labels[PipelineNameLabel] = runMeta.Annotations[PipelineNameLabel]
+	// podTempMeta.Annotations[TriggerAnnotation] = job.Trigger
+	podTempMeta.Labels[PipelineNameLabel] = runMeta.Labels[PipelineNameLabel]
 	podTempMeta.Labels[RunNameLabel] = runMeta.Name
 	return podTempMeta
 }
@@ -400,18 +426,20 @@ func constructKjobMetaFromJob(ctx context.Context, runMeta metav1.ObjectMeta, jo
 		Annotations: make(map[string]string),
 		Labels:      make(map[string]string),
 	}
-	hsByString := job.Name + fmt.Sprintf("%v", job)
+	hsByString := job.Name + runMeta.Name + runMeta.Namespace
 	meta.Name = getShortHashPostFix(job.Name, hsByString)
 	meta.Namespace = job.Namespace
 	meta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
 	meta.Annotations[TriggerAnnotation] = job.Trigger
 	meta.Labels[PipelineNameLabel] = runMeta.Labels[PipelineNameLabel]
 	meta.Labels[RunNameLabel] = runMeta.Name
+	meta.Labels[GpuTypeLabel] = job.Resource.Gpu.GpuType
+	meta.Labels[GpuAmountLabel] = fmt.Sprintf("%d", job.Resource.Gpu.Amount)
 	return meta
 }
 
-func ParsePodSpecFromJob(ctx context.Context, job Job) (*corev1.PodTemplateSpec, error) {
-	container, err := ParseContainerFromJob(ctx, job)
+func parsePodSpecFromJob(ctx context.Context, job Job) (*corev1.PodTemplateSpec, error) {
+	container, err := parseContainerFromJob(ctx, job)
 	if err != nil {
 		return nil, err
 	}
@@ -432,13 +460,13 @@ func ParsePodSpecFromJob(ctx context.Context, job Job) (*corev1.PodTemplateSpec,
 }
 
 // Parsing Container specs
-func ParseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, error) {
+func parseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, error) {
 
-	requests, err := ParseComputingResource(ctx, &job.Resource)
+	requests, err := parseComputingResource(ctx, &job.Resource)
 	if err != nil {
 		return nil, err
 	}
-	limits, _ := ParseComputingResource(ctx, &job.Resource)
+	limits, _ := parseComputingResource(ctx, &job.Resource)
 	mountVolumeList, err := parseVolumeMountList(ctx, job)
 	if err != nil {
 		return nil, err
@@ -467,7 +495,7 @@ func ParseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, er
 }
 
 // Parsing computing resouce: cpu: 500m / memory: 5GiB
-func ParseComputingResource(ctx context.Context, computingResource *Resource) (*corev1.ResourceList, error) {
+func parseComputingResource(ctx context.Context, computingResource *Resource) (*corev1.ResourceList, error) {
 	resourceList := corev1.ResourceList{}
 
 	if computingResource == nil {
@@ -533,11 +561,22 @@ const (
 func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, error) {
 	volumeMounts := []corev1.VolumeMount{}
 
-	volumeMountStringList := []string{}
-	volumeMountStringList = append(volumeMountStringList, job.Inputs...)
-	volumeMountStringList = append(volumeMountStringList, job.Outputs...)
-
-	for _, mountString := range volumeMountStringList {
+	for _, mountString := range job.Inputs {
+		mountCopus, err := splitVolumeCopus(mountString)
+		if err != nil {
+			return nil, err
+		}
+		// hsBy := mountCopus[0] + fmt.Sprintf("%v", job)
+		// volumeName := getShortHashPostFix(mountCopus[0], hsBy)
+		volumeName, subPath := mountCopus[0], mountCopus[1]
+		volumeMounts = append(volumeMounts, corev1.VolumeMount{
+			Name:      volumeName,
+			MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
+			SubPath:   subPath,
+			ReadOnly:  true,
+		})
+	}
+	for _, mountString := range job.Outputs {
 		mountCopus, err := splitVolumeCopus(mountString)
 		if err != nil {
 			return nil, err
@@ -565,7 +604,7 @@ func parseContainerEnv(ctx context.Context, env map[string]string) []corev1.EnvV
 	return envList
 }
 
-func ParsePvcListFromRun(ctx context.Context, run *Run) ([]*corev1.PersistentVolumeClaim, error) {
+func parsePvcListFromRun(ctx context.Context, run *Run) ([]*corev1.PersistentVolumeClaim, error) {
 	pvcList := []*corev1.PersistentVolumeClaim{}
 
 	for _, volume := range run.Spec.Volumes {
@@ -611,6 +650,42 @@ func ParsePvcFromVolumeResourceWithMeta(ctx context.Context, meta metav1.ObjectM
 	return pvc, nil
 }
 
+func DetermineKjobState(kjob *kbatchv1.Job, pod *corev1.Pod) JobState {
+	switch {
+	case *kjob.Spec.Suspend || kjob.ObjectMeta.Annotations[TriggerAnnotation] == "true":
+		return JobStateWait
+	case kjob.Status.Active > 0:
+		if pod.Status.Phase == corev1.PodPending {
+			return JobStateInit // Job 초기화 중
+		} else if pod.Status.Phase == corev1.PodRunning {
+			return JobStateRun // Job 실행 중
+		}
+
+	case kjob.Status.Succeeded > 0:
+		return JobStateCompleted // Job 완료
+
+	case kjob.Status.Failed > 0:
+		return JobStateFailed // Job 실패
+
+	case !kjob.ObjectMeta.DeletionTimestamp.IsZero():
+		if kjob.Status.Active > 0 {
+			return JobStateStop // Job 삭제 중
+		} else {
+			return JobStateDeleting
+		}
+	default:
+		return JobStateInit
+	}
+	return JobStateDeleted
+}
+
+func DetermineJobState(prevState, nextState JobState) JobState {
+	if StateOrder[prevState] > StateOrder[nextState] {
+		return prevState
+	} else {
+		return nextState
+	}
+}
 
 func parseCommand(command string) []string {
 	commandString := []string{}
@@ -652,4 +727,3 @@ func getShortHashPostFix(name, hashBy string) string {
 	hs := hashString(hashBy)
 	return fmt.Sprintf("%s-%x", name, hs)
 }
-

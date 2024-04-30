@@ -59,7 +59,7 @@ type VolumeResource struct {
 
 type ScheduleDate string
 
-func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
+func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
 	var duration time.Duration
 	// date string parser
 	scheduleDatePattern := `(\d+)([smhdMy])`
@@ -93,7 +93,7 @@ func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
 	return duration, nil
 }
 
-func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
+func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
 	// cron parser
 	cronExpr, err := cron.ParseStandard(string(sd))
 	duration := cronExpr.Next(time.Now()).Sub(time.Now())
@@ -106,7 +106,7 @@ func (sd ScheduleDate) Duration() (time.Duration, error) {
 	cronDuration, err := sd.durationFromCron()
 	dateDuration, err2 := sd.durationFromDateString()
 	if err != nil && err2 != nil {
-		return 0, fmt.Errorf("Unknown format schedule")
+		return 0, fmt.Errorf("unknown format schedule")
 	}
 	if err != nil {
 		return dateDuration, nil

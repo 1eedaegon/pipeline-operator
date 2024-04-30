@@ -30,9 +30,9 @@ type TaskSpec struct {
 
 // TaskStatus defines the observed state of Task
 type TaskStatus struct {
-	Jobs           uint         `json:"jobs,omitempty"`
-	CreateDate     *metav1.Time `json:"createDate,omitempty"`
-	LastUpdateDate *metav1.Time `json:"lastUpdateDate,omitempty"`
+	Jobs            uint         `json:"jobs,omitempty"`
+	CreatedDate     *metav1.Time `json:"createdDate,omitempty"`
+	LastUpdatedDate *metav1.Time `json:"lastUpdatedDate,omitempty"`
 }
 
 //+kubebuilder:object:root=true

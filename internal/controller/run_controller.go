@@ -81,6 +81,7 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 		log.V(1).Error(err, "Unable to update run")
 		return ctrl.Result{}, err
 	}
+
 	return ctrl.Result{}, nil
 }
 
@@ -186,18 +187,20 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 	log := log.FromContext(ctx)
 	log.Info("ensure job list.")
 
-	kjobList, err := pipelinev1.NewKjobListFromRun(ctx, run)
+	kjobList, err := pipelinev1.ConstructKjobListFromRun(ctx, run)
 	if err != nil {
 		log.V(1).Error(err, "Unable to parse from job list")
 		return err
 	}
-	for _, kjob := range kjobList {
+	for _, desiredkjob := range kjobList {
+		currentKjob := &kbatchv1.Job{}
 		objKey := client.ObjectKey{
-			Name:      kjob.ObjectMeta.Name,
-			Namespace: kjob.ObjectMeta.Namespace,
+			Name:      desiredkjob.ObjectMeta.Name,
+			Namespace: desiredkjob.ObjectMeta.Namespace,
 		}
+
 		// Ensure kjob list after query, if not exists create kjob
-		if err := r.Get(ctx, objKey, &kjob); err != nil {
+		if err := r.Get(ctx, objKey, currentKjob); err != nil {
 			log.V(1).Info(fmt.Sprintf("Getting jobs %v", objKey))
 			// If network error, return unknown
 			if !apierrors.IsNotFound(err) {
@@ -206,21 +209,44 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 			}
 
 			// Relation owner kjob -> run(owner)
-			if err := ctrl.SetControllerReference(run, &kjob, r.Scheme); err != nil {
+			if err := ctrl.SetControllerReference(run, &desiredkjob, r.Scheme); err != nil {
 				log.V(1).Error(err, "Unable to reference between run and new job")
 				return err
 			}
 
 			// Create kjob
 			log.V(1).Info(fmt.Sprintf("Creating jobs %v", objKey))
-			if err := r.Create(ctx, &kjob); err != nil {
+			if err := r.Create(ctx, &desiredkjob); err != nil {
 				log.V(1).Error(err, "Unable to create job")
 				return err
 			}
-		} else {
-			// Update kjob
-			if err := r.ensureKjobState(ctx, &kjob); err != nil {
-				log.V(1).Error(err, "Unable to update kjob state")
+		} else { // if exists
+
+			// runName := currentKjob.ObjectMeta.Labels[pipelinev1.RunNameLabel]
+			jobName := currentKjob.ObjectMeta.Name
+			currentTrigger := currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation]
+			desiredTrigger := desiredkjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation]
+
+			podList := &corev1.PodList{}
+			pod := &corev1.Pod{}
+			listQueryOpts := []client.ListOption{
+				client.InNamespace(desiredkjob.ObjectMeta.Namespace),
+				client.MatchingLabels(labels.Set{pipelinev1.JobNameLabel: jobName}),
+			}
+			if err := r.List(ctx, podList, listQueryOpts...); err != nil {
+				return err
+			}
+			if len(podList.Items) > 0 {
+				pod = &podList.Items[0]
+			}
+
+			jobState := pipelinev1.DetermineKjobState(currentKjob, pod)
+			currentKjob.ObjectMeta.Annotations[pipelinev1.StatusAnnotation] = string(jobState)
+			if currentTrigger == "true" && desiredTrigger == "false" {
+				currentKjob.Spec.Suspend = desiredkjob.Spec.Suspend
+				currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation] = "false"
+			}
+			if err := r.Update(ctx, currentKjob); err != nil {
 				return err
 			}
 		}
@@ -229,34 +255,13 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 	return nil
 }
 
-// TODO: Kjobstate
-func (r *RunReconciler) ensureKjobState(ctx context.Context, kjob *kbatchv1.Job) error {
-	// StatusInitializing = "Initializing"
-	// StatusRunning      = "Running"
-	// StatusCompleted    = "Completed"
-
-	// switch {
-	// case kjob.Status.Active > 0 && pod.Status.Phase == corev1.PodPending:
-	// 	customStatus = StatusInitializing
-	// case kjob.Status.Active > 0 && pod.Status.Phase == corev1.PodRunning:
-	// 	customStatus = StatusRunning
-	// case kjob.Status.Succeeded > 0 || kjob.Status.Failed > 0:
-	// 	customStatus = StatusCompleted
-	// default:
-	// 	customStatus = StatusInitializing // Default to Initializing if conditions are not met
-	// }
-	// return
-	return nil
-}
-
 // TODO: Job내 pod의 상태를 보고 run job의 상태를 결정지어야한다.
 func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run) error {
 	log := log.FromContext(ctx)
 	jobList := kbatchv1.JobList{}
-
 	listQueryOpts := []client.ListOption{
 		client.InNamespace(run.ObjectMeta.Namespace),
-		client.MatchingLabels(labels.Set{pipelinev1.PipelineNameLabel: run.ObjectMeta.Name}),
+		client.MatchingLabels(labels.Set{pipelinev1.RunNameLabel: run.ObjectMeta.Name}),
 	}
 
 	objKey := client.ObjectKey{
@@ -274,7 +279,69 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		if err != nil {
 			return err
 		}
-		run.Status.Initializing = len(jobList.Items)
+
+		jobState := pipelinev1.JobState(pipelinev1.JobStateDeleted)
+		var runJobStateList []pipelinev1.RunJobState
+		Init := 0
+		Wait := 0
+		Stop := 0
+		Run := 0
+		Deleting := 0
+		Complete := 0
+		Deleted := 0
+		Failed := 0
+		log.V(1).Info(fmt.Sprintf("jobState: %v", jobState))
+		for _, kjob := range jobList.Items {
+			kjobState := pipelinev1.JobState(kjob.Annotations[pipelinev1.StatusAnnotation])
+			runJobState := pipelinev1.RunJobState{
+				Name:     kjob.ObjectMeta.Name,
+				JobState: kjobState,
+			}
+			jobState = pipelinev1.DetermineJobState(jobState, kjobState)
+			runJobStateList = append(runJobStateList, runJobState)
+			if kjobState == pipelinev1.JobStateInit {
+				Init = Init + 1
+				continue
+			}
+			if kjobState == pipelinev1.JobStateWait {
+				Wait = Wait + 1
+				continue
+			}
+			if kjobState == pipelinev1.JobStateStop {
+				Stop = Stop + 1
+				continue
+			}
+			if kjobState == pipelinev1.JobStateRun {
+				Run = Run + 1
+				continue
+			}
+			if kjobState == pipelinev1.JobStateDeleting {
+				Deleting = Deleting + 1
+				continue
+			}
+			if kjobState == pipelinev1.JobStateCompleted {
+				Complete = Complete + 1
+				continue
+			}
+			if kjobState == pipelinev1.JobStateDeleted {
+				Deleted = Deleted + 1
+				continue
+			}
+			if kjobState == pipelinev1.JobStateFailed {
+				Failed = Failed + 1
+				continue
+			}
+		}
+		run.Status.JobStates = runJobStateList
+		run.Status.Initializing = &Init
+		run.Status.Waiting = &Wait
+		run.Status.Stopping = &Stop
+		run.Status.Running = &Run
+		run.Status.Deleting = &Deleting
+		run.Status.Completed = &Complete
+		run.Status.Deleted = &Deleted
+		run.Status.Failed = &Failed
+		run.Status.RunState = pipelinev1.RunState(jobState)
 		run.Status.CreatedDate = &run.ObjectMeta.CreationTimestamp
 		run.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 

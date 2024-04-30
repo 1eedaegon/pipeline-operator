@@ -22,28 +22,28 @@ spec:
     - jsonPath: .status.currentJob
       name: CurrentJob
       type: string
-    - jsonPath: .status.Initializing
+    - jsonPath: .status.initializing
       name: Initializing
       type: integer
-    - jsonPath: .status.Waiting
+    - jsonPath: .status.waiting
       name: Waiting
       type: integer
-    - jsonPath: .status.Stopping
+    - jsonPath: .status.stopping
       name: Stopping
       type: integer
-    - jsonPath: .status.Running
+    - jsonPath: .status.running
       name: Running
       type: integer
-    - jsonPath: .status.Deleting
+    - jsonPath: .status.deleting
       name: Deleting
       type: integer
-    - jsonPath: .status.Completed
+    - jsonPath: .status.completed
       name: Completed
       type: integer
-    - jsonPath: .status.Deleted
+    - jsonPath: .status.deleted
       name: Deleted
       type: integer
-    - jsonPath: .status.Failed
+    - jsonPath: .status.failed
       name: Failed
       type: integer
     name: v1
@@ -126,7 +126,7 @@ spec:
                           type: string
                       type: object
                     trigger:
-                      type: boolean
+                      type: string
                   type: object
                 type: array
               outputs:
@@ -174,12 +174,21 @@ spec:
             type: object
           status:
             properties:
+              JobStates:
+                items:
+                  properties:
+                    jobState:
+                      type: string
+                    name:
+                      type: string
+                    reason:
+                      type: string
+                  type: object
+                type: array
               completed:
                 type: integer
               createDate:
                 format: date-time
-                type: string
-              currentJob:
                 type: string
               deleted:
                 type: integer
