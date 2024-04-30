@@ -57,6 +57,25 @@ const (
 // # - Delete: Stopping|Deleting|Deleted
 // # - Failed: Completed상태 대신 failed로 빠지며 가장 우선순위가 높음
 
+type JobCategory string
+
+const (
+	PreRunCategory  JobCategory = "preRun"
+	RunCategory     JobCategory = "run"
+	PostRunCategory JobCategory = "postRun"
+)
+
+var JobCategoryMap = map[JobState]JobCategory{
+	JobStateInit:      PreRunCategory,
+	JobStateWait:      PreRunCategory,
+	JobStateStop:      PreRunCategory,
+	JobStateRun:       RunCategory,
+	JobStateDeleting:  RunCategory,
+	JobStateCompleted: PostRunCategory,
+	JobStateFailed:    PostRunCategory,
+	JobStateDeleted:   PostRunCategory,
+}
+
 type JobState string
 
 const (
@@ -395,10 +414,6 @@ func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job
 	if err != nil {
 		return nil, err
 	}
-	if len(job.RunBefore) > 0 {
-		trigger = true
-	}
-
 	kJob := &kbatchv1.Job{
 		ObjectMeta: kjobMeta,
 		Spec: kbatchv1.JobSpec{
@@ -650,7 +665,12 @@ func ParsePvcFromVolumeResourceWithMeta(ctx context.Context, meta metav1.ObjectM
 	return pvc, nil
 }
 
-func DetermineKjobState(kjob *kbatchv1.Job, pod *corev1.Pod) JobState {
+// TODO: Simplify state
+func CategorizeJobState(state JobState) JobCategory {
+	return JobCategoryMap[state]
+}
+
+func DetermineJobStateFrom(kjob *kbatchv1.Job, pod *corev1.Pod) JobState {
 	switch {
 	case *kjob.Spec.Suspend || kjob.ObjectMeta.Annotations[TriggerAnnotation] == "true":
 		return JobStateWait
@@ -660,7 +680,6 @@ func DetermineKjobState(kjob *kbatchv1.Job, pod *corev1.Pod) JobState {
 		} else if pod.Status.Phase == corev1.PodRunning {
 			return JobStateRun // Job 실행 중
 		}
-
 	case kjob.Status.Succeeded > 0:
 		return JobStateCompleted // Job 완료
 
@@ -679,7 +698,7 @@ func DetermineKjobState(kjob *kbatchv1.Job, pod *corev1.Pod) JobState {
 	return JobStateDeleted
 }
 
-func DetermineJobState(prevState, nextState JobState) JobState {
+func DetermineJobStateFromOrder(prevState, nextState JobState) JobState {
 	if StateOrder[prevState] > StateOrder[nextState] {
 		return prevState
 	} else {

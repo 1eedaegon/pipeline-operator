@@ -78,7 +78,7 @@ spec:
     - pipeline-init-pipeline
   - name: transform-data
     image: amazon/aws-cli
-    trigger: true
+    trigger: false
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi

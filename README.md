@@ -21,15 +21,15 @@ If you want to excitedly create a pipeline with YAML, deploy it all at once and 
 
 - [x] Pipeline reconciler
   - [ ] Task use import/inline
-  - [ ] Status: run counting
+  - [x] Status: run counting
   - [ ] Validation: volume with input/outputs
   - [ ] Validation: runBefore
 - [ ] Task reconciler
-  - [ ] Status: job counting
+  - [] Status: job counting
 - [x] Run reconciler
   - [ ] runBefore sequential process
   - [ ] scheduling
-  - [ ] Status: Job status counting
+  - [x] Status: Job status counting
 - [x] Job reconciler(Choose natively)
 - [ ] Finalizer
   - [ ] resource deletion protection

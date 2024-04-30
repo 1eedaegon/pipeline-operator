@@ -221,7 +221,7 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 				return err
 			}
 		} else { // if exists
-
+			log.V(1).Info("Update kjob.")
 			// runName := currentKjob.ObjectMeta.Labels[pipelinev1.RunNameLabel]
 			jobName := currentKjob.ObjectMeta.Name
 			currentTrigger := currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation]
@@ -233,6 +233,7 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 				client.InNamespace(desiredkjob.ObjectMeta.Namespace),
 				client.MatchingLabels(labels.Set{pipelinev1.JobNameLabel: jobName}),
 			}
+
 			if err := r.List(ctx, podList, listQueryOpts...); err != nil {
 				return err
 			}
@@ -240,12 +241,45 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 				pod = &podList.Items[0]
 			}
 
-			jobState := pipelinev1.DetermineKjobState(currentKjob, pod)
+			jobState := pipelinev1.DetermineJobStateFrom(currentKjob, pod)
 			currentKjob.ObjectMeta.Annotations[pipelinev1.StatusAnnotation] = string(jobState)
+
+			// TODO: Run의 Trigger가 false -> true 시 다음 kjob에 대해서 waiting(suspending)
 			if currentTrigger == "true" && desiredTrigger == "false" {
-				currentKjob.Spec.Suspend = desiredkjob.Spec.Suspend
 				currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation] = "false"
 			}
+
+			// Suspending
+			// 1. runBefore의 job이 failed거나 post-run이 아닐때
+			// 2. trigger가 true일 때
+			// TODO: DAG(BFS) 구현
+			selfJob := &pipelinev1.Job{}
+			isSuspending := false
+			for _, job := range run.Spec.Jobs {
+				if jobName == job.Name {
+					selfJob = &job
+					break
+				}
+			}
+			log.V(1).Info(fmt.Sprintf("runBeforeJob: %v\n", selfJob.RunBefore))
+
+			for _, beforeJob := range selfJob.RunBefore {
+				beforeJobKjob := &kbatchv1.Job{}
+				objKey := client.ObjectKey{
+					Name:      beforeJob,
+					Namespace: selfJob.Namespace,
+				}
+				if err := r.Get(ctx, objKey, beforeJobKjob); err != nil {
+					return err
+				}
+				beforeJobState := pipelinev1.JobState(beforeJobKjob.ObjectMeta.Annotations[pipelinev1.StatusAnnotation])
+				if currentTrigger == "true" || beforeJobState == pipelinev1.JobStateFailed || pipelinev1.JobCategoryMap[beforeJobState] != pipelinev1.PostRunCategory {
+					isSuspending = true
+					break
+				}
+			}
+			currentKjob.Spec.Suspend = &isSuspending
+
 			if err := r.Update(ctx, currentKjob); err != nil {
 				return err
 			}
@@ -297,7 +331,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 				Name:     kjob.ObjectMeta.Name,
 				JobState: kjobState,
 			}
-			jobState = pipelinev1.DetermineJobState(jobState, kjobState)
+			jobState = pipelinev1.DetermineJobStateFromOrder(jobState, kjobState)
 			runJobStateList = append(runJobStateList, runJobState)
 			if kjobState == pipelinev1.JobStateInit {
 				Init = Init + 1
