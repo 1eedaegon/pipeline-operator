@@ -40,12 +40,12 @@ spec:
             type: object
           status:
             properties:
-              createDate:
+              createdDate:
                 format: date-time
                 type: string
               jobs:
                 type: integer
-              lastUpdateDate:
+              lastUpdatedDate:
                 format: date-time
                 type: string
             type: object

@@ -19,9 +19,6 @@ spec:
     - jsonPath: .status.runState
       name: RunState
       type: string
-    - jsonPath: .status.currentJob
-      name: CurrentJob
-      type: string
     - jsonPath: .status.initializing
       name: Initializing
       type: integer
@@ -187,7 +184,7 @@ spec:
                 type: array
               completed:
                 type: integer
-              createDate:
+              createdDate:
                 format: date-time
                 type: string
               deleted:
