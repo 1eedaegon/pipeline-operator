@@ -52,8 +52,6 @@ spec:
     env:
       SAMPLE: hello
       SAMPLE2: world
-    runBefore:
-    - pipeline-init-pipeline
     inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
     - yennefer-something/input # RO
     - other-something/other-input

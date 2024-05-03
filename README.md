@@ -27,7 +27,7 @@ If you want to excitedly create a pipeline with YAML, deploy it all at once and 
 - [ ] Task reconciler
   - [] Status: job counting
 - [x] Run reconciler
-  - [ ] runBefore sequential process
+  - [x] runBefore sequential process
   - [ ] scheduling
   - [x] Status: Job status counting
 - [x] Job reconciler(Choose natively)

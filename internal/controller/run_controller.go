@@ -18,6 +18,7 @@ package controller
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -131,6 +132,7 @@ func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.R
 
 func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Run) error {
 	log := log.FromContext(ctx)
+	log.Info("ensure volume list.")
 	for idx, volume := range run.Spec.Volumes {
 
 		objKey := client.ObjectKey{
@@ -141,34 +143,34 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 		if err := r.Get(ctx, objKey, pvcQuery); err != nil {
 			// If network error, return unknown
 			if !apierrors.IsNotFound(err) {
-				log.V(1).Error(err, "Unknown error")
+				log.V(1).Error(err, "ensureVolumeList: unknown error")
 				return err
 			}
 
 			// Construct pvc template
-			log.V(1).Info(fmt.Sprintf("Creating pvc %v", objKey))
+			log.V(1).Info(fmt.Sprintf("volume not exist, creating pvc %v", objKey))
 			meta := metav1.ObjectMeta{
 				Name:      volume.Name,
 				Namespace: run.ObjectMeta.Namespace,
 			}
 			pvc, err := pipelinev1.ParsePvcFromVolumeResourceWithMeta(ctx, meta, volume)
 			if err != nil {
-				log.V(1).Error(err, fmt.Sprintf("Unable to parse volume from run(volume not exist): %v", volume))
+				log.V(1).Error(err, fmt.Sprintf("unable to parse volume from run(volume not exist): %v", volume))
 				return err
 			}
 
 			// Relation owner run -> pvc(owner)
 			if err := ctrl.SetControllerReference(run, pvc, r.Scheme); err != nil {
-				log.V(1).Error(err, "Unable to reference between run and new pvc")
+				log.V(1).Error(err, "unable to reference between run and new pvc")
 				return err
 			}
 
 			if err := r.Create(ctx, pvc); err != nil {
-				log.V(1).Error(err, "Unable to create pvc")
+				log.V(1).Error(err, "unable to create pvc")
 				return err
 			}
 		} else {
-			log.V(1).Info("Update run pvc")
+			log.V(1).Info("update run pvc")
 			capacityQuantity := pvcQuery.Spec.Resources.Requests[corev1.ResourceName(corev1.ResourceStorage)]
 			capacity := capacityQuantity.String()
 			run.Spec.Volumes[idx] = pipelinev1.VolumeResource{
@@ -263,20 +265,23 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 					break
 				}
 			}
-			log.V(1).Info(fmt.Sprintf("self job: %v, job Label: %s, jobs: %v\n", selfJob, currentRunJobLabel, run.Spec.Jobs))
-
 			for _, beforeJob := range selfJob.RunBefore {
-				beforeJobKjob := &kbatchv1.Job{}
-				objKey := client.ObjectKey{
-					Name:      beforeJob,
-					Namespace: selfJob.Namespace,
+				beforeKjobList := &kbatchv1.JobList{}
+				listQueryOpts := []client.ListOption{
+					client.InNamespace(selfJob.Namespace),
+					client.MatchingLabels(labels.Set{pipelinev1.RunJobNameLabel: beforeJob}),
 				}
 				// beforeJob에 해당하는 job을 가져온다
-				if err := r.Get(ctx, objKey, beforeJobKjob); err != nil {
+				// TODO: 병렬 job기능을 추가하면 beforeKjobList중 정상인 kjob의 최신상태만 가져와야한다.
+				if err := r.List(ctx, beforeKjobList, listQueryOpts...); err != nil {
 					return err
 				}
-				beforeJobState := pipelinev1.JobState(beforeJobKjob.ObjectMeta.Annotations[pipelinev1.StatusAnnotation])
-				// 현재 trigger가 true거나 이전 job state가 failed 이거나 끝나지 않았으면
+				if len(beforeKjobList.Items) <= 0 {
+					return errors.New("not found error: no kubernetes job corresponding to the job label was found")
+				}
+				beforeKjob := beforeKjobList.Items[0]
+				beforeJobState := pipelinev1.JobState(beforeKjob.ObjectMeta.Annotations[pipelinev1.StatusAnnotation])
+				// 현재 trigger가 true거나 이전 job state가 failed 이거나 끝나지 않았으면 kjob은 suspending이다.
 				if currentTrigger == pipelinev1.IsTriggered.String() || beforeJobState == pipelinev1.JobStateFailed || pipelinev1.JobCategoryMap[beforeJobState] != pipelinev1.PostRunCategory {
 					isSuspending = true
 					break
@@ -309,6 +314,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 	if err := r.List(ctx, &jobList, listQueryOpts...); err != nil {
 		return err
 	}
+
 	// Retry backoff
 	if err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
 		log.V(1).Info("update run status")
@@ -328,8 +334,6 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		Complete := 0
 		Deleted := 0
 		Failed := 0
-
-		log.V(1).Info(fmt.Sprintf("jobState: %v", jobState))
 		for _, kjob := range jobList.Items {
 			kjobState := pipelinev1.JobState(kjob.Annotations[pipelinev1.StatusAnnotation])
 			runJobState := pipelinev1.RunJobState{

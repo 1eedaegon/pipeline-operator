@@ -454,7 +454,6 @@ func constructKjobPodMetaFromJob(ctx context.Context, runMeta metav1.ObjectMeta,
 		Labels:      make(map[string]string),
 	}
 	podTempMeta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
-	// podTempMeta.Annotations[TriggerAnnotation] = job.Trigger
 	podTempMeta.Labels[PipelineNameLabel] = runMeta.Labels[PipelineNameLabel]
 	podTempMeta.Labels[RunNameLabel] = runMeta.Name
 	return podTempMeta
