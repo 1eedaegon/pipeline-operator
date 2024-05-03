@@ -5,10 +5,41 @@ metadata:
   labels:
   {{- include "pipeline-operator.labels" . | nindent 4 }}
 rules:
+- apiGroups: 
+  - ""
+  resources:
+  - pods
+  - pods/status
+  - persistentvolumeclaims
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  - jobs/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
 - apiGroups:
   - pipeline.1eedaegon.github.io
   resources:
+  - pipelines
+  - pipelines/status
   - tasks
+  - runs
+  - runs/status
   verbs:
   - create
   - delete

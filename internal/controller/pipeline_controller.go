@@ -20,7 +20,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"strconv"
 	"time"
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -62,6 +61,11 @@ type PipelineReconciler struct {
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=pipelines,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=pipelines/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=pipelines/finalizers,verbs=update
+// +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs/finalizers,verbs=update
+// +kubebuilder:rbac:groups=batch,resources=jobs,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=batch,resources=jobs/status,verbs=get
 func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
 	pipeline := &pipelinev1.Pipeline{}
@@ -111,7 +115,7 @@ func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipelin
 		objectMeta.Labels = make(map[string]string)
 	}
 	objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
-	objectMeta.Annotations[pipelinev1.TriggerAnnotation] = strconv.FormatBool(pipeline.Spec.Trigger)
+	objectMeta.Annotations[pipelinev1.TriggerAnnotation] = pipeline.Spec.Trigger.String()
 	objectMeta.Labels[pipelinev1.PipelineNameLabel] = pipeline.ObjectMeta.Name
 
 	if !reflect.DeepEqual(pipeline.ObjectMeta, objectMeta) {

@@ -51,9 +51,8 @@ type RunReconciler struct {
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs/finalizers,verbs=update
-// +kubebuilder:rbac:namespace=pipeline,groups=batch,resources=jobs,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:namespace=pipeline,groups=batch,resources=jobs/status,verbs=get;update;patch
-// +kubebuilder:rbac:namespace=pipeline,groups=,resources=pods,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=batch,resources=jobs,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=batch,resources=jobs/status,verbs=get
 func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
 	run := &pipelinev1.Run{}
@@ -163,6 +162,7 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				log.V(1).Error(err, "Unable to reference between run and new pvc")
 				return err
 			}
+
 			if err := r.Create(ctx, pvc); err != nil {
 				log.V(1).Error(err, "Unable to create pvc")
 				return err
@@ -225,13 +225,9 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 			}
 		} else { // if exists
 			log.V(1).Info("Update kjob.")
-			// runName := currentKjob.ObjectMeta.Labels[pipelinev1.RunNameLabel]
-			jobName := currentKjob.ObjectMeta.Name
-			currentTrigger := currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation]
-			desiredTrigger := desiredkjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation]
-
 			podList := &corev1.PodList{}
 			pod := &corev1.Pod{}
+			jobName := currentKjob.ObjectMeta.Name
 			listQueryOpts := []client.ListOption{
 				client.InNamespace(desiredkjob.ObjectMeta.Namespace),
 				client.MatchingLabels(labels.Set{pipelinev1.JobNameLabel: jobName}),
@@ -244,12 +240,15 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 				pod = &podList.Items[0]
 			}
 
+			currentTrigger := currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation]
+			desiredTrigger := desiredkjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation]
+			currentRunJobLabel := currentKjob.ObjectMeta.Labels[pipelinev1.RunJobNameLabel]
+
 			jobState := pipelinev1.DetermineJobStateFrom(currentKjob, pod)
 			currentKjob.ObjectMeta.Annotations[pipelinev1.StatusAnnotation] = string(jobState)
-
 			// TODO: Run의 Trigger가 false -> true 시 다음 kjob에 대해서 waiting(suspending)
-			if currentTrigger == "true" && desiredTrigger == "false" {
-				currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation] = "false"
+			if currentTrigger == pipelinev1.IsTriggered.String() && desiredTrigger == pipelinev1.IsNotTriggered.String() {
+				currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation] = pipelinev1.IsNotTriggered.String()
 			}
 
 			// Suspending
@@ -259,12 +258,12 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 			selfJob := &pipelinev1.Job{}
 			isSuspending := false
 			for _, job := range run.Spec.Jobs {
-				if jobName == job.Name {
+				if currentRunJobLabel == job.Name {
 					selfJob = &job
 					break
 				}
 			}
-			log.V(1).Info(fmt.Sprintf("runBeforeJob: %v\n", selfJob.RunBefore))
+			log.V(1).Info(fmt.Sprintf("self job: %v, job Label: %s, jobs: %v\n", selfJob, currentRunJobLabel, run.Spec.Jobs))
 
 			for _, beforeJob := range selfJob.RunBefore {
 				beforeJobKjob := &kbatchv1.Job{}
@@ -272,11 +271,13 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 					Name:      beforeJob,
 					Namespace: selfJob.Namespace,
 				}
+				// beforeJob에 해당하는 job을 가져온다
 				if err := r.Get(ctx, objKey, beforeJobKjob); err != nil {
 					return err
 				}
 				beforeJobState := pipelinev1.JobState(beforeJobKjob.ObjectMeta.Annotations[pipelinev1.StatusAnnotation])
-				if currentTrigger == "true" || beforeJobState == pipelinev1.JobStateFailed || pipelinev1.JobCategoryMap[beforeJobState] != pipelinev1.PostRunCategory {
+				// 현재 trigger가 true거나 이전 job state가 failed 이거나 끝나지 않았으면
+				if currentTrigger == pipelinev1.IsTriggered.String() || beforeJobState == pipelinev1.JobStateFailed || pipelinev1.JobCategoryMap[beforeJobState] != pipelinev1.PostRunCategory {
 					isSuspending = true
 					break
 				}
@@ -327,6 +328,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		Complete := 0
 		Deleted := 0
 		Failed := 0
+
 		log.V(1).Info(fmt.Sprintf("jobState: %v", jobState))
 		for _, kjob := range jobList.Items {
 			kjobState := pipelinev1.JobState(kjob.Annotations[pipelinev1.StatusAnnotation])

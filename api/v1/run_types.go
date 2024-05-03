@@ -41,12 +41,36 @@ const (
 
 const (
 	RunNameLabel         = "pipeline.1eedaegon.github.io/run-name"
+	RunJobNameLabel      = "pipeline.1eedaegon.github.io/run-job-name"
 	JobNameLabel         = "batch.kubernetes.io/job-name"
 	StatusAnnotation     = "pipeline.1eedaegon.github.io/status"
 	RunDeletionFinalizer = "pipeline.1eedaegon.github.io/finalizer"
 	GpuTypeLabel         = "nvidia.com/gpu.product"
 	GpuAmountLabel       = "nvidia.com/gpu.count"
 )
+
+type TriggerString string
+
+var (
+	IsTriggeredString    TriggerString = "true"
+	IsNotTriggeredString TriggerString = "false"
+)
+
+func (t TriggerString) Bool() bool {
+	trigger, err := strconv.ParseBool(string(t))
+	if err != nil {
+		return false
+	}
+	return trigger
+}
+
+func (t TriggerString) Trigger() Trigger {
+	return Trigger(t.Bool())
+}
+
+func (t TriggerString) String() string {
+	return string(t)
+}
 
 // RunStatus defines the observed state of Run
 // pre-run: initializing, stopping, waiting
@@ -163,7 +187,7 @@ type Job struct {
 	Args      []string          `json:"args,omitempty"`
 	Schedule  Schedule          `json:"schedule,omitempty"`
 	Resource  Resource          `json:"resource,omitempty"`
-	Trigger   string            `json:"trigger,omitempty"`
+	Trigger   TriggerString     `json:"trigger,omitempty"`
 	RunBefore []string          `json:"runBefore,omitempty"`
 	Inputs    []string          `json:"inputs,omitempty"`
 	Outputs   []string          `json:"outputs,omitempty"`
@@ -176,7 +200,7 @@ type RunSpec struct {
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
 	Schedule     Schedule          `json:"schedule,omitempty"`
 	Volumes      []VolumeResource  `json:"volumes,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
-	Trigger      bool              `json:"trigger,omitempty"`
+	Trigger      TriggerString     `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
 	Jobs         []Job             `json:"jobs,omitempty"`
 	RunBefore    []string          `json:"runBefore,omitempty"`
@@ -279,7 +303,7 @@ func newRunMetaFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) e
 	run.ObjectMeta.Labels[PipelineNameLabel] = pipeline.ObjectMeta.Name
 	run.ObjectMeta.Annotations[ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
 	run.ObjectMeta.Annotations[EndDateAnnotation] = string(pipeline.Spec.Schedule.EndDate)
-	run.ObjectMeta.Annotations[TriggerAnnotation] = strconv.FormatBool(pipeline.Spec.Trigger)
+	run.ObjectMeta.Annotations[TriggerAnnotation] = pipeline.Spec.Trigger.String()
 	return nil
 }
 
@@ -332,7 +356,7 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			Args:      task.Args,
 			Schedule:  task.Schedule,
 			Resource:  task.Resource,
-			Trigger:   strconv.FormatBool(task.Trigger),
+			Trigger:   task.Trigger.TriggerString(),
 			RunBefore: jobRunBeforeList,
 			Inputs:    uniqInputs,
 			Outputs:   uniqOutputs,
@@ -410,7 +434,7 @@ func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job
 	}
 	kjobMeta := constructKjobMetaFromJob(ctx, runMeta, job)
 
-	trigger, err := strconv.ParseBool(job.Trigger)
+	trigger := job.Trigger.Bool()
 	if err != nil {
 		return nil, err
 	}
@@ -445,9 +469,10 @@ func constructKjobMetaFromJob(ctx context.Context, runMeta metav1.ObjectMeta, jo
 	meta.Name = getShortHashPostFix(job.Name, hsByString)
 	meta.Namespace = job.Namespace
 	meta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
-	meta.Annotations[TriggerAnnotation] = job.Trigger
+	meta.Annotations[TriggerAnnotation] = job.Trigger.String()
 	meta.Labels[PipelineNameLabel] = runMeta.Labels[PipelineNameLabel]
 	meta.Labels[RunNameLabel] = runMeta.Name
+	meta.Labels[RunJobNameLabel] = job.Name
 	meta.Labels[GpuTypeLabel] = job.Resource.Gpu.GpuType
 	meta.Labels[GpuAmountLabel] = fmt.Sprintf("%d", job.Resource.Gpu.Amount)
 	return meta
@@ -672,7 +697,7 @@ func CategorizeJobState(state JobState) JobCategory {
 
 func DetermineJobStateFrom(kjob *kbatchv1.Job, pod *corev1.Pod) JobState {
 	switch {
-	case *kjob.Spec.Suspend || kjob.ObjectMeta.Annotations[TriggerAnnotation] == "true":
+	case *kjob.Spec.Suspend || kjob.ObjectMeta.Annotations[TriggerAnnotation] == IsTriggered.String():
 		return JobStateWait
 	case kjob.Status.Active > 0:
 		if pod.Status.Phase == corev1.PodPending {

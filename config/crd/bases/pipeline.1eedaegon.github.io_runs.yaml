@@ -155,7 +155,7 @@ spec:
                     type: string
                 type: object
               trigger:
-                type: boolean
+                type: string
               volumes:
                 items:
                   properties:

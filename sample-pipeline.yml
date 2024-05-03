@@ -20,9 +20,10 @@ spec:
   volumes: 
   - name: yennefer-something # 이미 있으면 생성하지 않고 사용
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
-      #storage: ceph-fs
     storage: standard
-  - name: other-something 
+  - name: other-something # 이미 있으면 생성하지 않고 사용
+    capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
+    storage: standard
   # 이미 있으면 생성하지 않고 사용
   trigger: false
   historyLimit:
@@ -31,7 +32,7 @@ spec:
   inputs: []
   outputs: []
   resource:
-    cpu: 200m
+    cpu: 100m
     memory: 100Mi
   tasks:
   - name: pipeline-init-pipeline # import task type without image version

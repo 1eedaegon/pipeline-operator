@@ -35,6 +35,20 @@ const (
 	PipelineNameLabel      = "pipeline.1eedaegon.github.io/pipeline-name"
 )
 
+type Trigger bool
+
+const (
+	IsTriggered    Trigger = true
+	IsNotTriggered Trigger = false
+)
+
+func (t Trigger) String() string {
+	return strconv.FormatBool(bool(t))
+}
+func (t Trigger) TriggerString() TriggerString {
+	return TriggerString(t.String())
+}
+
 type HistoryLimit struct {
 	Amount uint   `json:"amount,omitempty"`
 	Date   string `json:"date,omitempty"`
@@ -133,7 +147,7 @@ type PipelineTask struct {
 	TaskSpec  `json:",inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
 	Schedule  Schedule                   `json:"schedule,omitempty"`
 	Resource  Resource                   `json:"resource,omitempty"`
-	Trigger   bool                       `json:"trigger,omitempty"`
+	Trigger   Trigger                    `json:"trigger,omitempty"`
 	RunBefore []string                   `json:"runBefore,omitempty"`
 	Inputs    []string                   `json:"inputs,omitempty"`
 	Outputs   []string                   `json:"outputs,omitempty"`
@@ -155,7 +169,7 @@ type PipelineSpec struct {
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
 	Schedule     Schedule          `json:"schedule,omitempty"`
 	Volumes      []VolumeResource  `json:"volumes,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
-	Trigger      bool              `json:"trigger,omitempty"`
+	Trigger      Trigger           `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
 	Tasks        []PipelineTask    `json:"tasks,omitempty"`
 	RunBefore    []string          `json:"runBefore,omitempty"`
