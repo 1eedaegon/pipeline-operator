@@ -44,6 +44,7 @@ const (
 	RunJobNameLabel      = "pipeline.1eedaegon.github.io/run-job-name"
 	JobNameLabel         = "batch.kubernetes.io/job-name"
 	StatusAnnotation     = "pipeline.1eedaegon.github.io/status"
+	ReasonAnnotation     = "pipeline.1eedaegon.github.io/reason"
 	RunDeletionFinalizer = "pipeline.1eedaegon.github.io/finalizer"
 	GpuTypeLabel         = "nvidia.com/gpu.product"
 	GpuAmountLabel       = "nvidia.com/gpu.count"
@@ -114,6 +115,7 @@ const (
 	JobStateCompleted JobState = "completed"
 	JobStateDeleted   JobState = "deleted"
 	JobStateFailed    JobState = "failed"
+	JobStateUnknown   JobState = "unknown"
 )
 
 var StateOrder = map[JobState]int{
@@ -125,6 +127,7 @@ var StateOrder = map[JobState]int{
 	JobStateDeleting:  3,
 	JobStateStop:      2,
 	JobStateDeleted:   1,
+	JobStateUnknown:   0,
 }
 
 type RunJobState struct {
@@ -615,6 +618,7 @@ func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, e
 			ReadOnly:  true,
 		})
 	}
+
 	for _, mountString := range job.Outputs {
 		mountCopus, err := splitVolumeCopus(mountString)
 		if err != nil {

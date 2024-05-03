@@ -248,6 +248,8 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 
 			jobState := pipelinev1.DetermineJobStateFrom(currentKjob, pod)
 			currentKjob.ObjectMeta.Annotations[pipelinev1.StatusAnnotation] = string(jobState)
+			currentKjob.ObjectMeta.Annotations[pipelinev1.ReasonAnnotation] = pod.Status.Reason
+
 			// TODO: Run의 Trigger가 false -> true 시 다음 kjob에 대해서 waiting(suspending)
 			if currentTrigger == pipelinev1.IsTriggered.String() && desiredTrigger == pipelinev1.IsNotTriggered.String() {
 				currentKjob.ObjectMeta.Annotations[pipelinev1.TriggerAnnotation] = pipelinev1.IsNotTriggered.String()
@@ -265,6 +267,7 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 					break
 				}
 			}
+
 			for _, beforeJob := range selfJob.RunBefore {
 				beforeKjobList := &kbatchv1.JobList{}
 				listQueryOpts := []client.ListOption{
@@ -298,7 +301,6 @@ func (r *RunReconciler) ensureKJobList(ctx context.Context, run *pipelinev1.Run)
 	return nil
 }
 
-// TODO: Job내 pod의 상태를 보고 run job의 상태를 결정지어야한다.
 func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run) error {
 	log := log.FromContext(ctx)
 	jobList := kbatchv1.JobList{}
@@ -324,7 +326,8 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 			return err
 		}
 
-		jobState := pipelinev1.JobState(pipelinev1.JobStateDeleted)
+		// 가장 낮은 순위 state로 초기화
+		jobState := pipelinev1.JobState(pipelinev1.JobStateUnknown)
 		var runJobStateList []pipelinev1.RunJobState
 		Init := 0
 		Wait := 0
@@ -336,9 +339,11 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		Failed := 0
 		for _, kjob := range jobList.Items {
 			kjobState := pipelinev1.JobState(kjob.Annotations[pipelinev1.StatusAnnotation])
+			kjobReason := kjob.Annotations[pipelinev1.ReasonAnnotation]
 			runJobState := pipelinev1.RunJobState{
 				Name:     kjob.ObjectMeta.Name,
 				JobState: kjobState,
+				Reason:   kjobReason,
 			}
 			jobState = pipelinev1.DetermineJobStateFromOrder(jobState, kjobState)
 			runJobStateList = append(runJobStateList, runJobState)

@@ -32,7 +32,7 @@ spec:
   inputs: []
   outputs: []
   resource:
-    cpu: 100m
+    cpu: 200m
     memory: 100Mi
   tasks:
   - name: pipeline-init-pipeline # import task type without image version

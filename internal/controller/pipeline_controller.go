@@ -79,7 +79,7 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 
 	// Update pipeline with status(with sum)
 	if err := r.updatePipelineStatus(ctx, pipeline); err != nil {
-		log.V(1).Error(err, "Unable to update pipeline status")
+		log.V(1).Error(err, "unable to update pipeline status")
 		return ctrl.Result{}, err
 	}
 
@@ -103,6 +103,9 @@ func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipelin
 	objKey := client.ObjectKey{
 		Name:      pipeline.ObjectMeta.Name,
 		Namespace: pipeline.ObjectMeta.Namespace,
+	}
+	if pipeline.ObjectMeta.Namespace == "" {
+		pipeline.ObjectMeta.Namespace = "pipeline"
 	}
 	if err := r.Get(ctx, objKey, pipeline); err != nil {
 		return err
@@ -159,7 +162,7 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 
 func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
 	log := log.FromContext(ctx)
-	log.V(1).Info(fmt.Sprintf("Update pipeline status."))
+	log.V(1).Info(fmt.Sprintf("update pipeline status."))
 	runList := &pipelinev1.RunList{}
 
 	listQueryOpts := []client.ListOption{
