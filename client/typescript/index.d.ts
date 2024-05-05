@@ -8,6 +8,12 @@ declare namespace pipelineOperator {
   }
 
   // api/v1/task_types.go
+  namespace TriggerString {
+    type TriggerString = IsTriggeredString | IsNotTriggeredString;
+
+    type IsTriggeredString = "true";
+    type IsNotTriggeredString = "false";
+  }
   interface TaskSpec {
     name?: string;
     image?: string;
@@ -128,7 +134,7 @@ declare namespace pipelineOperator {
   interface RunSpec {
     schedule?: Schedule;
     volumes?: VolumeResource;
-    trigger?: boolean;
+    trigger?: TriggerString.TriggerString;
     historyLimit?: HistoryLimit;
     jobs?: Job[];
     runBefore?: string[];
@@ -159,6 +165,12 @@ declare namespace pipelineOperator {
   interface RunList extends k8sClient.KubernetesListObject<Run> {}
 
   // api/v1/pipeline_types.go
+  namespace Trigger {
+    type Trigger = IsTriggered | IsNotTriggered;
+
+    type IsTriggered = "true";
+    type IsNotTriggered = "false";
+  }
   interface HistoryLimit {
     amount: number;
     date: string;
@@ -200,7 +212,7 @@ declare namespace pipelineOperator {
     taskSpec?: TaskSpec;
     schedule?: Schedule;
     resource?: Resource;
-    trigger?: boolean;
+    trigger?: TriggerString.TriggerString;
     runBefore?: string[];
     inputs?: string[];
     outputs?: string[];
@@ -212,7 +224,7 @@ declare namespace pipelineOperator {
   interface PipelineSpec {
     schedule?: Schedule;
     volumes?: VolumeResource[];
-    trigger?: boolean;
+    trigger?: Trigger.Trigger;
     historyLimit?: HistoryLimit;
     tasks?: PipelineTask[];
     runBefore?: string[];
