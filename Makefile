@@ -140,11 +140,11 @@ uninstall: manifests kustomize ## Uninstall CRDs from the K8s cluster specified 
 	$(KUSTOMIZE) build config/crd | $(KUBECTL) delete --ignore-not-found=$(ignore-not-found) -f -
 
 .PHONY: helm-deploy
-helm-deploy: 
+helm-deploy: helm
 	helm upgrade -n pipeline-operator-system --create-namespace --install pipeline-operator ./charts/pipeline-operator
 
 .PHONY: helm-undeploy
-helm-undeploy:
+helm-undeploy: helm
 	helm uninstall -n pipeline-operator-system pipeline-operator
 
 .PHONY: deploy
