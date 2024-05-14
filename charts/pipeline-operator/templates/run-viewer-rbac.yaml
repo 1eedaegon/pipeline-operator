@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "pipeline-operator.fullname" . }}-run-viewer-role
+  labels:
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: pipeline-operator
+    app.kubernetes.io/part-of: pipeline-operator
+  {{- include "pipeline-operator.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - pipeline.1eedaegon.github.io
+  resources:
+  - runs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - pipeline.1eedaegon.github.io
+  resources:
+  - runs/status
+  verbs:
+  - get
