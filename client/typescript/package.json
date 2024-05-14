@@ -1,0 +1,18 @@
+{
+  "name": "pipeline-operator-client",
+  "version": "0.0.2",
+  "description": "@1eedaegon/pipeline-operator/client for Typescript",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1eedaegon/pipeline-operator"
+  },
+  "author": "@1eedaegon",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@kubernetes/client-node": "^0.20.0"
+  }
+}
