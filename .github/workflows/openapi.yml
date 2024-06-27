@@ -1,11 +1,11 @@
-name: Save openapi.json as artifact
+name: Save openapi.yaml as artifact
 on:
   push:
     branches:
       - main
 
 jobs:
-  save-and-upload-openapi-json:
+  save-and-upload-openapi-yaml:
     runs-on: ubuntu-24.04
     steps:
       - name: checkout
@@ -18,11 +18,11 @@ jobs:
         run: make helm-deploy
       - name: Run kubectl proxy
         run: nohup kubectl proxy &
-      - name: Fetch openapi.json
-        run: curl -k localhost:8001/openapi/v2 > openapi.json
-      - name: Upload openapi.json as artifact
+      - name: Fetch openapi.yaml
+        run: curl -k localhost:8001/openapi/v2 | yq -P > openapi.yaml
+      - name: Upload openapi.yaml as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: openapi.json
-          path: openapi.json
+          name: openapi.yaml
+          path: openapi.yaml
           if-no-files-found: error
