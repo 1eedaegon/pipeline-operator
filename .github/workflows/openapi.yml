@@ -21,12 +21,12 @@ jobs:
       - name: Run kubectl proxy
         run: nohup kubectl proxy &
       - name: Fetch openapi.yaml
-        run: curl -k localhost:8001/openapi/v2 | yq -P > openapi.yaml
+        run: mkdir -p ./generated ; curl -k localhost:8001/openapi/v2 | yq -P > ./generated/openapi.yaml
       - name: Upload openapi.yaml as artifact
         uses: actions/upload-artifact@v4
         with:
           name: openapi.yaml
-          path: openapi.yaml
+          path: ./generated/openapi.yaml
           if-no-files-found: error
       - uses: actions/setup-node@v4
         with:
@@ -38,20 +38,21 @@ jobs:
       - name: Generate typescript-axios sdk using openapi.yaml
         run: >
           openapi-generator generate
-          -i openapi.yaml
-          -o ts-axios-sdk-out
+          -i ./generated/openapi.yaml
+          -o ./generated/sdk/ts-axios-out
           -g typescript-axios
       - name: Move sdk definitions into npm package using template
         run: >
-          mkdir -p ./sdk &&
-          cp -r ./ts-axios-package-template ./sdk/ts-axios &&
-          cp -r ./ts-axios-sdk-out/* ./ts-axios-sdk-out/.* ./sdk/ts-axios &&
-          rmdir ./ts-axios-sdk-out
+          mkdir -p ./generated/sdk &&
+          rm -rf ./generated/sdk/ts-axios ;
+          cp -r ./template/sdk/ts-axios ./generated/sdk/ts-axios &&
+          cp -r ./generated/sdk/ts-axios-out/* ./generated/sdk/ts-axios-out/.* ./generated/sdk/ts-axios &&
+          rmdir ./generated/sdk/ts-axios-out
       - name: Commit sdk definitions
         uses: stefanzweifel/git-auto-commit-action@v5
       - name: Publish ts-axios sdk into npm
         run: >
-          cd ./sdk/ts-axios &&
+          cd ./generated/sdk/ts-axios &&
           npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
