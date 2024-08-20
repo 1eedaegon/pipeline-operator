@@ -44,7 +44,7 @@ jobs:
           mkdir -p ./generated/sdk &&
           rm -rf ./generated/sdk/ts-axios ;
           cp -r ./template/sdk/ts-axios ./generated/sdk/ts-axios &&
-          cp -r ./generated/sdk/ts-axios-out/* ./generated/sdk/ts-axios-out/.* ./generated/sdk/ts-axios &&
+          mv ./generated/sdk/ts-axios-out/* ./generated/sdk/ts-axios-out/.* ./generated/sdk/ts-axios &&
           rmdir ./generated/sdk/ts-axios-out
       - name: Commit sdk definitions
         uses: stefanzweifel/git-auto-commit-action@v5
