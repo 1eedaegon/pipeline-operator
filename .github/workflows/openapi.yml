@@ -54,7 +54,7 @@ jobs:
       - name: Publish ts-axios sdk into npm
         run: >
           cd ./generated/sdk/ts-axios &&
-          npm publish --provenance --access public
+          npm publish --provenance --access public --tag ${{ github.sha }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Compile redoc static pages
