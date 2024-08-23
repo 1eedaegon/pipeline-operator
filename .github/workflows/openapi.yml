@@ -60,8 +60,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Compile redoc static pages
         run: >
-          mkdir -p ./generated/docs &&
-          npx --node-options='--max-old-space-size=16384' @redocly/cli build-docs ./generated/openapi.yaml -o ./generated/docs/redoc
+          mkdir -p ./generated/docs ;
+          mkdir -p ./generated/docs/redoc ;
+          npx --node-options='--max-old-space-size=16384' @redocly/cli build-docs ./generated/openapi.yaml -o ./generated/docs/redoc/index.html
       - name: Commit redoc static page definitions
         uses: stefanzweifel/git-auto-commit-action@v5
       - name: Upload GitHub Pages artifact
