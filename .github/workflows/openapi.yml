@@ -61,7 +61,7 @@ jobs:
       - name: Compile redoc static pages
         run: >
           mkdir -p ./generated/docs &&
-          npx @redocly/reference-docs build ./generated/openapi.yaml -o ./generated/docs/redoc
+          npx @redocly/cli build-docs ./generated/openapi.yaml -o ./generated/docs/redoc
       - name: Commit redoc static page definitions
         uses: stefanzweifel/git-auto-commit-action@v5
       - name: Upload GitHub Pages artifact
