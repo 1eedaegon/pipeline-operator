@@ -55,6 +55,7 @@ jobs:
         run: >
           cd ./generated/sdk/ts-axios &&
           npm publish --provenance --access public --tag ${{ github.sha }}
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Compile redoc static pages
