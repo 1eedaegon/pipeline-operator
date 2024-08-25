@@ -25,7 +25,7 @@ If you want to excitedly create a pipeline with YAML, deploy it all at once and 
   - [ ] Validation: volume with input/outputs
   - [ ] Validation: runBefore
 - [ ] Task reconciler
-  - [] Status: job counting
+  - [ ] Status: job counting
 - [x] Run reconciler
   - [x] runBefore sequential process
   - [ ] scheduling
