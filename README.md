@@ -124,6 +124,10 @@ Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project
 kubectl apply -f https://raw.githubusercontent.com/<org>/pipeline-operator/<tag or branch>/dist/install.yaml
 ```
 
+## API Docs (Redoc)
+
+(https://dps0340.github.io/pipeline-operator/redoc/)
+
 ## License
 
 Copyright 2024.
