@@ -3,9 +3,9 @@ info:
   title: Kubernetes
   version: v1.30.0
 paths:
-  $paths
+$paths
 definitions:
-  $definitions
+$definitions
 securityDefinitions:
   BearerToken:
     description: Bearer Token authentication
