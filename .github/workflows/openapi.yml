@@ -25,6 +25,13 @@ jobs:
         run: nohup kubectl proxy &
       - name: Fetch openapi.yaml
         run: mkdir -p ./generated ; curl -k localhost:8001/openapi/v2 | yq -P > ./generated/openapi.yaml
+      - name: envsubst openapi.yaml
+        run: >
+          export paths=$(yq '.paths | with_entries(select(.key | test("pipeline")))' ./generated/openapi.yaml) ;
+          export definitions=$(yq '.definitions | with_entries(select(.key | test("pipeline")))' ./generated/openapi.yaml) ;
+
+          rm -f ./generated/openapi.yaml ;
+          envsubst < ./generated/openapi.template.yaml > ./generated/openapi.yaml
       - name: Upload openapi.yaml as artifact
         uses: actions/upload-artifact@v4
         with:
