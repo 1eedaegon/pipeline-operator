@@ -25,7 +25,7 @@ If you want to excitedly create a pipeline with YAML, deploy it all at once and 
   - [ ] Validation: volume with input/outputs
   - [ ] Validation: runBefore
 - [ ] Task reconciler
-  - [] Status: job counting
+  - [ ] Status: job counting
 - [x] Run reconciler
   - [x] runBefore sequential process
   - [ ] scheduling
@@ -123,6 +123,10 @@ Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/<org>/pipeline-operator/<tag or branch>/dist/install.yaml
 ```
+
+## API Docs (Redoc)
+
+(https://dps0340.github.io/pipeline-operator/redoc/)
 
 ## License
 
