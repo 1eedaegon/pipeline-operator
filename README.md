@@ -126,7 +126,7 @@ kubectl apply -f https://raw.githubusercontent.com/<org>/pipeline-operator/<tag 
 
 ## API Docs (Redoc)
 
-(https://dps0340.github.io/pipeline-operator/redoc/)
+https://1eedaegon.github.io/pipeline-operator/redoc/
 
 ## License
 
