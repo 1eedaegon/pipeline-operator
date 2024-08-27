@@ -1,0 +1,15 @@
+{
+    "name": "pipeline-operator-ts-fetch-sdk",
+    "version": "1.0.0",
+    "description": "Pipeline operator for k8s native",
+    "main": "index.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "1eedaegon & pipeline operator authors",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DPS0340/pipeline-operator"
+    },
+    "license": "Apache-2.0"
+}
