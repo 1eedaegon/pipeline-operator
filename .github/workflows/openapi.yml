@@ -69,6 +69,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: save-and-upload-openapi-yaml
     strategy:
+      max-parallel: 1
       matrix:
         sdk:
           - type: typescript-axios
