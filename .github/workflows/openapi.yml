@@ -42,29 +42,6 @@ jobs:
         with:
           node-version: 'latest'
           registry-url: 'https://registry.npmjs.org'
-      # TODO: Migrate into matrix
-      - name: Generate typescript-axios sdk using openapi.yaml
-        run: >
-          npx @openapitools/openapi-generator-cli generate
-          -i ./generated/openapi.yaml
-          -o ./generated/sdk/ts-axios-out
-          -g typescript-axios
-      - name: Move sdk definitions into npm package using template
-        run: >
-          mkdir -p ./generated/sdk &&
-          rm -rf ./generated/sdk/ts-axios ;
-          cp -r ./template/sdk/ts-axios ./generated/sdk/ts-axios &&
-          mv ./generated/sdk/ts-axios-out/* ./generated/sdk/ts-axios-out/.* ./generated/sdk/ts-axios &&
-          rmdir ./generated/sdk/ts-axios-out
-      - name: Commit sdk definitions
-        uses: stefanzweifel/git-auto-commit-action@v5
-      - name: Publish ts-axios sdk into npm
-        run: >
-          cd ./generated/sdk/ts-axios &&
-          npm publish --provenance --access public --tag ${{ github.sha }}
-        continue-on-error: true
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Compile redoc static pages
         run: >
           mkdir -p ./generated/docs ;
@@ -76,14 +53,51 @@ jobs:
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: ./generated/docs
-
+      
   deploy-github-pages:
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     needs: save-and-upload-openapi-yaml
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  generate-and-publish-sdks-to-npm:
+    runs-on: ubuntu-24.04
+    needs: save-and-upload-openapi-yaml
+    strategy:
+      matrix:
+        sdk-type: [typescript-axios, typescript-fetch]
+        sdk-type-shorthand: [ts-axios, ts-fetch]
+        sdk-repo-npm-token-key: [TS_AXIOS_NPM_TOKEN, TS_FETCH_NPM_TOKEN]
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Generate typescript-axios sdk using openapi.yaml
+        run: >
+          npx @openapitools/openapi-generator-cli generate
+          -i ./generated/openapi.yaml
+          -o ./generated/sdk/${{ matrix.sdk-type-shorthand }}-out
+          -g ${{ matrix.sdk-type }}
+      - name: Move sdk definitions into npm package using template
+        run: >
+          mkdir -p ./generated/sdk &&
+          rm -rf ./generated/sdk/${{ matrix.sdk-type-shorthand }} ;
+          cp -r ./template/sdk/${{ matrix.sdk-type-shorthand }} ./generated/sdk/${{ matrix.sdk-type-shorthand }} &&
+          mv ./generated/sdk/${{ matrix.sdk-type-shorthand }}-out/* ./generated/sdk/${{ matrix.sdk-type-shorthand }}-out/.* ./generated/sdk/${{ matrix.sdk-type-shorthand }} &&
+          rmdir ./generated/sdk/${{ matrix.sdk-type-shorthand }}-out
+      - name: Commit sdk definitions
+        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Publish ${{ matrix.sdk-type-shorthand }} sdk into npm
+        run: >
+          cd ./generated/sdk/${{ matrix.sdk-type-shorthand }} &&
+          npm publish --provenance --access public --tag ${{ github.sha }}
+        continue-on-error: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets[matrix.sdk-repo-npm-token-key] }}
+
