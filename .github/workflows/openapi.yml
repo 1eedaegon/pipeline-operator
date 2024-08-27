@@ -73,10 +73,8 @@ jobs:
         sdk:
           - type: typescript-axios
             type-shorthand: ts-axios
-            repo-npm-token-key: TS_AXIOS_NPM_TOKEN
           - type: typescript-axios
             type-shorthand: ts-axios
-            repo-npm-token-key: TS_FETCH_NPM_TOKEN
     steps:
       - uses: actions/setup-node@v4
         with:
@@ -103,5 +101,5 @@ jobs:
           npm publish --provenance --access public --tag ${{ github.sha }}
         continue-on-error: true
         env:
-          NODE_AUTH_TOKEN: ${{ secrets[matrix.sdk.repo-npm-token-key] }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
