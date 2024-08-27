@@ -73,8 +73,8 @@ jobs:
         sdk:
           - type: typescript-axios
             type-shorthand: ts-axios
-          - type: typescript-axios
-            type-shorthand: ts-axios
+          - type: typescript-fetch
+            type-shorthand: ts-fetch
     steps:
       - name: checkout
         uses: actions/checkout@v2
