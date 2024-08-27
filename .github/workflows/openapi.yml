@@ -76,6 +76,8 @@ jobs:
           - type: typescript-axios
             type-shorthand: ts-axios
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       - uses: actions/setup-node@v4
         with:
           node-version: 'latest'
