@@ -96,6 +96,14 @@ jobs:
           cp -r ./template/sdk/${{ matrix.sdk.type-shorthand }} ./generated/sdk/${{ matrix.sdk.type-shorthand }} &&
           mv ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out/* ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out/.* ./generated/sdk/${{ matrix.sdk.type-shorthand }} &&
           rmdir ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out
+      - name: Pull from remote repo
+        run: >
+          git add . &&
+          git stash &&
+          git pull --rebase origin $BRANCH_NAME &&
+          git stash apply
+        env:
+         BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
       - name: Commit sdk definitions
         uses: stefanzweifel/git-auto-commit-action@v5
       - name: Publish ${{ matrix.sdk.type-shorthand }} sdk into npm
