@@ -9,7 +9,7 @@
     "author": "1eedaegon & pipeline operator authors",
     "repository": {
         "type": "git",
-        "url": "https://github.com/DPS0340/pipeline-operator"
+        "url": "https://github.com/1eedaegon/pipeline-operator"
     },
     "license": "Apache-2.0"
 }
