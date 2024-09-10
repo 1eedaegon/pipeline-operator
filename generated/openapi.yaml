@@ -1492,6 +1492,7 @@ definitions:
       - group: pipeline.1eedaegon.github.io
         kind: Pipeline
         version: v1
+    x-kubernetes-selectable-fields: []
   io.github.1eedaegon.pipeline.v1.PipelineList:
     description: PipelineList is a list of Pipeline
     type: object
@@ -1516,6 +1517,7 @@ definitions:
       - group: pipeline.1eedaegon.github.io
         kind: PipelineList
         version: v1
+    x-kubernetes-selectable-fields: []
   io.github.1eedaegon.pipeline.v1.Run:
     type: object
     properties:
@@ -1686,6 +1688,7 @@ definitions:
       - group: pipeline.1eedaegon.github.io
         kind: Run
         version: v1
+    x-kubernetes-selectable-fields: []
   io.github.1eedaegon.pipeline.v1.RunList:
     description: RunList is a list of Run
     type: object
@@ -1710,6 +1713,7 @@ definitions:
       - group: pipeline.1eedaegon.github.io
         kind: RunList
         version: v1
+    x-kubernetes-selectable-fields: []
   io.github.1eedaegon.pipeline.v1.Task:
     type: object
     properties:
@@ -1750,6 +1754,7 @@ definitions:
       - group: pipeline.1eedaegon.github.io
         kind: Task
         version: v1
+    x-kubernetes-selectable-fields: []
   io.github.1eedaegon.pipeline.v1.TaskList:
     description: TaskList is a list of Task
     type: object
@@ -1774,6 +1779,7 @@ definitions:
       - group: pipeline.1eedaegon.github.io
         kind: TaskList
         version: v1
+    x-kubernetes-selectable-fields: []
   io.k8s.apimachinery.pkg.api.resource.Quantity:
     description: |-
       Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.
@@ -2119,6 +2125,9 @@ definitions:
         version: v1
       - group: coordination.k8s.io
         kind: DeleteOptions
+        version: v1alpha1
+      - group: coordination.k8s.io
+        kind: DeleteOptions
         version: v1beta1
       - group: discovery.k8s.io
         kind: DeleteOptions
@@ -2188,7 +2197,7 @@ definitions:
         version: v1beta1
       - group: resource.k8s.io
         kind: DeleteOptions
-        version: v1alpha2
+        version: v1alpha3
       - group: scheduling.k8s.io
         kind: DeleteOptions
         version: v1
@@ -2210,6 +2219,25 @@ definitions:
       - group: storagemigration.k8s.io
         kind: DeleteOptions
         version: v1alpha1
+  io.k8s.apimachinery.pkg.apis.meta.v1.FieldSelectorRequirement:
+    description: FieldSelectorRequirement is a selector that contains values, a key, and an operator that relates the key and values.
+    type: object
+    required:
+      - key
+      - operator
+    properties:
+      key:
+        description: key is the field selector key that the requirement applies to.
+        type: string
+      operator:
+        description: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. The list of operators may grow in the future.
+        type: string
+      values:
+        description: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.
+        type: array
+        items:
+          type: string
+        x-kubernetes-list-type: atomic
   io.k8s.apimachinery.pkg.apis.meta.v1.FieldsV1:
     description: |-
       FieldsV1 stores a set of fields in a data structure like a Trie, in JSON format.
@@ -2489,9 +2517,6 @@ definitions:
       - group: ""
         kind: Status
         version: v1
-      - group: resource.k8s.io
-        kind: Status
-        version: v1alpha2
   io.k8s.apimachinery.pkg.apis.meta.v1.StatusCause:
     description: StatusCause provides more information about an api.Status failure, including cases when multiple errors are encountered.
     type: object
@@ -2644,6 +2669,9 @@ definitions:
         version: v1
       - group: coordination.k8s.io
         kind: WatchEvent
+        version: v1alpha1
+      - group: coordination.k8s.io
+        kind: WatchEvent
         version: v1beta1
       - group: discovery.k8s.io
         kind: WatchEvent
@@ -2713,7 +2741,7 @@ definitions:
         version: v1beta1
       - group: resource.k8s.io
         kind: WatchEvent
-        version: v1alpha2
+        version: v1alpha3
       - group: scheduling.k8s.io
         kind: WatchEvent
         version: v1
