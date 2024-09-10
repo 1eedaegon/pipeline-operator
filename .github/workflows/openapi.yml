@@ -49,6 +49,10 @@ jobs:
           npx --node-options='--max-old-space-size=16384' @redocly/cli build-docs ./generated/openapi.yaml -o ./generated/docs/redoc/index.html
       - name: Commit redoc static page definitions
         uses: stefanzweifel/git-auto-commit-action@v5
+      - name: tar & index helm chart
+        run: |
+          helm package ./charts/pipeline-operator
+          helm repo index ./
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
