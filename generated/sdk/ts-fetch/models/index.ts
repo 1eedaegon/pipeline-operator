@@ -27,6 +27,7 @@ export * from './IoK8sApimachineryPkgApisMetaV1APIResourceList';
 export * from './IoK8sApimachineryPkgApisMetaV1APIVersions';
 export * from './IoK8sApimachineryPkgApisMetaV1Condition';
 export * from './IoK8sApimachineryPkgApisMetaV1DeleteOptions';
+export * from './IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement';
 export * from './IoK8sApimachineryPkgApisMetaV1GroupVersionForDiscovery';
 export * from './IoK8sApimachineryPkgApisMetaV1LabelSelector';
 export * from './IoK8sApimachineryPkgApisMetaV1LabelSelectorRequirement';
