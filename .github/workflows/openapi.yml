@@ -103,10 +103,14 @@ jobs:
           rmdir ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out
       - name: Pull from remote repo
         run: |
+          set +e
+
           git add .
           git stash
           git pull --rebase origin $BRANCH_NAME
           git stash apply
+
+          set -e
           exit 0
         env:
          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
