@@ -1095,6 +1095,31 @@ export interface IoK8sApimachineryPkgApisMetaV1DeleteOptions {
     'propagationPolicy'?: string;
 }
 /**
+ * FieldSelectorRequirement is a selector that contains values, a key, and an operator that relates the key and values.
+ * @export
+ * @interface IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement
+ */
+export interface IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement {
+    /**
+     * key is the field selector key that the requirement applies to.
+     * @type {string}
+     * @memberof IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement
+     */
+    'key': string;
+    /**
+     * operator represents a key\'s relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. The list of operators may grow in the future.
+     * @type {string}
+     * @memberof IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement
+     */
+    'operator': string;
+    /**
+     * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.
+     * @type {Array<string>}
+     * @memberof IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement
+     */
+    'values'?: Array<string>;
+}
+/**
  * GroupVersion contains the \"group/version\" and \"version\" string of a version. It is made a struct to keep extensibility.
  * @export
  * @interface IoK8sApimachineryPkgApisMetaV1GroupVersionForDiscovery
