@@ -103,9 +103,10 @@ jobs:
       - name: Pull from remote repo
         run: >
           git add . &&
-          git stash &&
+          git stash ;
           git pull --rebase origin $BRANCH_NAME &&
-          git stash apply
+          git stash apply ;
+          exit 0
         env:
          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
       - name: Commit sdk definitions
