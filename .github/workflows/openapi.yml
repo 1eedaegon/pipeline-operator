@@ -51,12 +51,13 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
       - name: tar & index helm chart
         run: |
-          helm package ./charts/pipeline-operator
+          cd ./generated
+          helm package ../charts/pipeline-operator
           helm repo index ./
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
-          path: ./generated/docs
+          path: ./generated
       
   deploy-github-pages:
     runs-on: ubuntu-24.04
