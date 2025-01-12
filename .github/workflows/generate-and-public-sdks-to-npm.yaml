@@ -1,9 +1,10 @@
 name: Generate and publish sdks to npm
 on:
   workflow_dispatch:
-  tags:
+  push:
     # https://stackoverflow.com/questions/61891328/trigger-github-action-only-on-new-tags
-    - 'v*'
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
