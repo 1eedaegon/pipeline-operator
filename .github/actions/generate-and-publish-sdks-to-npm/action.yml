@@ -48,5 +48,3 @@ runs:
         cd ./generated/sdk/${{ matrix.sdk.type-shorthand }}
         npm publish --provenance --access public --tag ${{ github.sha }}
       continue-on-error: true
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

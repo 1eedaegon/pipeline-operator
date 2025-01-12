@@ -27,3 +27,5 @@ jobs:
         uses: actions/checkout@v2
       - uses: ./.github/actions/save-and-upload-openapi-yaml
       - uses: ./.github/actions/generate-and-publish-sdks-to-npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
