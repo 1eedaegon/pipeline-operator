@@ -32,16 +32,14 @@ runs:
         set +e
 
         git add .
-        git stash
-        git pull --rebase origin $BRANCH_NAME
+        git commit -m "[skip ci] Commit sdk definitions"
+        git push -f origin tags/$BRANCH_NAME
         git stash apply
 
         set -e
         exit 0
       env:
        BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
-    - name: Commit sdk definitions
-      uses: stefanzweifel/git-auto-commit-action@v5
     - name: Publish ${{ matrix.sdk.type-shorthand }} sdk into npm
       shell: bash
       run: |
