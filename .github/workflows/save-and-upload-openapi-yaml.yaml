@@ -1,0 +1,18 @@
+name: Save openapi.yaml as artifact
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  id-token: write
+  pages: write
+
+jobs:
+  save-and-upload-openapi-yaml:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - uses: ./.github/actions/save-and-upload-openapi-yaml
