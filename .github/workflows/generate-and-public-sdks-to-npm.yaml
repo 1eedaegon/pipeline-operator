@@ -1,7 +1,8 @@
 name: Generate and publish sdks to npm
 on:
-  tag:
-    'v*.*.*'
+  tags:
+    # https://stackoverflow.com/questions/61891328/trigger-github-action-only-on-new-tags
+    - 'v*'
 
 permissions:
   contents: write
