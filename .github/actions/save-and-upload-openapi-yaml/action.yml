@@ -58,6 +58,7 @@ runs:
       uses: actions/upload-pages-artifact@v3.0.1
       with:
         path: ./generated
+      continue-on-error: true
     - name: Deploy to GitHub Pages
       uses: actions/deploy-pages@v4
       continue-on-error: true
