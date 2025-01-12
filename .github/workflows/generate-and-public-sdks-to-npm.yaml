@@ -1,5 +1,6 @@
 name: Generate and publish sdks to npm
 on:
+  workflow_dispatch:
   tags:
     # https://stackoverflow.com/questions/61891328/trigger-github-action-only-on-new-tags
     - 'v*'

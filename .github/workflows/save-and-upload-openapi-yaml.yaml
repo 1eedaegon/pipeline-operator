@@ -1,5 +1,6 @@
 name: Save openapi.yaml as artifact
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
