@@ -59,3 +59,4 @@ runs:
         path: ./generated
     - name: Deploy to GitHub Pages
       uses: actions/deploy-pages@v4
+      continue-on-error: true
