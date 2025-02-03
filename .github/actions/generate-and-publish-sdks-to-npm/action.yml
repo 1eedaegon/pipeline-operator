@@ -26,20 +26,20 @@ runs:
         cp -r ./template/sdk/${{ matrix.sdk.type-shorthand }} ./generated/sdk/${{ matrix.sdk.type-shorthand }}
         mv ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out/* ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out/.* ./generated/sdk/${{ matrix.sdk.type-shorthand }}
         rmdir ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out
-    - name: Pull from remote repo
+    - name: Push to remote repo
       shell: bash
       run: |
         set +e
 
         git add .
         git commit -m "[skip ci] Commit sdk definitions"
-        git push -f origin tags/$BRANCH_NAME
+        git push -f origin $BRANCH_NAME
         git stash apply
 
         set -e
         exit 0
       env:
-       BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+       BRANCH_NAME: ${{ github.ref_name }}
     - name: Publish ${{ matrix.sdk.type-shorthand }} sdk into npm
       shell: bash
       run: |

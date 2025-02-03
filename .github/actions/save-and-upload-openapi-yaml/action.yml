@@ -47,8 +47,20 @@ runs:
         mkdir -p ./generated/docs
         mkdir -p ./generated/docs/redoc
         npx --node-options='--max-old-space-size=16384' @redocly/cli build-docs ./generated/openapi.yaml -o ./generated/docs/redoc/index.html
-    - name: Commit redoc static page definitions
-      uses: stefanzweifel/git-auto-commit-action@v5
+    - name: Push to remote repo
+      shell: bash
+      run: |
+        set +e
+
+        git add .
+        git commit -m "[skip ci] Commit redoc static page definitions"
+        git push -f origin $BRANCH_NAME
+        git stash apply
+
+        set -e
+        exit 0
+      env:
+       BRANCH_NAME: ${{ github.ref_name }}
     - name: tar & index helm chart
       shell: bash
       run: |
