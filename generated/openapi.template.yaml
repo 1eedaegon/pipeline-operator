@@ -6,6 +6,8 @@ paths:
 $paths
 definitions:
 $definitions
+parameters:
+$parameters
 securityDefinitions:
   BearerToken:
     description: Bearer Token authentication

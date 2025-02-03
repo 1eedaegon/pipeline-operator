@@ -26,6 +26,7 @@ runs:
       run: |
         export paths=$(yq '.paths | with_entries(select(.key | test("pipeline")))' ./generated/openapi.yaml | sed 's/^/  /')
         export definitions=$(yq '.definitions | with_entries(select(.key | (test("pipeline") or test("io.k8s.apimachinery"))))' ./generated/openapi.yaml | sed 's/^/  /')
+        export parameters=$(yq '.parameters' ./generated/openapi.yaml | sed 's/^/  /')
 
         rm -f ./generated/openapi.yaml
         envsubst < ./generated/openapi.template.yaml > ./generated/openapi.yaml
