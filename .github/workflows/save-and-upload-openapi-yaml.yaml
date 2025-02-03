@@ -16,4 +16,5 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - uses: ./.github/actions/build-and-push-container-image
       - uses: ./.github/actions/save-and-upload-openapi-yaml
