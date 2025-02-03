@@ -12,8 +12,8 @@ runs:
       run: |
         docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
 
-        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+        echo "${GITHUB_TOKEN}" | docker login ghcr.io -u $ --password-stdin
+        IMAGE_ID=ghcr.io/${REPO_OWNER}/$IMAGE_NAME
         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
         VERSION="${TAG}"
 
@@ -25,3 +25,5 @@ runs:
       env:
        IMAGE_NAME: pipeline-operator
        TAG: ${{ github.ref_name }}
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       REPO_OWNER: ${{ github.repository_owner }}
