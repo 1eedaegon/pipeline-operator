@@ -17,6 +17,15 @@ If you want to excitedly create a pipeline with YAML, deploy it all at once and 
   - From file
   - Secret
 
+
+## API Docs (Redoc)
+
+https://1eedaegon.github.io/pipeline-operator/docs/redoc/
+
+## NPM SDKs
+
+[![https://nodei.co/npm/pipeline-operator-ts-axios-sdk.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/pipeline-operator-ts-axios-sdk.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/pipeline-operator-ts-axios-sdk) [![https://nodei.co/npm/pipeline-operator-ts-fetch-sdk.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/pipeline-operator-ts-fetch-sdk.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/pipeline-operator-ts-fetch-sdk)
+
 ## TODOS
 
 - [x] Pipeline reconciler
@@ -123,10 +132,6 @@ Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/<org>/pipeline-operator/<tag or branch>/dist/install.yaml
 ```
-
-## API Docs (Redoc)
-
-https://1eedaegon.github.io/pipeline-operator/docs/redoc/
 
 ## License
 
