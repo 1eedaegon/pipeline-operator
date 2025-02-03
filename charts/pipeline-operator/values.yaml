@@ -31,8 +31,8 @@ controllerManager:
         drop:
         - ALL
     image:
-      repository: docker.io/1eedaegon/pipeline-operator
-      tag: v0.0.3
+      repository: ghcr.io/dps0340/pipeline-operator
+      tag: v1.0.2
     resources:
       limits:
         cpu: 500m
