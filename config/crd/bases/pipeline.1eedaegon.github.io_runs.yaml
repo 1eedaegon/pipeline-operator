@@ -173,6 +173,8 @@ spec:
               JobStates:
                 items:
                   properties:
+                    jobName:
+                      type: string
                     jobState:
                       type: string
                     name:

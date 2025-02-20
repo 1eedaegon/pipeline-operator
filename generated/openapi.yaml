@@ -1657,6 +1657,8 @@ definitions:
             items:
               type: object
               properties:
+                jobName:
+                  type: string
                 jobState:
                   type: string
                 name:
