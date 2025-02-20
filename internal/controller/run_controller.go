@@ -343,7 +343,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 			kjobReason := kjob.Annotations[pipelinev1.ReasonAnnotation]
 			runJobState := pipelinev1.RunJobState{
 				Name:       kjob.ObjectMeta.Name,
-				RunJobName: kjob.ObjectMeta.Annotations[pipelinev1.RunJobNameLabel],
+				RunJobName: kjob.ObjectMeta.Labels[pipelinev1.RunJobNameLabel],
 				JobState:   kjobState,
 				Reason:     kjobReason,
 			}
