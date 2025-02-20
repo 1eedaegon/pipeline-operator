@@ -21,6 +21,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"sort"
 	"time"
 
 	kbatchv1 "k8s.io/api/batch/v1"
@@ -342,6 +343,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 			kjobReason := kjob.Annotations[pipelinev1.ReasonAnnotation]
 			runJobState := pipelinev1.RunJobState{
 				Name:     kjob.ObjectMeta.Name,
+				JobName:  kjob.ObjectMeta.Annotations[pipelinev1.RunJobNameLabel],
 				JobState: kjobState,
 				Reason:   kjobReason,
 			}
@@ -380,6 +382,17 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 				continue
 			}
 		}
+
+		// Construct run.Spec.Jobs.Name -> index mappings.
+		m := make(map[string]int)
+		for i, v := range run.Spec.Jobs {
+			m[v.Name] = i
+		}
+
+		// Sort runJobStateList by above mappings.
+		sort.Slice(runJobStateList, func(i, j int) bool {
+			return m[runJobStateList[j].JobName] < m[runJobStateList[j].JobName]
+		})
 
 		run.Status.JobStates = runJobStateList
 		run.Status.Initializing = &Init
