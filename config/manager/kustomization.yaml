@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: ghcr.io/dps0340/pipeline-operator
-  newTag: v1.0.2
+  newTag: v1.0.4
