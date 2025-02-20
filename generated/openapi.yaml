@@ -1663,7 +1663,7 @@ definitions:
                   type: string
                 reason:
                   type: string
-                runjobName:
+                runJobName:
                   type: string
           completed:
             type: integer

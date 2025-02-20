@@ -180,7 +180,7 @@ spec:
                       type: string
                     reason:
                       type: string
-                    runjobName:
+                    runJobName:
                       type: string
                   type: object
                 type: array
