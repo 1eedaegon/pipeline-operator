@@ -173,13 +173,13 @@ spec:
               JobStates:
                 items:
                   properties:
-                    RunjobName:
-                      type: string
                     jobState:
                       type: string
                     name:
                       type: string
                     reason:
+                      type: string
+                    runjobName:
                       type: string
                   type: object
                 type: array
