@@ -132,7 +132,7 @@ var StateOrder = map[JobState]int{
 
 type RunJobState struct {
 	Name       string   `json:"name,omitempty"`
-	RunJobName string   `json:"runjobName,omitempty"`
+	RunJobName string   `json:"runJobName,omitempty"`
 	JobState   JobState `json:"jobState,omitempty"`
 	Reason     string   `json:"reason,omitempty"`
 }
