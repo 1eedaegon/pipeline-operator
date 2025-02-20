@@ -1657,7 +1657,7 @@ definitions:
             items:
               type: object
               properties:
-                jobName:
+                RunjobName:
                   type: string
                 jobState:
                   type: string
