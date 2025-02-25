@@ -15,6 +15,8 @@ runs:
         echo "${GITHUB_TOKEN}" | docker login ghcr.io -u $ --password-stdin
         IMAGE_ID=ghcr.io/${REPO_OWNER}/$IMAGE_NAME
         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+        
+        TAG="${GITHUB_SHA::7}"
 
         echo IMAGE_ID=$IMAGE_ID
         echo BRANCH=$BRANCH
@@ -28,5 +30,5 @@ runs:
       env:
        IMAGE_NAME: pipeline-operator
        BRANCH: ${{ github.ref_name }}
-       TAG: ${{ github.sha }}
+       COMMIT_HASH: ${{ github.sha }}
        REPO_OWNER: ${{ github.repository_owner }}
