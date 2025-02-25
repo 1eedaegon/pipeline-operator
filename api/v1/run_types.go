@@ -604,35 +604,23 @@ const (
 func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, error) {
 	volumeMounts := []corev1.VolumeMount{}
 
-	for _, mountString := range job.Inputs {
-		mountCopus, err := splitVolumeCopus(mountString)
-		if err != nil {
-			return nil, err
+	for _, es := range [][]string{job.Inputs, job.Outputs} {
+		for _, mountString := range es {
+			mountCopus, err := splitVolumeCopus(mountString)
+			if err != nil {
+				return nil, err
+			}
+			// hsBy := mountCopus[0] + fmt.Sprintf("%v", job)
+			// volumeName := getShortHashPostFix(mountCopus[0], hsBy)
+			volumeName, directoryWithHash := mountCopus[0], mountCopus[1]
+			subPath := strings.Join(mountCopus[2:], "/")
+			volumeMounts = append(volumeMounts, corev1.VolumeMount{
+				Name:      volumeName,
+				MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
+				SubPath:   directoryWithHash + subPath,
+				ReadOnly:  true,
+			})
 		}
-		// hsBy := mountCopus[0] + fmt.Sprintf("%v", job)
-		// volumeName := getShortHashPostFix(mountCopus[0], hsBy)
-		volumeName, subPath := mountCopus[0], mountCopus[1]
-		volumeMounts = append(volumeMounts, corev1.VolumeMount{
-			Name:      volumeName,
-			MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
-			SubPath:   subPath,
-			ReadOnly:  true,
-		})
-	}
-
-	for _, mountString := range job.Outputs {
-		mountCopus, err := splitVolumeCopus(mountString)
-		if err != nil {
-			return nil, err
-		}
-		// hsBy := mountCopus[0] + fmt.Sprintf("%v", job)
-		// volumeName := getShortHashPostFix(mountCopus[0], hsBy)
-		volumeName, subPath := mountCopus[0], mountCopus[1]
-		volumeMounts = append(volumeMounts, corev1.VolumeMount{
-			Name:      volumeName,
-			MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
-			SubPath:   subPath,
-		})
 	}
 	return volumeMounts, nil
 }
@@ -753,9 +741,9 @@ func defaultImageRegistry(imagePath string) string {
 }
 
 // volume 이름의 "/"를 기준으로 자른다.(copus)
-// 자른 이름의 좌측을 pvc의 이름으로 사용, 우측을 subpath로 사용한다.
+// 자른 이름의 0 index를 pvc의 이름으로 사용, 1 index를 hash subdirectory로, 2.. index를 subpath로 사용한다.
 func splitVolumeCopus(volumeString string) ([]string, error) {
-	volumeCopus := strings.SplitN(volumeString, "/", 2)
+	volumeCopus := strings.Split(volumeString, "/")
 	if len(volumeCopus) <= 0 || volumeCopus[1] == "" {
 		return nil, errors.New("volume has no prefix or postfix like: 'volumeName/filePath'")
 	}
