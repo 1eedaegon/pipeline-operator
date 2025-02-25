@@ -617,7 +617,7 @@ func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, e
 			volumeMounts = append(volumeMounts, corev1.VolumeMount{
 				Name:      volumeName,
 				MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
-				SubPath:   directoryWithHash + subPath,
+				SubPath:   directoryWithHash + "/" + subPath,
 				ReadOnly:  true,
 			})
 		}
