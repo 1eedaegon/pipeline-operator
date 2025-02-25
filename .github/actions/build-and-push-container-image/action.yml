@@ -15,14 +15,18 @@ runs:
         echo "${GITHUB_TOKEN}" | docker login ghcr.io -u $ --password-stdin
         IMAGE_ID=ghcr.io/${REPO_OWNER}/$IMAGE_NAME
         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-        VERSION="${TAG}"
 
         echo IMAGE_ID=$IMAGE_ID
-        echo VERSION=$VERSION
+        echo BRANCH=$BRANCH
+        echo TAG=$TAG
 
-        docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-        docker push $IMAGE_ID:$VERSION
+        docker tag $IMAGE_NAME $IMAGE_ID:$BRANCH
+        docker tag $IMAGE_NAME $IMAGE_ID:$TAG
+
+        docker push $IMAGE_ID:$BRANCH
+        docker push $IMAGE_ID:$TAG
       env:
        IMAGE_NAME: pipeline-operator
-       TAG: ${{ github.ref_name }}
+       BRANCH: ${{ github.ref_name }}
+       TAG: ${{ github.sha }}
        REPO_OWNER: ${{ github.repository_owner }}
