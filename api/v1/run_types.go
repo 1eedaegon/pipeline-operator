@@ -492,6 +492,9 @@ func constructKjobFromRunJob(ctx context.Context, run *Run, job Job) (*kbatchv1.
 
 	// Merge container Specs from run / job
 	for _, containerSpecs := range []*corev1.Container{run.Spec.AdditionalContainerSpecs, job.AdditionalContainerSpecs} {
+		if containerSpecs == nil {
+			continue
+		}
 		for i := range containers {
 			if err := mergo.Merge(&containers[i], *containerSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
 				return nil, err
@@ -501,6 +504,9 @@ func constructKjobFromRunJob(ctx context.Context, run *Run, job Job) (*kbatchv1.
 
 	// Merge pod Specs from run / job
 	for _, podSpecs := range []*corev1.PodSpec{run.Spec.AdditionalPodSpecs, job.AdditionalPodSpecs} {
+		if podSpecs == nil {
+			continue
+		}
 		if err := mergo.Merge(&podSpec, *podSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
 			return nil, err
 		}
