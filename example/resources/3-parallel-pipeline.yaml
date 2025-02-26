@@ -87,3 +87,6 @@ spec:
     runBefore:
     - pipeline-2-2
     - pipeline-2-1-1
+  # Below are optional fields, So You could safely omit without specifying null.
+  additionalContainerSpecs: null
+  additionalPodSpecs: null

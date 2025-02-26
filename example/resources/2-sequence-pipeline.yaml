@@ -24,6 +24,8 @@ spec:
     - name: yennefer-something/init-output # RWX
       useIntermediateDirectory: true
     runBefore: []
+    additionalContainerSpecs: null
+    additionalPodSpecs: null
   - name: pipeline-2 # import task type without image version
     image: amazon/aws-cli
     trigger: false
@@ -38,6 +40,8 @@ spec:
       useIntermediateDirectory: true
     runBefore:
     - pipeline-1
+    additionalContainerSpecs: null
+    additionalPodSpecs: null
   - name: pipeline-3 # import task type without image version
     image: amazon/aws-cli
     trigger: false
@@ -52,3 +56,5 @@ spec:
       useIntermediateDirectory: true
     runBefore:
     - pipeline-2
+  additionalContainerSpecs: null
+  additionalPodSpecs: null
