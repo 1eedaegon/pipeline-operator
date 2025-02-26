@@ -37,13 +37,13 @@ runs:
 
       cp ./generated/openapi.template.yaml ./generated/openapi.yaml
 
-      echo "paths:" >> ./generated/openapi.yaml
+      echo -e "paths:\n" >> ./generated/openapi.yaml
       cat ./generated/openapi.paths.yaml >> ./generated/openapi.yaml
 
-      echo "definitions:" >> ./generated/openapi.yaml
+      echo -e "definitions:\n" >> ./generated/openapi.yaml
       cat ./generated/openapi.definitions.yaml >> ./generated/openapi.yaml
 
-      echo "parameters:" >> ./generated/openapi.yaml
+      echo -e "parameters:\n" >> ./generated/openapi.yaml
       cat ./generated/openapi.parameters.yaml >> ./generated/openapi.yaml
 
       rm -f ./generated/openapi.paths.yaml ./generated/openapi.definitions.yaml ./generated/openapi.parameters.yaml
