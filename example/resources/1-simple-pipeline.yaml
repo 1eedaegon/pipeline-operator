@@ -37,6 +37,7 @@ spec:
       useIntermediateDirectory: true
     # Below are optional fields, So You could safely omit without specifying null.
     additionalContainerSpecs:
+      name: ""
       ports:
       - name: test-port-2
         containerPort: 443
