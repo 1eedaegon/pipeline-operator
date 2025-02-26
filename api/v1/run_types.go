@@ -372,25 +372,33 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 		var additionalContainerSpecs *corev1.Container
 
 		if run.Spec.AdditionalContainerSpecs != nil {
-			additionalContainerSpecs = &*run.Spec.AdditionalContainerSpecs
+			additionalContainerSpecs = new(corev1.Container)
+			*additionalContainerSpecs = *run.Spec.AdditionalContainerSpecs
 		} else if task.AdditionalContainerSpecs != nil {
-			additionalContainerSpecs = &*task.AdditionalContainerSpecs
+			additionalContainerSpecs = new(corev1.Container)
+			*additionalContainerSpecs = *task.AdditionalContainerSpecs
 		}
 
 		if run.Spec.AdditionalContainerSpecs != nil && task.AdditionalContainerSpecs != nil {
-			mergo.Merge(additionalContainerSpecs, *task.AdditionalContainerSpecs)
+			if err := mergo.Merge(additionalContainerSpecs, *task.AdditionalContainerSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
+				return err
+			}
 		}
 
 		var additionalPodSpecs *corev1.PodSpec
 
 		if run.Spec.AdditionalPodSpecs != nil {
-			additionalPodSpecs = &*run.Spec.AdditionalPodSpecs
+			additionalPodSpecs = new(corev1.PodSpec)
+			*additionalPodSpecs = *run.Spec.AdditionalPodSpecs
 		} else if task.AdditionalPodSpecs != nil {
-			additionalPodSpecs = &*task.AdditionalPodSpecs
+			additionalPodSpecs = new(corev1.PodSpec)
+			*additionalPodSpecs = *task.AdditionalPodSpecs
 		}
 
 		if run.Spec.AdditionalPodSpecs != nil && task.AdditionalPodSpecs != nil {
-			mergo.Merge(additionalPodSpecs, *task.AdditionalPodSpecs)
+			if err := mergo.Merge(additionalPodSpecs, *task.AdditionalPodSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
+				return err
+			}
 		}
 
 		job := &Job{
@@ -500,7 +508,9 @@ func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job
 	}
 
 	if job.AdditionalPodSpecs != nil {
-		mergo.Merge(&podSpec, *job.AdditionalPodSpecs)
+		if err := mergo.Merge(&podSpec, *job.AdditionalPodSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
+			return nil, err
+		}
 	}
 
 	// Construct pod Template
@@ -608,8 +618,10 @@ func parseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, er
 	}
 
 	if job.AdditionalContainerSpecs != nil {
-		for _, c := range containers {
-			mergo.Merge(&c, *job.AdditionalContainerSpecs)
+		for i := range containers {
+			if err := mergo.Merge(&containers[i], *job.AdditionalContainerSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
+				return nil, err
+			}
 		}
 	}
 
