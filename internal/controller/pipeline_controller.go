@@ -104,27 +104,36 @@ func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipelin
 		Name:      pipeline.ObjectMeta.Name,
 		Namespace: pipeline.ObjectMeta.Namespace,
 	}
-	if pipeline.ObjectMeta.Namespace == "" {
-		pipeline.ObjectMeta.Namespace = "pipeline"
-	}
-	if err := r.Get(ctx, objKey, pipeline); err != nil {
-		return err
-	}
-	objectMeta := pipeline.ObjectMeta
-	if objectMeta.Annotations == nil {
-		objectMeta.Annotations = make(map[string]string)
-	}
-	if objectMeta.Labels == nil {
-		objectMeta.Labels = make(map[string]string)
-	}
-	objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
-	objectMeta.Annotations[pipelinev1.TriggerAnnotation] = pipeline.Spec.Trigger.String()
-	objectMeta.Labels[pipelinev1.PipelineNameLabel] = pipeline.ObjectMeta.Name
 
-	if !reflect.DeepEqual(pipeline.ObjectMeta, objectMeta) {
-		pipeline.ObjectMeta = objectMeta
-	}
-	if err := r.Update(ctx, pipeline); err != nil {
+	// Retry backoff
+	if err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
+		pipeline = &pipelinev1.Pipeline{}
+		err := r.Get(ctx, objKey, pipeline)
+		if err != nil {
+			return err
+		}
+
+		if pipeline.ObjectMeta.Namespace == "" {
+			pipeline.ObjectMeta.Namespace = "pipeline"
+		}
+
+		objectMeta := pipeline.ObjectMeta
+		if objectMeta.Annotations == nil {
+			objectMeta.Annotations = make(map[string]string)
+		}
+		if objectMeta.Labels == nil {
+			objectMeta.Labels = make(map[string]string)
+		}
+		objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
+		objectMeta.Annotations[pipelinev1.TriggerAnnotation] = pipeline.Spec.Trigger.String()
+		objectMeta.Labels[pipelinev1.PipelineNameLabel] = pipeline.ObjectMeta.Name
+
+		if !reflect.DeepEqual(pipeline.ObjectMeta, objectMeta) {
+			pipeline.ObjectMeta = objectMeta
+		}
+
+		return r.Update(ctx, pipeline)
+	}); err != nil {
 		return err
 	}
 	return nil
