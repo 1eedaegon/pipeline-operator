@@ -76,8 +76,8 @@ runs:
 
       git add .
       git commit -m "[skip ci] Commit redoc static page definitions"
-      git push -f origin $BRANCH_NAME
-      git stash apply
+      git pull origin $BRANCH_NAME
+      git push origin $BRANCH_NAME
 
       set -e
       exit 0
