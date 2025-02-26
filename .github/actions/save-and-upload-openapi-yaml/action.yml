@@ -33,9 +33,9 @@ runs:
       yq '.parameters' ./generated/openapi.yaml > ./generated/openapi.parameters.yaml
       sed -i 's/^/  /' ./generated/openapi.parameters.yaml
 
-      export paths=$(cat ./generated/openapi.paths.yaml)
-      export definitions=$(cat ./generated/openapi.definitions.yaml)
-      export parameters=$(cat ./generated/openapi.parameters.yaml)
+      paths=$(cat ./generated/openapi.paths.yaml)
+      definitions=$(cat ./generated/openapi.definitions.yaml)
+      parameters=$(cat ./generated/openapi.parameters.yaml)
 
       rm -f ./generated/openapi.yaml ./generated/openapi.paths.yaml ./generated/openapi.definitions.yaml ./generated/openapi.parameters.yaml
       envsubst < ./generated/openapi.template.yaml > ./generated/openapi.yaml
