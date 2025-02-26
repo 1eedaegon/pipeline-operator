@@ -11,6 +11,7 @@ securityDefinitions:
 security:
 - BearerToken: []
 paths:
+
   /apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines:
     get:
       description: list objects of kind Pipeline
@@ -1362,6 +1363,7 @@ paths:
       - $ref: '#/parameters/timeoutSeconds-yvYezaOC'
       - $ref: '#/parameters/watch-XNNPZGbK'
 definitions:
+
   io.github.1eedaegon.pipeline.v1.Pipeline:
     type: object
     properties:
@@ -5279,6 +5281,7 @@ definitions:
       platform:
         type: string
 parameters:
+
   allowWatchBookmarks-HC2hJt-J:
     uniqueItems: true
     type: boolean
