@@ -20,7 +20,9 @@ runs:
     run: nohup kubectl proxy &
   - name: Fetch openapi.yaml
     shell: bash
-    run: mkdir -p ./generated ; curl -k localhost:8001/openapi/v2 | yq -P > ./generated/openapi.yaml
+    run: |
+      rm -f ./generated/openapi.yaml
+      mkdir -p ./generated ; curl -k localhost:8001/openapi/v2 | yq -P > ./generated/openapi.yaml
   - name: envsubst openapi.yaml
     shell: bash
     run: |
