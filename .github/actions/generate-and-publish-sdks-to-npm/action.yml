@@ -31,6 +31,8 @@ runs:
       git config --global user.name "${GIT_USER_NAME}"
       git config --global user.email "${GIT_USER_EMAIL}"
 
+      echo $BRANCH_NAME
+
       git add .
       git commit -m "[skip ci] Commit sdk definitions"
       git pull origin $BRANCH_NAME
@@ -39,7 +41,7 @@ runs:
       set -e
       exit 0
     env:
-      BRANCH_NAME: ${{ github.ref_name }}
+      BRANCH_NAME: ${{ github.ref }}
       GIT_USER_NAME: github-actions[bot]
       GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
   - name: Publish ${{ matrix.sdk.type-shorthand }} sdk into npm
