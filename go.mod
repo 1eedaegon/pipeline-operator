@@ -12,6 +12,8 @@ require (
 	sigs.k8s.io/controller-runtime v0.17.0
 )
 
+require dario.cat/mergo v1.0.1 // indirect
+
 require (
 	github.com/1eedaegon/go-hashset v0.0.2
 	github.com/beorn7/perks v1.0.1 // indirect

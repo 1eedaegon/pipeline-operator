@@ -24,6 +24,8 @@ import (
 	"strconv"
 	"strings"
 
+	"dario.cat/mergo"
+
 	hashset "github.com/1eedaegon/go-hashset"
 	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -184,18 +186,19 @@ metadata:
 */
 
 type Job struct {
-	Name      string            `json:"name,omitempty"`
-	Namespace string            `json:"namespace,omitempty"`
-	Image     string            `json:"image,omitempty"`
-	Command   string            `json:"command,omitempty"`
-	Args      []string          `json:"args,omitempty"`
-	Schedule  Schedule          `json:"schedule,omitempty"`
-	Resource  Resource          `json:"resource,omitempty"`
-	Trigger   TriggerString     `json:"trigger,omitempty"`
-	RunBefore []string          `json:"runBefore,omitempty"`
-	Inputs    []IOVolumeSpec    `json:"inputs,omitempty"`
-	Outputs   []IOVolumeSpec    `json:"outputs,omitempty"`
-	Env       map[string]string `json:"env,omitempty"`
+	Name                     string            `json:"name,omitempty"`
+	Namespace                string            `json:"namespace,omitempty"`
+	Image                    string            `json:"image,omitempty"`
+	Command                  string            `json:"command,omitempty"`
+	Args                     []string          `json:"args,omitempty"`
+	Schedule                 Schedule          `json:"schedule,omitempty"`
+	Resource                 Resource          `json:"resource,omitempty"`
+	Trigger                  TriggerString     `json:"trigger,omitempty"`
+	RunBefore                []string          `json:"runBefore,omitempty"`
+	Inputs                   []IOVolumeSpec    `json:"inputs,omitempty"`
+	Outputs                  []IOVolumeSpec    `json:"outputs,omitempty"`
+	Env                      map[string]string `json:"env,omitempty"`
+	AdditionalContainerSpecs corev1.Container  `json:"additionalContainerSpecs,omitempty"`
 }
 
 type RunSpec struct {
@@ -209,15 +212,16 @@ type RunSpec struct {
 		  true: 개별 run의 input / output에서 source hashed intermediate directory를 사용함으로써 개별 run이 다룰 수 있는 volume 내 데이터가 격리된다.
 		  false: pvc에 초기 주입된 기존 데이터를 사용하거나 기존 run에서 write한 결과를 재사용할 수 있다.
 	*/
-	Volumes      []VolumeResource  `json:"volumes,omitempty"`
-	Trigger      TriggerString     `json:"trigger,omitempty"`
-	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
-	Jobs         []Job             `json:"jobs,omitempty"`
-	RunBefore    []string          `json:"runBefore,omitempty"`
-	Inputs       []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
-	Outputs      []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
-	Resource     Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
-	Env          map[string]string `json:"env,omitempty"`
+	Volumes                  []VolumeResource  `json:"volumes,omitempty"`
+	Trigger                  TriggerString     `json:"trigger,omitempty"`
+	HistoryLimit             HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
+	Jobs                     []Job             `json:"jobs,omitempty"`
+	RunBefore                []string          `json:"runBefore,omitempty"`
+	Inputs                   []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
+	Outputs                  []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
+	Resource                 Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
+	Env                      map[string]string `json:"env,omitempty"`
+	AdditionalContainerSpecs corev1.Container  `json:"additionalContainerSpecs,omitempty"`
 }
 
 // RunStatus defines the observed state of Run
@@ -294,6 +298,7 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 	run.Spec.RunBefore = pipeline.Spec.RunBefore
 	run.Spec.Resource = pipeline.Spec.Resource
 	run.Spec.Env = pipeline.Spec.Env
+	run.Spec.AdditionalContainerSpecs = pipeline.Spec.AdditionalContainerSpecs
 
 	return nil
 }
@@ -353,14 +358,14 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 		hsByString := run.ObjectMeta.Name + run.ObjectMeta.Namespace
 		jobName := getShortHashPostFix(task.Name, hsByString)
 
-		intermediateDirectoryName := run.ObjectMeta.Name
+		IntermediateDirectoryName := run.ObjectMeta.Name
 
-		uniqInputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Inputs, intermediateDirectoryName)
+		uniqInputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Inputs, IntermediateDirectoryName)
 		if err != nil {
 			return err
 		}
 
-		uniqOutputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Outputs, intermediateDirectoryName)
+		uniqOutputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Outputs, IntermediateDirectoryName)
 		if err != nil {
 			return err
 		}
@@ -370,19 +375,24 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			jobRunBefore := getShortHashPostFix(taskRunBefore, hsByString)
 			jobRunBeforeList = append(jobRunBeforeList, jobRunBefore)
 		}
+
+		additionalContainerSpecs := run.Spec.AdditionalContainerSpecs
+		mergo.Merge(&additionalContainerSpecs, task.AdditionalContainerSpecs)
+
 		job := &Job{
-			Name:      jobName,
-			Namespace: namespace,
-			Image:     task.Image,
-			Command:   task.Command,
-			Args:      task.Args,
-			Schedule:  task.Schedule,
-			Resource:  task.Resource,
-			Trigger:   task.Trigger.TriggerString(),
-			RunBefore: jobRunBeforeList,
-			Inputs:    append(run.Spec.Inputs, uniqInputs...),
-			Outputs:   append(run.Spec.Outputs, uniqOutputs...),
-			Env:       task.Env,
+			Name:                     jobName,
+			Namespace:                namespace,
+			Image:                    task.Image,
+			Command:                  task.Command,
+			Args:                     task.Args,
+			Schedule:                 task.Schedule,
+			Resource:                 task.Resource,
+			Trigger:                  task.Trigger.TriggerString(),
+			RunBefore:                jobRunBeforeList,
+			Inputs:                   append(run.Spec.Inputs, uniqInputs...),
+			Outputs:                  append(run.Spec.Outputs, uniqOutputs...),
+			Env:                      task.Env,
+			AdditionalContainerSpecs: additionalContainerSpecs,
 		}
 		jobs = append(jobs, *job)
 	}
@@ -391,11 +401,11 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 	return nil
 }
 
-func toInsertIntermediateDirectoryNameOnIOVolumeSpecs(ioVolumeSpecs []IOVolumeSpec, intermediateDirectoryName string) ([]IOVolumeSpec, error) {
+func toInsertIntermediateDirectoryNameOnIOVolumeSpecs(ioVolumeSpecs []IOVolumeSpec, IntermediateDirectoryName string) ([]IOVolumeSpec, error) {
 	res := []IOVolumeSpec{}
 	for _, v := range ioVolumeSpecs {
 		e := v
-		e.intermediateDirectoryName = intermediateDirectoryName
+		e.IntermediateDirectoryName = IntermediateDirectoryName
 		res = append(res, e)
 	}
 	return res, nil
@@ -578,6 +588,10 @@ func parseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, er
 		},
 	}
 
+	for _, c := range containers {
+		mergo.Merge(&c, job.AdditionalContainerSpecs)
+	}
+
 	return containers, nil
 }
 
@@ -658,8 +672,8 @@ func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, e
 			subPath := strings.Join(mountCopus[1:], "/")
 
 			subPathWithIntermediateDirectory := subPath
-			if e.UseIntermediateDirectory && e.intermediateDirectoryName != "" {
-				subPathWithIntermediateDirectory = e.intermediateDirectoryName + "/" + subPath
+			if e.UseIntermediateDirectory && e.IntermediateDirectoryName != "" {
+				subPathWithIntermediateDirectory = e.IntermediateDirectoryName + "/" + subPath
 			}
 
 			volumeName := mountCopus[0]
