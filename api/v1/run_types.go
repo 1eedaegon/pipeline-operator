@@ -371,30 +371,14 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 
 		var additionalContainerSpecs *corev1.Container
 
-		if run.Spec.AdditionalContainerSpecs != nil {
-			additionalContainerSpecs = run.Spec.AdditionalContainerSpecs.DeepCopy()
-		} else if task.AdditionalContainerSpecs != nil {
+		if task.AdditionalContainerSpecs != nil {
 			additionalContainerSpecs = task.AdditionalContainerSpecs.DeepCopy()
-		}
-
-		if run.Spec.AdditionalContainerSpecs != nil && task.AdditionalContainerSpecs != nil {
-			if err := mergo.Merge(additionalContainerSpecs, *task.AdditionalContainerSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
-				return err
-			}
 		}
 
 		var additionalPodSpecs *corev1.PodSpec
 
-		if run.Spec.AdditionalPodSpecs != nil {
-			additionalPodSpecs = run.Spec.AdditionalPodSpecs.DeepCopy()
-		} else if task.AdditionalPodSpecs != nil {
+		if task.AdditionalPodSpecs != nil {
 			additionalPodSpecs = task.AdditionalPodSpecs.DeepCopy()
-		}
-
-		if run.Spec.AdditionalPodSpecs != nil && task.AdditionalPodSpecs != nil {
-			if err := mergo.Merge(additionalPodSpecs, *task.AdditionalPodSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
-				return err
-			}
 		}
 
 		job := &Job{
@@ -474,7 +458,7 @@ func toInsertBetweenFirstPath(pathName string, insertPath string) (string, error
 func ConstructKjobListFromRun(ctx context.Context, run *Run) ([]kbatchv1.Job, error) {
 	kjobList := []kbatchv1.Job{}
 	for _, runjob := range run.Spec.Jobs {
-		kjob, err := constructKjobFromRunJob(ctx, run.ObjectMeta, runjob)
+		kjob, err := constructKjobFromRunJob(ctx, run, runjob)
 		if err != nil {
 			return nil, err
 		}
@@ -485,9 +469,11 @@ func ConstructKjobListFromRun(ctx context.Context, run *Run) ([]kbatchv1.Job, er
 
 // TODO: 임의로 리소스를 추가하려고 하는 경우를 방지하기 위해 validationWebhook에서 제한을 걸어야한다.
 // TODO: 리콘실러가 아닌 다른 조작에 의해 리소스가 삭제되지않도록  finalizer 제약을 걸어야한다.
-func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job Job) (*kbatchv1.Job, error) {
+func constructKjobFromRunJob(ctx context.Context, run *Run, job Job) (*kbatchv1.Job, error) {
+	runMeta := run.ObjectMeta
+
 	// Construct container template
-	container, err := parseContainerFromJob(ctx, job)
+	containers, err := parseContainerFromJob(ctx, job)
 	if err != nil {
 		return nil, err
 	}
@@ -496,15 +482,26 @@ func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job
 	if err != nil {
 		return nil, err
 	}
+
 	// Construct pod Spec
 	podSpec := corev1.PodSpec{
 		Volumes:       volumes,
-		Containers:    container,
+		Containers:    containers,
 		RestartPolicy: corev1.RestartPolicyNever,
 	}
 
-	if job.AdditionalPodSpecs != nil {
-		if err := mergo.Merge(&podSpec, *job.AdditionalPodSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
+	// Merge container Specs from run / job
+	for _, containerSpecs := range []*corev1.Container{run.Spec.AdditionalContainerSpecs, job.AdditionalContainerSpecs} {
+		for i := range containers {
+			if err := mergo.Merge(&containers[i], *containerSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	// Merge pod Specs from run / job
+	for _, podSpecs := range []*corev1.PodSpec{run.Spec.AdditionalPodSpecs, job.AdditionalPodSpecs} {
+		if err := mergo.Merge(&podSpec, *podSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
 			return nil, err
 		}
 	}
@@ -611,14 +608,6 @@ func parseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, er
 			VolumeMounts: mountVolumeList,
 			Env:          envList,
 		},
-	}
-
-	if job.AdditionalContainerSpecs != nil {
-		for i := range containers {
-			if err := mergo.Merge(&containers[i], *job.AdditionalContainerSpecs, mergo.WithOverride, mergo.WithAppendSlice); err != nil {
-				return nil, err
-			}
-		}
 	}
 
 	return containers, nil
