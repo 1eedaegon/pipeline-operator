@@ -1,6 +1,6 @@
 {
     "name": "pipeline-operator-ts-fetch-sdk",
-    "version": "1.0.2",
+    "version": "1.0.5",
     "description": "Pipeline operator for k8s native",
     "main": "index.ts",
     "scripts": {
