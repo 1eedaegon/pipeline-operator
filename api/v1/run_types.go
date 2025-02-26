@@ -326,23 +326,14 @@ func newRunVolumes(ctx context.Context, run *Run, pipeline *Pipeline) error {
 
 // Convert pipeline input/output and Convert job input/ouput to uniq string with short hash
 func newRunScopeInputOutputsFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) error {
-	inputs, err := toInsertIfHasIntermediateDirectoryFromIOVolumeSpecs(pipeline.Spec.Inputs, run.ObjectMeta.Name)
-	if err != nil {
-		return err
-	}
-
-	outputs, err := toInsertIfHasIntermediateDirectoryFromIOVolumeSpecs(pipeline.Spec.Outputs, run.ObjectMeta.Name)
-	if err != nil {
-		return err
-	}
-
 	initialRunIOs := [][]IOVolumeSpec{}
-	for _, es := range [][]string{inputs, outputs} {
+	for _, es := range [][]IOVolumeSpec{pipeline.Spec.Inputs, pipeline.Spec.Outputs} {
 		res := []IOVolumeSpec{}
 
 		for _, e := range es {
-			res = append(res, IOVolumeSpec{Name: e, UseIntermediateDirectory: false})
+			res = append(res, IOVolumeSpec{Name: e.Name, UseIntermediateDirectory: true, IntermediateDirectoryName: run.ObjectMeta.Name})
 		}
+		initialRunIOs = append(initialRunIOs, res)
 	}
 
 	run.Spec.Inputs = initialRunIOs[0]
