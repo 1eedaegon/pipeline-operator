@@ -36,15 +36,19 @@ spec:
     - name: yennefer-something/init-output # RWX
       useIntermediateDirectory: true
     # Below are optional fields, So You could safely omit without specifying null.
-    additionalContainerSpecs: null
+    additionalContainerSpecs:
+      ports:
+      - name: test-port-2
+        containerPort: 443
+        protocol: TCP
     additionalPodSpecs: null
   additionalContainerSpecs:
     name: ""
     ports:
-      - name: test-port
-        containerPort: 80
-        protocol: TCP
+    - name: test-port
+      containerPort: 80
+      protocol: TCP
   additionalPodSpecs:
     containers: []
     imagePullSecrets:
-      - name: regcred
+    - name: regcred
