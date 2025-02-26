@@ -35,10 +35,16 @@ runs:
 
       rm -f ./generated/openapi.yaml 
 
-      paths=$(cat ./generated/openapi.paths.yaml) \
-        definitions=$(cat ./generated/openapi.definitions.yaml) \
-        parameters=$(cat ./generated/openapi.parameters.yaml) \
-        envsubst < ./generated/openapi.template.yaml > ./generated/openapi.yaml
+      cp ./generated/openapi.template.yaml ./generated/openapi.yaml
+
+      echo "paths:" >> ./generated/openapi.yaml
+      cat ./generated/openapi.paths.yaml >> ./generated/openapi.yaml
+
+      echo "definitions:" >> ./generated/openapi.yaml
+      cat ./generated/openapi.definitions.yaml >> ./generated/openapi.yaml
+
+      echo "parameters:" >> ./generated/openapi.yaml
+      cat ./generated/openapi.parameters.yaml >> ./generated/openapi.yaml
 
       rm -f ./generated/openapi.paths.yaml ./generated/openapi.definitions.yaml ./generated/openapi.parameters.yaml
   - name: Upload openapi.yaml as artifact
