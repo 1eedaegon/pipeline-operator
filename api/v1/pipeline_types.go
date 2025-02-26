@@ -155,16 +155,18 @@ const (
 type PipelineTask struct {
 	// Inline 타입이면 Task를 수동으로 기입해줘야한다. inline에서 정의한 task가 task 템플릿으로 들어가진 않는다.
 	// Import 타입이면 이미있는 Task를 기준으로 Task가 채워진다.
-	TaskSpec                 `json:",inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
-	Schedule                 Schedule                   `json:"schedule,omitempty"`
-	Resource                 Resource                   `json:"resource,omitempty"`
-	Trigger                  Trigger                    `json:"trigger,omitempty"`
-	RunBefore                []string                   `json:"runBefore,omitempty"`
-	Inputs                   []IOVolumeSpec             `json:"inputs,omitempty"`
-	Outputs                  []IOVolumeSpec             `json:"outputs,omitempty"`
-	Env                      map[string]string          `json:"env,omitempty"`
-	AdditionalContainerSpecs corev1.Container           `json:"additionalContainerSpecs,omitempty"`
-	AdditionalPodSpecs       corev1.PodSpec             `json:"additionalPodSpecs,omitempty"`
+	TaskSpec  `json:",inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
+	Schedule  Schedule                   `json:"schedule,omitempty"`
+	Resource  Resource                   `json:"resource,omitempty"`
+	Trigger   Trigger                    `json:"trigger,omitempty"`
+	RunBefore []string                   `json:"runBefore,omitempty"`
+	Inputs    []IOVolumeSpec             `json:"inputs,omitempty"`
+	Outputs   []IOVolumeSpec             `json:"outputs,omitempty"`
+	Env       map[string]string          `json:"env,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalContainerSpecs *corev1.Container `json:"additionalContainerSpecs,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalPodSpecs *corev1.PodSpec `json:"additionalPodSpecs,omitempty"`
 }
 
 /*
@@ -190,17 +192,19 @@ type PipelineSpec struct {
 				To avoid this sharing, append subDirectories on task input / output name.
 		  false: pvc에 초기 주입된 기존 데이터를 사용하거나 기존 run에서 write한 결과를 재사용할 수 있다.
 	*/
-	Volumes                  []VolumeResource  `json:"volumes,omitempty"`
-	Trigger                  Trigger           `json:"trigger,omitempty"`
-	HistoryLimit             HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
-	Tasks                    []PipelineTask    `json:"tasks,omitempty"`
-	RunBefore                []string          `json:"runBefore,omitempty"`
-	Inputs                   []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
-	Outputs                  []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
-	Resource                 Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
-	Env                      map[string]string `json:"env,omitempty"`
-	AdditionalContainerSpecs corev1.Container  `json:"additionalContainerSpecs,omitempty"`
-	AdditionalPodSpecs       corev1.PodSpec    `json:"additionalPodSpecs,omitempty"`
+	Volumes      []VolumeResource  `json:"volumes,omitempty"`
+	Trigger      Trigger           `json:"trigger,omitempty"`
+	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
+	Tasks        []PipelineTask    `json:"tasks,omitempty"`
+	RunBefore    []string          `json:"runBefore,omitempty"`
+	Inputs       []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
+	Outputs      []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
+	Resource     Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
+	Env          map[string]string `json:"env,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalContainerSpecs *corev1.Container `json:"additionalContainerSpecs,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalPodSpecs *corev1.PodSpec `json:"additionalPodSpecs,omitempty"`
 }
 
 // PipelineStatus defines the observed state of Pipeline

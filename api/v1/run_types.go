@@ -186,20 +186,22 @@ metadata:
 */
 
 type Job struct {
-	Name                     string            `json:"name,omitempty"`
-	Namespace                string            `json:"namespace,omitempty"`
-	Image                    string            `json:"image,omitempty"`
-	Command                  string            `json:"command,omitempty"`
-	Args                     []string          `json:"args,omitempty"`
-	Schedule                 Schedule          `json:"schedule,omitempty"`
-	Resource                 Resource          `json:"resource,omitempty"`
-	Trigger                  TriggerString     `json:"trigger,omitempty"`
-	RunBefore                []string          `json:"runBefore,omitempty"`
-	Inputs                   []IOVolumeSpec    `json:"inputs,omitempty"`
-	Outputs                  []IOVolumeSpec    `json:"outputs,omitempty"`
-	Env                      map[string]string `json:"env,omitempty"`
-	AdditionalContainerSpecs corev1.Container  `json:"additionalContainerSpecs,omitempty"`
-	AdditionalPodSpecs       corev1.PodSpec    `json:"additionalPodSpecs,omitempty"`
+	Name      string            `json:"name,omitempty"`
+	Namespace string            `json:"namespace,omitempty"`
+	Image     string            `json:"image,omitempty"`
+	Command   string            `json:"command,omitempty"`
+	Args      []string          `json:"args,omitempty"`
+	Schedule  Schedule          `json:"schedule,omitempty"`
+	Resource  Resource          `json:"resource,omitempty"`
+	Trigger   TriggerString     `json:"trigger,omitempty"`
+	RunBefore []string          `json:"runBefore,omitempty"`
+	Inputs    []IOVolumeSpec    `json:"inputs,omitempty"`
+	Outputs   []IOVolumeSpec    `json:"outputs,omitempty"`
+	Env       map[string]string `json:"env,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalContainerSpecs *corev1.Container `json:"additionalContainerSpecs,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalPodSpecs *corev1.PodSpec `json:"additionalPodSpecs,omitempty"`
 }
 
 type RunSpec struct {
@@ -208,17 +210,19 @@ type RunSpec struct {
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
 	Schedule Schedule `json:"schedule,omitempty"`
 	// See comments on api/v1/run_types.go
-	Volumes                  []VolumeResource  `json:"volumes,omitempty"`
-	Trigger                  TriggerString     `json:"trigger,omitempty"`
-	HistoryLimit             HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
-	Jobs                     []Job             `json:"jobs,omitempty"`
-	RunBefore                []string          `json:"runBefore,omitempty"`
-	Inputs                   []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
-	Outputs                  []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
-	Resource                 Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
-	Env                      map[string]string `json:"env,omitempty"`
-	AdditionalContainerSpecs corev1.Container  `json:"additionalContainerSpecs,omitempty"`
-	AdditionalPodSpecs       corev1.PodSpec    `json:"additionalPodSpecs,omitempty"`
+	Volumes      []VolumeResource  `json:"volumes,omitempty"`
+	Trigger      TriggerString     `json:"trigger,omitempty"`
+	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
+	Jobs         []Job             `json:"jobs,omitempty"`
+	RunBefore    []string          `json:"runBefore,omitempty"`
+	Inputs       []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
+	Outputs      []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
+	Resource     Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
+	Env          map[string]string `json:"env,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalContainerSpecs *corev1.Container `json:"additionalContainerSpecs,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalPodSpecs *corev1.PodSpec `json:"additionalPodSpecs,omitempty"`
 }
 
 // RunStatus defines the observed state of Run
@@ -365,11 +369,29 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			jobRunBeforeList = append(jobRunBeforeList, jobRunBefore)
 		}
 
-		additionalContainerSpecs := run.Spec.AdditionalContainerSpecs
-		mergo.Merge(&additionalContainerSpecs, task.AdditionalContainerSpecs)
+		var additionalContainerSpecs *corev1.Container
 
-		additionalPodSpecs := run.Spec.AdditionalPodSpecs
-		mergo.Merge(&additionalPodSpecs, task.AdditionalPodSpecs)
+		if run.Spec.AdditionalContainerSpecs != nil {
+			additionalContainerSpecs = &*run.Spec.AdditionalContainerSpecs
+		} else if task.AdditionalContainerSpecs != nil {
+			additionalContainerSpecs = &*task.AdditionalContainerSpecs
+		}
+
+		if run.Spec.AdditionalContainerSpecs != nil && task.AdditionalContainerSpecs != nil {
+			mergo.Merge(additionalContainerSpecs, *task.AdditionalContainerSpecs)
+		}
+
+		var additionalPodSpecs *corev1.PodSpec
+
+		if run.Spec.AdditionalPodSpecs != nil {
+			additionalPodSpecs = &*run.Spec.AdditionalPodSpecs
+		} else if task.AdditionalPodSpecs != nil {
+			additionalPodSpecs = &*task.AdditionalPodSpecs
+		}
+
+		if run.Spec.AdditionalPodSpecs != nil && task.AdditionalPodSpecs != nil {
+			mergo.Merge(additionalPodSpecs, *task.AdditionalPodSpecs)
+		}
 
 		job := &Job{
 			Name:                     jobName,
@@ -477,7 +499,9 @@ func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job
 		RestartPolicy: corev1.RestartPolicyNever,
 	}
 
-	mergo.Merge(&podSpec, job.AdditionalPodSpecs)
+	if job.AdditionalPodSpecs != nil {
+		mergo.Merge(&podSpec, *job.AdditionalPodSpecs)
+	}
 
 	// Construct pod Template
 	podTemplateMeta := constructKjobPodMetaFromJob(ctx, runMeta, job)
@@ -583,8 +607,10 @@ func parseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, er
 		},
 	}
 
-	for _, c := range containers {
-		mergo.Merge(&c, job.AdditionalContainerSpecs)
+	if job.AdditionalContainerSpecs != nil {
+		for _, c := range containers {
+			mergo.Merge(&c, *job.AdditionalContainerSpecs)
+		}
 	}
 
 	return containers, nil
