@@ -24,12 +24,20 @@ runs:
   - name: envsubst openapi.yaml
     shell: bash
     run: |
-      ulimit -s 65536
-      export paths=$(yq '.paths | with_entries(select(.key | test("pipeline")))' ./generated/openapi.yaml | sed 's/^/  /')
-      export definitions=$(yq '.definitions | with_entries(select(.key | (test("pipeline") or test("io.k8s.apimachinery"))))' ./generated/openapi.yaml | sed 's/^/  /')
-      export parameters=$(yq '.parameters' ./generated/openapi.yaml | sed 's/^/  /')
+      yq '.paths | with_entries(select(.key | test("pipeline")))' ./generated/openapi.yaml > ./generated/openapi.paths.yaml
+      sed -i 's/^/  /' ./generated/openapi.paths.yaml
 
-      rm -f ./generated/openapi.yaml
+      yq '.definitions | with_entries(select(.key | (test("pipeline") or test("io.k8s.apimachinery"))))' ./generated/openapi.yaml > ./generated/openapi.definitions.yaml
+      sed -i 's/^/  /' ./generated/openapi.definitions.yaml
+
+      yq '.parameters' ./generated/openapi.yaml > ./generated/openapi.parameters.yaml
+      sed -i 's/^/  /' ./generated/openapi.parameters.yaml
+
+      export paths=$(cat ./generated/openapi.paths.yaml)
+      export definitions=$(cat ./generated/openapi.definitions.yaml)
+      export parameters=$(cat ./generated/openapi.parameters.yaml)
+
+      rm -f ./generated/openapi.yaml ./generated/openapi.paths.yaml ./generated/openapi.definitions.yaml ./generated/openapi.parameters.yaml
       envsubst < ./generated/openapi.template.yaml > ./generated/openapi.yaml
   - name: Upload openapi.yaml as artifact
     uses: actions/upload-artifact@v4
