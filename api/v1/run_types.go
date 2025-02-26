@@ -299,8 +299,8 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 	run.Spec.RunBefore = pipeline.Spec.RunBefore
 	run.Spec.Resource = pipeline.Spec.Resource
 	run.Spec.Env = pipeline.Spec.Env
-	run.Spec.AdditionalContainerSpecs = pipeline.Spec.AdditionalContainerSpecs
-	run.Spec.AdditionalPodSpecs = pipeline.Spec.AdditionalPodSpecs
+	run.Spec.AdditionalContainerSpecs = pipeline.Spec.AdditionalContainerSpecs.DeepCopy()
+	run.Spec.AdditionalPodSpecs = pipeline.Spec.AdditionalPodSpecs.DeepCopy()
 
 	return nil
 }
@@ -372,11 +372,9 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 		var additionalContainerSpecs *corev1.Container
 
 		if run.Spec.AdditionalContainerSpecs != nil {
-			additionalContainerSpecs = new(corev1.Container)
-			*additionalContainerSpecs = *run.Spec.AdditionalContainerSpecs
+			additionalContainerSpecs = run.Spec.AdditionalContainerSpecs.DeepCopy()
 		} else if task.AdditionalContainerSpecs != nil {
-			additionalContainerSpecs = new(corev1.Container)
-			*additionalContainerSpecs = *task.AdditionalContainerSpecs
+			additionalContainerSpecs = task.AdditionalContainerSpecs.DeepCopy()
 		}
 
 		if run.Spec.AdditionalContainerSpecs != nil && task.AdditionalContainerSpecs != nil {
@@ -388,11 +386,9 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 		var additionalPodSpecs *corev1.PodSpec
 
 		if run.Spec.AdditionalPodSpecs != nil {
-			additionalPodSpecs = new(corev1.PodSpec)
-			*additionalPodSpecs = *run.Spec.AdditionalPodSpecs
+			additionalPodSpecs = run.Spec.AdditionalPodSpecs.DeepCopy()
 		} else if task.AdditionalPodSpecs != nil {
-			additionalPodSpecs = new(corev1.PodSpec)
-			*additionalPodSpecs = *task.AdditionalPodSpecs
+			additionalPodSpecs = task.AdditionalPodSpecs.DeepCopy()
 		}
 
 		if run.Spec.AdditionalPodSpecs != nil && task.AdditionalPodSpecs != nil {
