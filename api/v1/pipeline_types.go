@@ -164,6 +164,7 @@ type PipelineTask struct {
 	Outputs                  []IOVolumeSpec             `json:"outputs,omitempty"`
 	Env                      map[string]string          `json:"env,omitempty"`
 	AdditionalContainerSpecs corev1.Container           `json:"additionalContainerSpecs,omitempty"`
+	AdditionalPodSpecs       corev1.PodSpec             `json:"additionalPodSpecs,omitempty"`
 }
 
 /*
@@ -181,7 +182,7 @@ type PipelineSpec struct {
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
 	Schedule Schedule `json:"schedule,omitempty"`
 	/*
-		하나의 pipeline의 run들은 동일한 volume을 사용한다.
+		단일 pipeline의 run들은 동일한 volume을 사용한다.
 		hashed intermediate directory (IOVolumeSpec.UseIntermediateDirectory) 구성에 따른 영향과 목적은 다음과 같다.
 		  true: 개별 run의 input / output에서 source hashed intermediate directory를 사용함으로써 개별 run이 다룰 수 있는 volume 내 데이터가 격리된다.
 				Share intermediate directory on same run based jobs
@@ -199,6 +200,7 @@ type PipelineSpec struct {
 	Resource                 Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
 	Env                      map[string]string `json:"env,omitempty"`
 	AdditionalContainerSpecs corev1.Container  `json:"additionalContainerSpecs,omitempty"`
+	AdditionalPodSpecs       corev1.PodSpec    `json:"additionalPodSpecs,omitempty"`
 }
 
 // PipelineStatus defines the observed state of Pipeline

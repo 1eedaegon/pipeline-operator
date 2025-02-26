@@ -199,6 +199,7 @@ type Job struct {
 	Outputs                  []IOVolumeSpec    `json:"outputs,omitempty"`
 	Env                      map[string]string `json:"env,omitempty"`
 	AdditionalContainerSpecs corev1.Container  `json:"additionalContainerSpecs,omitempty"`
+	AdditionalPodSpecs       corev1.PodSpec    `json:"additionalPodSpecs,omitempty"`
 }
 
 type RunSpec struct {
@@ -206,12 +207,7 @@ type RunSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
 	Schedule Schedule `json:"schedule,omitempty"`
-	/*
-		하나의 pipeline의 run들은 동일한 volume을 사용한다.
-		hashed intermediate directory (IOVolumeSpec.UseIntermediateDirectory) 정의에 따른 영향과 목적은 다음과 같다.
-		  true: 개별 run의 input / output에서 source hashed intermediate directory를 사용함으로써 개별 run이 다룰 수 있는 volume 내 데이터가 격리된다.
-		  false: pvc에 초기 주입된 기존 데이터를 사용하거나 기존 run에서 write한 결과를 재사용할 수 있다.
-	*/
+	// See comments on api/v1/run_types.go
 	Volumes                  []VolumeResource  `json:"volumes,omitempty"`
 	Trigger                  TriggerString     `json:"trigger,omitempty"`
 	HistoryLimit             HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
@@ -222,6 +218,7 @@ type RunSpec struct {
 	Resource                 Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
 	Env                      map[string]string `json:"env,omitempty"`
 	AdditionalContainerSpecs corev1.Container  `json:"additionalContainerSpecs,omitempty"`
+	AdditionalPodSpecs       corev1.PodSpec    `json:"additionalPodSpecs,omitempty"`
 }
 
 // RunStatus defines the observed state of Run
@@ -299,6 +296,7 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 	run.Spec.Resource = pipeline.Spec.Resource
 	run.Spec.Env = pipeline.Spec.Env
 	run.Spec.AdditionalContainerSpecs = pipeline.Spec.AdditionalContainerSpecs
+	run.Spec.AdditionalPodSpecs = pipeline.Spec.AdditionalPodSpecs
 
 	return nil
 }
@@ -370,6 +368,9 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 		additionalContainerSpecs := run.Spec.AdditionalContainerSpecs
 		mergo.Merge(&additionalContainerSpecs, task.AdditionalContainerSpecs)
 
+		additionalPodSpecs := run.Spec.AdditionalPodSpecs
+		mergo.Merge(&additionalPodSpecs, task.AdditionalPodSpecs)
+
 		job := &Job{
 			Name:                     jobName,
 			Namespace:                namespace,
@@ -384,6 +385,7 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			Outputs:                  append(run.Spec.Outputs, uniqOutputs...),
 			Env:                      task.Env,
 			AdditionalContainerSpecs: additionalContainerSpecs,
+			AdditionalPodSpecs:       additionalPodSpecs,
 		}
 		jobs = append(jobs, *job)
 	}
@@ -468,18 +470,20 @@ func constructKjobFromRunJob(ctx context.Context, runMeta metav1.ObjectMeta, job
 	if err != nil {
 		return nil, err
 	}
+	// Construct pod Spec
+	podSpec := corev1.PodSpec{
+		Volumes:       volumes,
+		Containers:    container,
+		RestartPolicy: corev1.RestartPolicyNever,
+	}
+
+	mergo.Merge(&podSpec, job.AdditionalPodSpecs)
+
 	// Construct pod Template
 	podTemplateMeta := constructKjobPodMetaFromJob(ctx, runMeta, job)
 	podTemplate := corev1.PodTemplateSpec{
 		ObjectMeta: podTemplateMeta,
-		Spec: corev1.PodSpec{
-			Volumes:       volumes,
-			Containers:    container,
-			RestartPolicy: corev1.RestartPolicyNever,
-		},
-	}
-	if err != nil {
-		return nil, err
+		Spec:       podSpec,
 	}
 	kjobMeta := constructKjobMetaFromJob(ctx, runMeta, job)
 
