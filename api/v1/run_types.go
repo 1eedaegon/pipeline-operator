@@ -666,11 +666,11 @@ func parseVolumeWithPVCFromJob(ctx context.Context, job Job) ([]corev1.Volume, e
 	volumeStringList = append(volumeStringList, job.Outputs...)
 
 	for _, e := range volumeStringList {
-		volumeCopus, err := splitVolumeCopus(e.Name)
+		volumeCorpus, err := splitVolumeCorpus(e.Name)
 		if err != nil {
 			return nil, err
 		}
-		volumeName := volumeCopus[0]
+		volumeName := volumeCorpus[0]
 		if !hashSet.Contains(volumeName) {
 			hashSet.Add(volumeName)
 			volume := corev1.Volume{
@@ -697,19 +697,19 @@ func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, e
 
 	for _, es := range [][]IOVolumeSpec{job.Inputs, job.Outputs} {
 		for _, e := range es {
-			mountCopus, err := splitVolumeCopus(e.Name)
+			mountCorpus, err := splitVolumeCorpus(e.Name)
 			if err != nil {
 				return nil, err
 			}
 
-			subPath := strings.Join(mountCopus[1:], "/")
+			subPath := strings.Join(mountCorpus[1:], "/")
 
 			subPathWithIntermediateDirectory := subPath
 			if e.UseIntermediateDirectory && e.IntermediateDirectoryName != "" {
 				subPathWithIntermediateDirectory = e.IntermediateDirectoryName + "/" + subPath
 			}
 
-			volumeName := mountCopus[0]
+			volumeName := mountCorpus[0]
 			volumeMounts = append(volumeMounts, corev1.VolumeMount{
 				Name:      volumeName,
 				MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
@@ -828,22 +828,23 @@ func parseCommand(command string) []string {
 }
 
 func defaultImageRegistry(imagePath string) string {
-	imagePathCopus := strings.SplitN(imagePath, "/", 2)
-	url := strings.Split(imagePathCopus[0], ".")
+	imagePathCorpus := strings.SplitN(imagePath, "/", 2)
+	url := strings.Split(imagePathCorpus[0], ".")
 	if len(url) <= 1 {
 		return "docker.io/" + imagePath
 	}
 	return imagePath
 }
 
-// volume 이름의 "/"를 기준으로 자른다.(copus)
-// 자른 이름의 0 index를 pvc의 이름으로 사용, 1 index를 hash subdirectory로, 2.. index를 subpath로 사용한다.
-func splitVolumeCopus(volumeString string) ([]string, error) {
-	volumeCopus := strings.Split(volumeString, "/")
-	if len(volumeCopus) <= 0 || volumeCopus[1] == "" {
+// volume 이름의 "/"를 기준으로 자른다. (corpus)
+// 자른 이름의 0 index를 pvc의 이름으로 사용, 2.. index를 subpath로 사용한다.
+// This function doesn't handle IOVolumeSpec.intermediateDirectoryName.
+func splitVolumeCorpus(volumeString string) ([]string, error) {
+	volumeCorpus := strings.Split(volumeString, "/")
+	if len(volumeCorpus) <= 0 || volumeCorpus[1] == "" {
 		return nil, errors.New("volume has no prefix or postfix like: 'volumeName/filePath'")
 	}
-	return volumeCopus, nil
+	return volumeCorpus, nil
 }
 
 // Get hash64a
