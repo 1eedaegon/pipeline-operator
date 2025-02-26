@@ -1,4 +1,3 @@
-
 apiVersion: pipeline.1eedaegon.github.io/v1
 kind: Pipeline
 metadata:
@@ -18,10 +17,12 @@ spec:
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
-    inputs: 
-    - yennefer-something/input # RO
+    inputs:
+    - name: yennefer-something/input # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/init-output # RWX
+    - name: yennefer-something/init-output # RWX
+      useIntermediateDirectory: true
     runBefore: []
   - name: pipeline-2 # import task type without image version
     image: amazon/aws-cli
@@ -29,10 +30,12 @@ spec:
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
-    inputs: 
-    - yennefer-something/input # RO
+    inputs:
+    - name: yennefer-something/input # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/init-output # RWX
+    - name: yennefer-something/init-output # RWX
+      useIntermediateDirectory: true
     runBefore:
     - pipeline-1
   - name: pipeline-3 # import task type without image version
@@ -41,9 +44,11 @@ spec:
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
-    inputs: 
-    - yennefer-something/input # RO
+    inputs:
+    - name: yennefer-something/input # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/init-output # RWX
+    - name: yennefer-something/init-output # RWX
+      useIntermediateDirectory: true
     runBefore:
-    - pipeline-2    
+    - pipeline-2

@@ -193,8 +193,8 @@ type Job struct {
 	Resource  Resource          `json:"resource,omitempty"`
 	Trigger   TriggerString     `json:"trigger,omitempty"`
 	RunBefore []string          `json:"runBefore,omitempty"`
-	Inputs    []string          `json:"inputs,omitempty"`
-	Outputs   []string          `json:"outputs,omitempty"`
+	Inputs    []IOVolumeSpec    `json:"inputs,omitempty"`
+	Outputs   []IOVolumeSpec    `json:"outputs,omitempty"`
 	Env       map[string]string `json:"env,omitempty"`
 }
 
@@ -202,14 +202,20 @@ type RunSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
-	Schedule     Schedule          `json:"schedule,omitempty"`
-	Volumes      []VolumeResource  `json:"volumes,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Schedule Schedule `json:"schedule,omitempty"`
+	/*
+		하나의 pipeline의 run들은 동일한 volume을 사용한다.
+		hashed intermediate directory (IOVolumeSpec.UseIntermediateDirectory) 정의에 따른 영향과 목적은 다음과 같다.
+		  true: 개별 run의 input / output에서 source hashed intermediate directory를 사용함으로써 개별 run이 다룰 수 있는 volume 내 데이터가 격리된다.
+		  false: pvc에 초기 주입된 기존 데이터를 사용하거나 기존 run에서 write한 결과를 재사용할 수 있다.
+	*/
+	Volumes      []VolumeResource  `json:"volumes,omitempty"`
 	Trigger      TriggerString     `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간: Default - 1D
 	Jobs         []Job             `json:"jobs,omitempty"`
 	RunBefore    []string          `json:"runBefore,omitempty"`
-	Inputs       []string          `json:"inputs,omitempty"`   // RX
-	Outputs      []string          `json:"outputs,omitempty"`  // RWX
+	Inputs       []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
+	Outputs      []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
 	Resource     Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
 	Env          map[string]string `json:"env,omitempty"`
 }
@@ -263,9 +269,6 @@ func init() {
 }
 
 // Construct Run template from pipeline
-// TODO: 이곳에서 PVC가 없으면 에러를 뱉는 로직을 추가해야한다.
-// TODO: Pipeline과의 차이는, pipeline은 iuputs의 목록이 volume에 있는지 확인이고
-// 이곳은 실제 get() 함수를 통해 pvc가 존재하는지 확인 후 생성해야한다.
 func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run) error {
 	// Construct run metadata
 	if err := newRunMetaFromPipeline(ctx, run, pipeline); err != nil {
@@ -281,7 +284,7 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 	}
 
 	// Construct run input/output from pipeline
-	if err := newRunVolumeMountsFromPipeline(ctx, run, pipeline); err != nil {
+	if err := newRunScopeInputOutputsFromPipeline(ctx, run, pipeline); err != nil {
 		return err
 	}
 
@@ -317,18 +320,28 @@ func newRunVolumes(ctx context.Context, run *Run, pipeline *Pipeline) error {
 }
 
 // Convert pipeline input/output and Convert job input/ouput to uniq string with short hash
-func newRunVolumeMountsFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) error {
-	runInputs, err := toInsertBetweenFirstPathFromList(pipeline.Spec.Inputs, run.ObjectMeta.Name)
+func newRunScopeInputOutputsFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) error {
+	inputs, err := toInsertIfHasIntermediateDirectoryFromIOVolumeSpecs(pipeline.Spec.Inputs, run.ObjectMeta.Name)
 	if err != nil {
 		return err
 	}
-	run.Spec.Inputs = runInputs
 
-	runOutputs, err := toInsertBetweenFirstPathFromList(pipeline.Spec.Inputs, run.ObjectMeta.Name)
+	outputs, err := toInsertIfHasIntermediateDirectoryFromIOVolumeSpecs(pipeline.Spec.Outputs, run.ObjectMeta.Name)
 	if err != nil {
 		return err
 	}
-	run.Spec.Outputs = runOutputs
+
+	initialRunIOs := [][]IOVolumeSpec{}
+	for _, es := range [][]string{inputs, outputs} {
+		res := []IOVolumeSpec{}
+
+		for _, e := range es {
+			res = append(res, IOVolumeSpec{Name: e, UseIntermediateDirectory: false})
+		}
+	}
+
+	run.Spec.Inputs = initialRunIOs[0]
+	run.Spec.Outputs = initialRunIOs[1]
 	return nil
 }
 
@@ -339,14 +352,19 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 	for _, task := range pipeline.Spec.Tasks {
 		hsByString := run.ObjectMeta.Name + run.ObjectMeta.Namespace
 		jobName := getShortHashPostFix(task.Name, hsByString)
-		uniqInputs, err := toInsertBetweenFirstPathFromList(task.Inputs, jobName)
+
+		intermediateDirectoryName := run.ObjectMeta.Name
+
+		uniqInputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Inputs, intermediateDirectoryName)
 		if err != nil {
 			return err
 		}
-		uniqOutputs, err := toInsertBetweenFirstPathFromList(task.Outputs, jobName)
+
+		uniqOutputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Outputs, intermediateDirectoryName)
 		if err != nil {
 			return err
 		}
+
 		jobRunBeforeList := []string{}
 		for _, taskRunBefore := range task.RunBefore {
 			jobRunBefore := getShortHashPostFix(taskRunBefore, hsByString)
@@ -362,8 +380,8 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			Resource:  task.Resource,
 			Trigger:   task.Trigger.TriggerString(),
 			RunBefore: jobRunBeforeList,
-			Inputs:    uniqInputs,
-			Outputs:   uniqOutputs,
+			Inputs:    append(run.Spec.Inputs, uniqInputs...),
+			Outputs:   append(run.Spec.Outputs, uniqOutputs...),
 			Env:       task.Env,
 		}
 		jobs = append(jobs, *job)
@@ -371,6 +389,32 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 	run.Spec.Jobs = jobs
 	// Construct Job
 	return nil
+}
+
+func toInsertIntermediateDirectoryNameOnIOVolumeSpecs(ioVolumeSpecs []IOVolumeSpec, intermediateDirectoryName string) ([]IOVolumeSpec, error) {
+	res := []IOVolumeSpec{}
+	for _, v := range ioVolumeSpecs {
+		e := v
+		e.intermediateDirectoryName = intermediateDirectoryName
+		res = append(res, e)
+	}
+	return res, nil
+}
+
+func toInsertIfHasIntermediateDirectoryFromIOVolumeSpecs(pathList []IOVolumeSpec, insertPath string) ([]string, error) {
+	res := []string{}
+	for _, input := range pathList {
+		name := input.Name
+		if input.UseIntermediateDirectory {
+			nameWithHashedSubdirectory, err := toInsertBetweenFirstPath(name, insertPath)
+			if err != nil {
+				return nil, err
+			}
+			name = nameWithHashedSubdirectory
+		}
+		res = append(res, name)
+	}
+	return res, nil
 }
 
 func toInsertBetweenFirstPathFromList(pathList []string, insertPath string) ([]string, error) {
@@ -570,12 +614,12 @@ func parseVolumeWithPVCFromJob(ctx context.Context, job Job) ([]corev1.Volume, e
 
 	volumeList := []corev1.Volume{}
 	// 들어온 volume이름 목록으로 PVC template을 만든다.
-	volumeStringList := []string{}
+	volumeStringList := []IOVolumeSpec{}
 	volumeStringList = append(volumeStringList, job.Inputs...)
 	volumeStringList = append(volumeStringList, job.Outputs...)
 
-	for _, volumeString := range volumeStringList {
-		volumeCopus, err := splitVolumeCopus(volumeString)
+	for _, e := range volumeStringList {
+		volumeCopus, err := splitVolumeCopus(e.Name)
 		if err != nil {
 			return nil, err
 		}
@@ -604,20 +648,25 @@ const (
 func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, error) {
 	volumeMounts := []corev1.VolumeMount{}
 
-	for _, es := range [][]string{job.Inputs, job.Outputs} {
-		for _, mountString := range es {
-			mountCopus, err := splitVolumeCopus(mountString)
+	for _, es := range [][]IOVolumeSpec{job.Inputs, job.Outputs} {
+		for _, e := range es {
+			mountCopus, err := splitVolumeCopus(e.Name)
 			if err != nil {
 				return nil, err
 			}
-			// hsBy := mountCopus[0] + fmt.Sprintf("%v", job)
-			// volumeName := getShortHashPostFix(mountCopus[0], hsBy)
-			volumeName, directoryWithHash := mountCopus[0], mountCopus[1]
-			subPath := strings.Join(mountCopus[2:], "/")
+
+			subPath := strings.Join(mountCopus[1:], "/")
+
+			subPathWithIntermediateDirectory := subPath
+			if e.UseIntermediateDirectory && e.intermediateDirectoryName != "" {
+				subPathWithIntermediateDirectory = e.intermediateDirectoryName + "/" + subPath
+			}
+
+			volumeName := mountCopus[0]
 			volumeMounts = append(volumeMounts, corev1.VolumeMount{
 				Name:      volumeName,
 				MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
-				SubPath:   directoryWithHash + "/" + subPath,
+				SubPath:   subPathWithIntermediateDirectory,
 				ReadOnly:  true,
 			})
 		}

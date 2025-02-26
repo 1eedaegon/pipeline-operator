@@ -71,6 +71,16 @@ type VolumeResource struct {
 	Storage  string `json:"storage,omitempty"`
 }
 
+// Pipeline / Task 내 Input / Output 정의에 필요한 Spec
+type IOVolumeSpec struct {
+	// Volume의 name과 동일해야 한다. (기존 or 신규 생성 Volume 공통)
+	Name string `json:"name,omitempty"`
+	// pvc root 하위의 run별로 격리된 hashed path를 subPath로 사용할 것인지 정의한다. (PipelineSpec 참고)
+	UseIntermediateDirectory bool `json:"useIntermediateDirectory,omitempty"`
+	// parseVolumeMountList() parameter까지 run 정의를 넘겨줄 수 없기에 사용하는 private field.
+	intermediateDirectoryName string
+}
+
 type ScheduleDate string
 
 func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
@@ -149,8 +159,8 @@ type PipelineTask struct {
 	Resource  Resource                   `json:"resource,omitempty"`
 	Trigger   Trigger                    `json:"trigger,omitempty"`
 	RunBefore []string                   `json:"runBefore,omitempty"`
-	Inputs    []string                   `json:"inputs,omitempty"`
-	Outputs   []string                   `json:"outputs,omitempty"`
+	Inputs    []IOVolumeSpec             `json:"inputs,omitempty"`
+	Outputs   []IOVolumeSpec             `json:"outputs,omitempty"`
 	Env       map[string]string          `json:"env,omitempty"`
 }
 
@@ -167,14 +177,23 @@ type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
-	Schedule     Schedule          `json:"schedule,omitempty"`
-	Volumes      []VolumeResource  `json:"volumes,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Schedule Schedule `json:"schedule,omitempty"`
+	/*
+		하나의 pipeline의 run들은 동일한 volume을 사용한다.
+		hashed intermediate directory (IOVolumeSpec.UseIntermediateDirectory) 구성에 따른 영향과 목적은 다음과 같다.
+		  true: 개별 run의 input / output에서 source hashed intermediate directory를 사용함으로써 개별 run이 다룰 수 있는 volume 내 데이터가 격리된다.
+				Share intermediate directory on same run based jobs
+				It is attended to output of a job becomes input of other job.
+				To avoid this sharing, append subDirectories on task input / output name.
+		  false: pvc에 초기 주입된 기존 데이터를 사용하거나 기존 run에서 write한 결과를 재사용할 수 있다.
+	*/
+	Volumes      []VolumeResource  `json:"volumes,omitempty"`
 	Trigger      Trigger           `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
 	Tasks        []PipelineTask    `json:"tasks,omitempty"`
 	RunBefore    []string          `json:"runBefore,omitempty"`
-	Inputs       []string          `json:"inputs,omitempty"`   // RX
-	Outputs      []string          `json:"outputs,omitempty"`  // RWX
+	Inputs       []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
+	Outputs      []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
 	Resource     Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
 	Env          map[string]string `json:"env,omitempty"`
 }

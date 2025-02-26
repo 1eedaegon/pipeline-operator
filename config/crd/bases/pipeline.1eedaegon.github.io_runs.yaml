@@ -67,7 +67,12 @@ spec:
                 type: object
               inputs:
                 items:
-                  type: string
+                  properties:
+                    name:
+                      type: string
+                    useIntermediateDirectory:
+                      type: boolean
+                  type: object
                 type: array
               jobs:
                 items:
@@ -86,7 +91,12 @@ spec:
                       type: string
                     inputs:
                       items:
-                        type: string
+                        properties:
+                          name:
+                            type: string
+                          useIntermediateDirectory:
+                            type: boolean
+                        type: object
                       type: array
                     name:
                       type: string
@@ -94,7 +104,12 @@ spec:
                       type: string
                     outputs:
                       items:
-                        type: string
+                        properties:
+                          name:
+                            type: string
+                          useIntermediateDirectory:
+                            type: boolean
+                        type: object
                       type: array
                     resource:
                       properties:
@@ -127,7 +142,12 @@ spec:
                 type: array
               outputs:
                 items:
-                  type: string
+                  properties:
+                    name:
+                      type: string
+                    useIntermediateDirectory:
+                      type: boolean
+                  type: object
                 type: array
               resource:
                 properties:

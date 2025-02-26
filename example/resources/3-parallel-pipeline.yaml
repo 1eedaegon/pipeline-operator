@@ -6,7 +6,7 @@ metadata:
   name: pipeline-chain-test
 spec:
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. 
-  volumes: 
+  volumes:
   - name: yennefer-something # 이미 있으면 생성하지 않고 사용
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
     storage: standard
@@ -20,10 +20,13 @@ spec:
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
-    inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    - yennefer-something/input # RO
+    inputs:
+    # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
+    - name: yennefer-something/input # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/output # RWX
+    - name: yennefer-something/output # RWX
+      useIntermediateDirectory: true
     runBefore: []
   - name: pipeline-2-1 # import task type without image version
     image: amazon/aws-cli
@@ -31,10 +34,12 @@ spec:
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
-    inputs: 
-    - yennefer-something/output # RO
+    inputs:
+    - name: yennefer-something/input # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/pipeline-2-1-output # RWX
+    - name: yennefer-something/pipeline-2-1-output # RWX
+      useIntermediateDirectory: true
     runBefore:
     - pipeline-1
   - name: pipeline-2-2 # import task type without image version
@@ -43,10 +48,12 @@ spec:
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
-    inputs: 
-    - yennefer-something/output # RO
+    inputs:
+    - name: yennefer-something/output # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/pipeline-2-2-output # RWX
+    - name: yennefer-something/pipeline-2-2-output # RWX
+      useIntermediateDirectory: true
     runBefore:
     - pipeline-1
   - name: pipeline-2-1-1 # import task type without image version
@@ -56,9 +63,11 @@ spec:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
-    - yennefer-something/pipeline-2-2-output # RO
+    - name: yennefer-something/pipeline-2-2-output # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/pipeline-2-1-1-output # RWX
+    - name: yennefer-something/pipeline-2-1-1-output # RWX
+      useIntermediateDirectory: true
     runBefore:
     - pipeline-2-1
   - name: pipeline-3 # import task type without image version
@@ -67,11 +76,14 @@ spec:
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
-    inputs: 
-    - yennefer-something/pipeline-2-1-1-output
-    - yennefer-something/pipeline-2-2-output
+    inputs:
+    - name: yennefer-something/pipeline-2-1-1-output # RO
+      useIntermediateDirectory: true
+    - name: yennefer-something/pipeline-2-2-output # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/pipeline-3-out # RWX
+    - name: yennefer-something/pipeline-3-out # RWX
+      useIntermediateDirectory: true
     runBefore:
     - pipeline-2-2
     - pipeline-2-1-1

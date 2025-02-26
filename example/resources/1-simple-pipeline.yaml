@@ -12,7 +12,7 @@ metadata:
   name: pipeline-chain-test
 spec:
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. 
-  volumes: 
+  volumes:
   - name: yennefer-something # 이미 있으면 생성하지 않고 사용
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
     storage: standard
@@ -28,7 +28,10 @@ spec:
     args:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
-    inputs: # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    - yennefer-something/input # RO
+    inputs:
+    # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
+    - name: yennefer-something/input # RO
+      useIntermediateDirectory: true
     outputs:
-    - yennefer-something/init-output # RWX
+    - name: yennefer-something/init-output # RWX
+      useIntermediateDirectory: true
