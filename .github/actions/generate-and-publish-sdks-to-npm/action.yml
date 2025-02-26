@@ -5,49 +5,46 @@ outputs: {}
 runs:
   using: "composite"
   steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 'latest'
-        registry-url: 'https://registry.npmjs.org'
-    - name: Generate typescript-axios sdk using openapi.yaml
-      shell: bash
-      run: >
-        npx @openapitools/openapi-generator-cli generate
-        -i ./generated/openapi.yaml
-        -o ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out
-        -g ${{ matrix.sdk.type }}
-    - name: Move sdk definitions into npm package using template
-      shell: bash
-      run: |
-        mkdir -p ./generated/sdk
-        rm -rf ./generated/sdk/${{ matrix.sdk.type-shorthand }}
-        cp -r ./template/sdk/${{ matrix.sdk.type-shorthand }} ./generated/sdk/${{ matrix.sdk.type-shorthand }}
-        mv ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out/* ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out/.* ./generated/sdk/${{ matrix.sdk.type-shorthand }}
-        rmdir ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out
-    - name: Push to remote repo
-      shell: bash
-      run: |
-        set +e
+  - name: checkout
+    uses: actions/checkout@v2
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 'latest'
+      registry-url: 'https://registry.npmjs.org'
+  - name: Generate typescript-axios sdk using openapi.yaml
+    shell: bash
+    run: >
+      npx @openapitools/openapi-generator-cli generate -i ./generated/openapi.yaml -o ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out -g ${{ matrix.sdk.type }}
+  - name: Move sdk definitions into npm package using template
+    shell: bash
+    run: |
+      mkdir -p ./generated/sdk
+      rm -rf ./generated/sdk/${{ matrix.sdk.type-shorthand }}
+      cp -r ./template/sdk/${{ matrix.sdk.type-shorthand }} ./generated/sdk/${{ matrix.sdk.type-shorthand }}
+      mv ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out/* ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out/.* ./generated/sdk/${{ matrix.sdk.type-shorthand }}
+      rmdir ./generated/sdk/${{ matrix.sdk.type-shorthand }}-out
+  - name: Push to remote repo
+    shell: bash
+    run: |
+      set +e
 
-        git config --global user.name "${GIT_USER_NAME}"
-        git config --global user.email "${GIT_USER_EMAIL}"
+      git config --global user.name "${GIT_USER_NAME}"
+      git config --global user.email "${GIT_USER_EMAIL}"
 
-        git add .
-        git commit -m "[skip ci] Commit sdk definitions"
-        git push -f origin $BRANCH_NAME
-        git stash apply
+      git add .
+      git commit -m "[skip ci] Commit sdk definitions"
+      git push -f origin $BRANCH_NAME
+      git stash apply
 
-        set -e
-        exit 0
-      env:
-       BRANCH_NAME: ${{ github.ref_name }}
-       GIT_USER_NAME: github-actions[bot]
-       GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
-    - name: Publish ${{ matrix.sdk.type-shorthand }} sdk into npm
-      shell: bash
-      run: |
-        cd ./generated/sdk/${{ matrix.sdk.type-shorthand }}
-        npm publish --provenance --access public --tag ${{ github.sha }}
-      continue-on-error: true
+      set -e
+      exit 0
+    env:
+      BRANCH_NAME: ${{ github.ref_name }}
+      GIT_USER_NAME: github-actions[bot]
+      GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  - name: Publish ${{ matrix.sdk.type-shorthand }} sdk into npm
+    shell: bash
+    run: |
+      cd ./generated/sdk/${{ matrix.sdk.type-shorthand }}
+      npm publish --provenance --access public --tag ${{ github.sha }}
+    continue-on-error: true

@@ -5,30 +5,30 @@ outputs: {}
 runs:
   using: "composite"
   steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: Build and push container image
-      shell: bash
-      run: |
-        docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+  - name: checkout
+    uses: actions/checkout@v2
+  - name: Build and push container image
+    shell: bash
+    run: |
+      docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
 
-        echo "${GITHUB_TOKEN}" | docker login ghcr.io -u $ --password-stdin
-        IMAGE_ID=ghcr.io/${REPO_OWNER}/$IMAGE_NAME
-        IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-        
-        TAG="${GITHUB_SHA::7}"
+      echo "${GITHUB_TOKEN}" | docker login ghcr.io -u $ --password-stdin
+      IMAGE_ID=ghcr.io/${REPO_OWNER}/$IMAGE_NAME
+      IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-        echo IMAGE_ID=$IMAGE_ID
-        echo BRANCH=$BRANCH
-        echo TAG=$TAG
+      TAG="${GITHUB_SHA::7}"
 
-        docker tag $IMAGE_NAME $IMAGE_ID:$BRANCH
-        docker tag $IMAGE_NAME $IMAGE_ID:$TAG
+      echo IMAGE_ID=$IMAGE_ID
+      echo BRANCH=$BRANCH
+      echo TAG=$TAG
 
-        docker push $IMAGE_ID:$BRANCH
-        docker push $IMAGE_ID:$TAG
-      env:
-       IMAGE_NAME: pipeline-operator
-       BRANCH: ${{ github.ref_name }}
-       COMMIT_HASH: ${{ github.sha }}
-       REPO_OWNER: ${{ github.repository_owner }}
+      docker tag $IMAGE_NAME $IMAGE_ID:$BRANCH
+      docker tag $IMAGE_NAME $IMAGE_ID:$TAG
+
+      docker push $IMAGE_ID:$BRANCH
+      docker push $IMAGE_ID:$TAG
+    env:
+      IMAGE_NAME: pipeline-operator
+      BRANCH: ${{ github.ref_name }}
+      COMMIT_HASH: ${{ github.sha }}
+      REPO_OWNER: ${{ github.repository_owner }}
