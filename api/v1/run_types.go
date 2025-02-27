@@ -391,8 +391,8 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			Resource:                 task.Resource,
 			Trigger:                  task.Trigger.TriggerString(),
 			RunBefore:                jobRunBeforeList,
-			Inputs:                   append(run.Spec.Inputs, uniqInputs...),
-			Outputs:                  append(run.Spec.Outputs, uniqOutputs...),
+			Inputs:                   uniqInputs,
+			Outputs:                  uniqOutputs,
 			Env:                      task.Env,
 			AdditionalContainerSpecs: additionalContainerSpecs,
 			AdditionalPodSpecs:       additionalPodSpecs,
@@ -473,12 +473,12 @@ func constructKjobFromRunJob(ctx context.Context, run *Run, job Job) (*kbatchv1.
 	runMeta := run.ObjectMeta
 
 	// Construct container template
-	containers, err := parseContainerFromJob(ctx, job)
+	containers, err := parseContainerFromJob(ctx, run, job)
 	if err != nil {
 		return nil, err
 	}
 	// Construct volume template
-	volumes, err := parseVolumeWithPVCFromJob(ctx, job)
+	volumes, err := parseVolumeWithPVCFromJob(ctx, run, job)
 	if err != nil {
 		return nil, err
 	}
@@ -563,13 +563,13 @@ func constructKjobMetaFromJob(ctx context.Context, runMeta metav1.ObjectMeta, jo
 	return meta
 }
 
-func parsePodSpecFromJob(ctx context.Context, job Job) (*corev1.PodTemplateSpec, error) {
-	container, err := parseContainerFromJob(ctx, job)
+func parsePodSpecFromJob(ctx context.Context, run *Run, job Job) (*corev1.PodTemplateSpec, error) {
+	container, err := parseContainerFromJob(ctx, run, job)
 	if err != nil {
 		return nil, err
 	}
 
-	volumes, err := parseVolumeWithPVCFromJob(ctx, job)
+	volumes, err := parseVolumeWithPVCFromJob(ctx, run, job)
 	if err != nil {
 		return nil, err
 	}
@@ -585,14 +585,14 @@ func parsePodSpecFromJob(ctx context.Context, job Job) (*corev1.PodTemplateSpec,
 }
 
 // Parsing Container specs
-func parseContainerFromJob(ctx context.Context, job Job) ([]corev1.Container, error) {
+func parseContainerFromJob(ctx context.Context, run *Run, job Job) ([]corev1.Container, error) {
 
 	requests, err := parseComputingResource(ctx, &job.Resource)
 	if err != nil {
 		return nil, err
 	}
 	limits, _ := parseComputingResource(ctx, &job.Resource)
-	mountVolumeList, err := parseVolumeMountList(ctx, job)
+	mountVolumeList, err := parseVolumeMountList(ctx, run, job)
 	if err != nil {
 		return nil, err
 	}
@@ -647,12 +647,14 @@ func parseComputingResource(ctx context.Context, computingResource *Resource) (*
 }
 
 // Parsing Volume with PVC
-func parseVolumeWithPVCFromJob(ctx context.Context, job Job) ([]corev1.Volume, error) {
+func parseVolumeWithPVCFromJob(ctx context.Context, run *Run, job Job) ([]corev1.Volume, error) {
 	hashSet := hashset.New()
 
 	volumeList := []corev1.Volume{}
 	// 들어온 volume이름 목록으로 PVC template을 만든다.
 	volumeStringList := []IOVolumeSpec{}
+	volumeStringList = append(volumeStringList, run.Spec.Inputs...)
+	volumeStringList = append(volumeStringList, run.Spec.Outputs...)
 	volumeStringList = append(volumeStringList, job.Inputs...)
 	volumeStringList = append(volumeStringList, job.Outputs...)
 
@@ -683,30 +685,32 @@ const (
 )
 
 // Parsing Volume mount for using containers
-func parseVolumeMountList(ctx context.Context, job Job) ([]corev1.VolumeMount, error) {
+func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.VolumeMount, error) {
 	volumeMounts := []corev1.VolumeMount{}
 
-	for _, es := range [][]IOVolumeSpec{job.Inputs, job.Outputs} {
-		for _, e := range es {
-			mountCorpus, err := splitVolumeCorpus(e.Name)
-			if err != nil {
-				return nil, err
+	for _, ios := range [][][]IOVolumeSpec{{run.Spec.Inputs, run.Spec.Outputs}, {job.Inputs, job.Outputs}} {
+		for _, es := range ios {
+			for _, e := range es {
+				mountCorpus, err := splitVolumeCorpus(e.Name)
+				if err != nil {
+					return nil, err
+				}
+
+				subPath := strings.Join(mountCorpus[1:], "/")
+
+				subPathWithIntermediateDirectory := subPath
+				if e.UseIntermediateDirectory && e.IntermediateDirectoryName != "" {
+					subPathWithIntermediateDirectory = e.IntermediateDirectoryName + "/" + subPath
+				}
+
+				volumeName := mountCorpus[0]
+				volumeMounts = append(volumeMounts, corev1.VolumeMount{
+					Name:      volumeName,
+					MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
+					SubPath:   subPathWithIntermediateDirectory,
+					ReadOnly:  true,
+				})
 			}
-
-			subPath := strings.Join(mountCorpus[1:], "/")
-
-			subPathWithIntermediateDirectory := subPath
-			if e.UseIntermediateDirectory && e.IntermediateDirectoryName != "" {
-				subPathWithIntermediateDirectory = e.IntermediateDirectoryName + "/" + subPath
-			}
-
-			volumeName := mountCorpus[0]
-			volumeMounts = append(volumeMounts, corev1.VolumeMount{
-				Name:      volumeName,
-				MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
-				SubPath:   subPathWithIntermediateDirectory,
-				ReadOnly:  true,
-			})
 		}
 	}
 	return volumeMounts, nil
