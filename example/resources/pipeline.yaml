@@ -9,7 +9,6 @@
 apiVersion: pipeline.1eedaegon.github.io/v1
 kind: Pipeline
 metadata:
-  namespace: default
   name: pipeline-chain-test
 spec:
   schedule:
