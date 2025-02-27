@@ -30,8 +30,16 @@ spec:
   historyLimit:
     amount: 10
   runBefore: [] # runBefore를 걸었을 때 tasks/pipeline에 해당 이름이 없으면 경고를 띄운다.
-  inputs: []
-  outputs: []
+  inputs:
+  - name: yennefer-something/global-share-input # RO
+    useIntermediateDirectory: false
+  - name: yennefer-something/tasks-share-input # RO
+    useIntermediateDirectory: true
+  outputs:
+  - name: yennefer-something/global-share-output # RO
+    useIntermediateDirectory: false
+  - name: yennefer-something/tasks-share-output # RO
+    useIntermediateDirectory: true
   resource:
     cpu: 200m
     memory: 100Mi
@@ -108,6 +116,6 @@ spec:
       #   createDate: 2024-05-13:16:00:00
       #   lastUpdateDate: 2024-05-13:17:00:00
       #
-  # Below are optional fields, So You could safely omit without specifying null.
+      # Below are optional fields, So You could safely omit without specifying null.
   additionalContainerSpecs: null
   additionalPodSpecs: null
