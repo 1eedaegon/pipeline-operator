@@ -689,7 +689,7 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 	volumeMounts := []corev1.VolumeMount{}
 
 	for _, ios := range [][][]IOVolumeSpec{{run.Spec.Inputs, run.Spec.Outputs}, {job.Inputs, job.Outputs}} {
-		for _, es := range ios {
+		for i, es := range ios {
 			for _, e := range es {
 				mountCorpus, err := splitVolumeCorpus(e.Name)
 				if err != nil {
@@ -708,7 +708,7 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 					Name:      volumeName,
 					MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
 					SubPath:   subPathWithIntermediateDirectory,
-					ReadOnly:  true,
+					ReadOnly:  i == 0,
 				})
 			}
 		}
