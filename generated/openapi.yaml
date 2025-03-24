@@ -9098,6 +9098,13 @@ definitions:
               properties:
                 capacity:
                   type: string
+                lifecycle:
+                  type: string
+                  enum:
+                    - ""
+                    - persistent
+                    - pipeline
+                    - run
                 name:
                   type: string
                 storage:
@@ -16879,6 +16886,13 @@ definitions:
               properties:
                 capacity:
                   type: string
+                lifecycle:
+                  type: string
+                  enum:
+                    - ""
+                    - persistent
+                    - pipeline
+                    - run
                 name:
                   type: string
                 storage:

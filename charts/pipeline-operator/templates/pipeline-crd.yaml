@@ -8113,6 +8113,14 @@ spec:
                   properties:
                     capacity:
                       type: string
+                    lifecycle:
+                      default: ""
+                      enum:
+                      - ""
+                      - persistent
+                      - pipeline
+                      - run
+                      type: string
                     name:
                       type: string
                     storage:
