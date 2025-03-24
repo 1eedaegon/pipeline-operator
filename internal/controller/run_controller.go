@@ -189,19 +189,19 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				return err
 			}
 
-			var controlled metav1.Object
+			var owner metav1.Object
 
 			if volume.Lifecycle == pipelinev1.PipelineScope || volume.Lifecycle == pipelinev1.DefaultPipelineScope {
-				// Relation owner pipeline -> pvc(owner)
-				controlled = pvc
+				// Relation owner pipeline(owner) -> pvc(resource)
+				owner = pipeline
 			}
 			if volume.Lifecycle == pipelinev1.RunScope {
-				// Relation owner run -> pvc(owner)
-				controlled = run
+				// Relation owner run(owner) -> pvc(resource)
+				owner = run
 			}
 
 			if volume.Lifecycle != pipelinev1.Persistent {
-				if err := ctrl.SetControllerReference(pipeline, controlled, r.Scheme); err != nil {
+				if err := ctrl.SetControllerReference(owner, pvc, r.Scheme); err != nil {
 					log.V(1).Error(err, "unable to reference between pipeline or run and new pvc")
 					return err
 				}
@@ -212,16 +212,44 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				return err
 			}
 		} else {
-			log.V(1).Info("update run pvc")
+			log.V(1).Info("update from fetched pvc to run volume")
 			capacityQuantity := pvcQuery.Spec.Resources.Requests[corev1.ResourceName(corev1.ResourceStorage)]
 			capacity := capacityQuantity.String()
 			run.Spec.Volumes[idx] = pipelinev1.VolumeResource{
-				Name:     pvcQuery.Name,
-				Capacity: capacity,
-				Storage:  *pvcQuery.Spec.StorageClassName,
+				Name:      pvcQuery.Name,
+				Capacity:  capacity,
+				Storage:   *pvcQuery.Spec.StorageClassName,
+				Lifecycle: volume.Lifecycle,
 			}
 
 			if err := r.Update(ctx, run); err != nil {
+				return err
+			}
+
+			log.V(1).Info("reconciling pvc using update volume definition.")
+			volume = run.Spec.Volumes[idx]
+
+			var owner metav1.Object
+
+			if volume.Lifecycle == pipelinev1.PipelineScope || volume.Lifecycle == pipelinev1.DefaultPipelineScope {
+				// Relation owner pipeline(owner) -> pvc(resource)
+				owner = pipeline
+			}
+			if volume.Lifecycle == pipelinev1.RunScope {
+				// Relation owner run(owner) -> pvc(resource)
+				owner = run
+			}
+
+			if volume.Lifecycle != pipelinev1.Persistent {
+				if err := ctrl.SetControllerReference(owner, pvcQuery, r.Scheme); err != nil {
+					log.V(1).Error(err, "unable to reference between pipeline or run and new pvc")
+					return err
+				}
+			} else {
+				pvcQuery.OwnerReferences = make([]metav1.OwnerReference, 0)
+			}
+
+			if err := r.Update(ctx, pvcQuery); err != nil {
 				return err
 			}
 		}
