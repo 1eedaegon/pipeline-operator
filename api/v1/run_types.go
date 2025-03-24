@@ -764,10 +764,8 @@ func ParsePvcFromVolumeResourceWithMeta(ctx context.Context, meta metav1.ObjectM
 		corev1.ResourceName(corev1.ResourceStorage): capacity,
 	}
 
-	if volumeResource.Storage == "" {
-		return nil, errors.New("storage name must be defined")
-
-	}
+	// Handles also default StorageClass
+	// See: https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass
 	pvc.Spec.StorageClassName = &volumeResource.Storage
 
 	return pvc, nil

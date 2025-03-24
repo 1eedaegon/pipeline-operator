@@ -6,7 +6,8 @@ spec:
   volumes:
   - name: yennefer-something # 이미 있으면 생성하지 않고 사용
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
-    storage: standard
+    # storage 미정의 혹은 empty string으로 정의시 Default StorageClass 사용
+    # storage: standard
   resource:
     cpu: 200m
     memory: 100Mi
