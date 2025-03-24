@@ -46,14 +46,14 @@ const (
 type VolumeLifecycle string
 
 const (
-	// Created once (by pipeline reconciller / existing pvc), never deleted
+	// Created once (by run reconciller / existing pvc), never deleted
 	Persistent VolumeLifecycle = "persistent"
-	// Created once (by pipeline reconciller / existing pvc), deleted after pipeline deletion
+	// Created once (by run reconciller / existing pvc), deleted after pipeline deletion
 	// Set by default value
 	DefaultPipelineScope VolumeLifecycle = ""
-	// Created once (by pipeline reconciller / existing pvc), deleted after pipeline deletion
+	// Created once (by run reconciller / existing pvc), deleted after pipeline deletion
 	PipelineScope VolumeLifecycle = "pipeline"
-	// Created once (by pipeline reconciller / existing pvc), deleted after run deletion
+	// Created once (by run reconciller / existing pvc), deleted after run deletion
 	RunScope VolumeLifecycle = "run"
 )
 
