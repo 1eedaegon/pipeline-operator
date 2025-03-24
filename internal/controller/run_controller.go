@@ -28,6 +28,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
+	apitypes "k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/util/retry"
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -59,10 +60,46 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 	log := log.FromContext(ctx)
 	run := &pipelinev1.Run{}
 
-	// Checking pipeline CRD
+	pipelineNamespacedName := apitypes.NamespacedName{
+		Namespace: req.NamespacedName.Namespace,
+		Name:      run.Annotations[pipelinev1.PipelineNameLabel],
+	}
+
+	pipeline := &pipelinev1.Pipeline{}
+
 	log.Info("Reconciling run.")
-	if err := r.Get(ctx, req.NamespacedName, run); err != nil {
-		log.V(1).Error(err, "unable to fetch run")
+
+	var err error
+	notFound := false
+
+	// Checking pipeline CR
+	if err = r.Get(ctx, pipelineNamespacedName, pipeline); err != nil {
+		var errorMsg string
+		// If network error, return unknown
+		if !apierrors.IsNotFound(err) {
+			errorMsg = "unable to fetch pipeline of run: unknown error"
+		} else {
+			errorMsg = "unable to fetch pipeline of run: pipeline not exists"
+		}
+		log.V(1).Error(err, errorMsg)
+		r.deleteExternalResources(ctx, run, pipelinev1.PipelineDeleted)
+		notFound = true
+	}
+
+	if err = r.Get(ctx, req.NamespacedName, run); err != nil {
+		var errorMsg string
+		// If network error, return unknown
+		if !apierrors.IsNotFound(err) {
+			errorMsg = "unable to fetch run: unknown error"
+		} else {
+			errorMsg = "unable to fetch run: run not exists"
+		}
+		log.V(1).Error(err, errorMsg)
+		r.deleteExternalResources(ctx, run, pipelinev1.RunDeleted)
+		notFound = true
+	}
+
+	if notFound {
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
@@ -71,7 +108,7 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 		return ctrl.Result{}, err
 	}
 
-	if err := r.ensureVolumeList(ctx, run); err != nil {
+	if err := r.ensureVolumeList(ctx, run, pipeline); err != nil {
 		log.V(1).Error(err, "unable to ensure volume list")
 		return ctrl.Result{}, err
 	}
@@ -107,6 +144,57 @@ func (r *RunReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		Complete(r)
 }
 
+func (r *RunReconciler) deleteExternalResources(ctx context.Context, run *pipelinev1.Run, deletionType pipelinev1.ResourceDeletionType) error {
+	log := log.FromContext(ctx)
+	log.Info("Deleting external resources of run due to run or pipeline is deleted.")
+
+	// Delete volumes by lifecycle
+	for _, volume := range run.Spec.Volumes {
+
+		objKey := client.ObjectKey{
+			Name:      volume.Name,
+			Namespace: run.ObjectMeta.Namespace,
+		}
+		pvcQuery := &corev1.PersistentVolumeClaim{}
+		if err := r.Get(ctx, objKey, pvcQuery); err != nil {
+			// If network error, return unknown
+			if !apierrors.IsNotFound(err) {
+				log.V(1).Error(err, "deleteExternalResources(): unknown error")
+				return err
+			}
+
+			log.V(1).Info(fmt.Sprintf("pvc %v not exist already.", objKey))
+		} else {
+			log.V(1).Info("Check pvc %v whether need to delete.", objKey)
+			deleting := false
+			logMsg := "Not deleting because of deletion scope not matches."
+			if volume.Lifecycle == pipelinev1.Persistent {
+				logMsg = "Not deleting because of pvc has persistent lifecycle."
+			}
+			if volume.Lifecycle == pipelinev1.PipelineScope && deletionType == pipelinev1.PipelineDeleted {
+				deleting = true
+				logMsg = "Deleting pipeline scope lifecycle pvc due to pipeline deletion."
+			}
+			if volume.Lifecycle == pipelinev1.DefaultPipelineScope && deletionType == pipelinev1.PipelineDeleted {
+				deleting = true
+				logMsg = "Deleting default (pipeline scope) lifecycle pvc due to pipeline deletion."
+			}
+			if volume.Lifecycle == pipelinev1.RunScope && deletionType == pipelinev1.RunDeleted {
+				deleting = true
+				logMsg = "Deleting run scope lifecycle pvc due to run deletion."
+			}
+			log.V(1).Info(logMsg, objKey)
+			if deleting {
+				if err := r.Delete(ctx, pvcQuery); err != nil {
+					log.V(1).Error(err, "deleteExternalResources() -> delete: unknown error")
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}
+
 func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.Run) error {
 	log := log.FromContext(ctx)
 	log.Info("ensure run metadata.")
@@ -131,7 +219,7 @@ func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.R
 	return nil
 }
 
-func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Run) error {
+func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Run, pipeline *pipelinev1.Pipeline) error {
 	log := log.FromContext(ctx)
 	log.Info("ensure volume list.")
 	for idx, volume := range run.Spec.Volumes {
@@ -160,9 +248,10 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				return err
 			}
 
-			// Relation owner run -> pvc(owner)
-			if err := ctrl.SetControllerReference(run, pvc, r.Scheme); err != nil {
-				log.V(1).Error(err, "unable to reference between run and new pvc")
+			// Relation owner pipeline -> pvc(owner)
+			// Not setting owner to run because pvc is not run scoped, managed by volumeResource lifecycle
+			if err := ctrl.SetControllerReference(pipeline, pvc, r.Scheme); err != nil {
+				log.V(1).Error(err, "unable to reference between pipeline and new pvc")
 				return err
 			}
 

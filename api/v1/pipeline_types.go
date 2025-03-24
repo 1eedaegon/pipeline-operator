@@ -43,6 +43,28 @@ const (
 	IsNotTriggered Trigger = false
 )
 
+type VolumeLifecycle string
+
+const (
+	// Created once (by pipeline reconciller / existing pvc), never deleted
+	Persistent VolumeLifecycle = "persistent"
+	// Created once (by pipeline reconciller / existing pvc), deleted after pipeline deletion
+	// Set by default value
+	DefaultPipelineScope VolumeLifecycle = ""
+	// Created once (by pipeline reconciller / existing pvc), deleted after pipeline deletion
+	PipelineScope VolumeLifecycle = "pipeline"
+	// Created once (by pipeline reconciller / existing pvc), deleted after run deletion
+	RunScope VolumeLifecycle = "run"
+)
+
+// Handle deleteExternalResources() on run reconciler
+type ResourceDeletionType string
+
+const (
+	RunDeleted      ResourceDeletionType = "run"
+	PipelineDeleted ResourceDeletionType = "pipeline"
+)
+
 func (t Trigger) String() string {
 	return strconv.FormatBool(bool(t))
 }
@@ -70,6 +92,10 @@ type VolumeResource struct {
 	Name     string `json:"name,omitempty"`
 	Capacity string `json:"capacity,omitempty"`
 	Storage  string `json:"storage,omitempty"`
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Enum="";persistent;pipeline;run
+	// +kubebuilder:default:=""
+	Lifecycle VolumeLifecycle `json:"lifecycle,omitempty"`
 }
 
 // Pipeline / Task 내 Input / Output 정의에 필요한 Spec
