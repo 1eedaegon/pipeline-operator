@@ -32,7 +32,7 @@ controllerManager:
         - ALL
     image:
       repository: ghcr.io/dps0340/pipeline-operator
-      tag: v1.0.7-hotfix
+      tag: v1.0.8
     resources:
       limits:
         cpu: 500m
