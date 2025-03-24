@@ -766,7 +766,9 @@ func ParsePvcFromVolumeResourceWithMeta(ctx context.Context, meta metav1.ObjectM
 
 	// Handles also default StorageClass
 	// See: https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass
-	pvc.Spec.StorageClassName = &volumeResource.Storage
+	if volumeResource.Storage != "" {
+		pvc.Spec.StorageClassName = &volumeResource.Storage
+	}
 
 	return pvc, nil
 }
