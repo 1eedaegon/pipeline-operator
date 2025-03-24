@@ -79,7 +79,7 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 
 	pipelineNamespacedName := apitypes.NamespacedName{
 		Namespace: req.NamespacedName.Namespace,
-		Name:      run.ObjectMeta.Labels[pipelinev1.PipelineNameLabel],
+		Name:      run.Labels[pipelinev1.PipelineNameLabel],
 	}
 
 	// Checking pipeline CR
