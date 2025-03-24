@@ -48,5 +48,6 @@ runs:
     shell: bash
     run: |
       cd ./generated/sdk/${{ matrix.sdk.type-shorthand }}
+      npm publish --provenance --access public --tag latest
       npm publish --provenance --access public --tag ${{ github.sha }}
     continue-on-error: true
