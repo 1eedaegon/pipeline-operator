@@ -57,14 +57,6 @@ const (
 	RunScope VolumeLifecycle = "run"
 )
 
-// Handle deleteExternalResources() on run reconciler
-type ResourceDeletionType string
-
-const (
-	RunDeleted      ResourceDeletionType = "run"
-	PipelineDeleted ResourceDeletionType = "pipeline"
-)
-
 func (t Trigger) String() string {
 	return strconv.FormatBool(bool(t))
 }

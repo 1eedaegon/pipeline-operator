@@ -82,7 +82,6 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 			errorMsg = "unable to fetch pipeline of run: pipeline not exists"
 		}
 		log.V(1).Error(err, errorMsg)
-		r.deleteExternalResources(ctx, run, pipelinev1.PipelineDeleted)
 		notFound = true
 	}
 
@@ -95,7 +94,6 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 			errorMsg = "unable to fetch run: run not exists"
 		}
 		log.V(1).Error(err, errorMsg)
-		r.deleteExternalResources(ctx, run, pipelinev1.RunDeleted)
 		notFound = true
 	}
 
@@ -142,57 +140,6 @@ func (r *RunReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		).
 		Owns(&kbatchv1.Job{}).
 		Complete(r)
-}
-
-func (r *RunReconciler) deleteExternalResources(ctx context.Context, run *pipelinev1.Run, deletionType pipelinev1.ResourceDeletionType) error {
-	log := log.FromContext(ctx)
-	log.Info("Deleting external resources of run due to run or pipeline is deleted.")
-
-	// Delete volumes by lifecycle
-	for _, volume := range run.Spec.Volumes {
-
-		objKey := client.ObjectKey{
-			Name:      volume.Name,
-			Namespace: run.ObjectMeta.Namespace,
-		}
-		pvcQuery := &corev1.PersistentVolumeClaim{}
-		if err := r.Get(ctx, objKey, pvcQuery); err != nil {
-			// If network error, return unknown
-			if !apierrors.IsNotFound(err) {
-				log.V(1).Error(err, "deleteExternalResources(): unknown error")
-				return err
-			}
-
-			log.V(1).Info(fmt.Sprintf("pvc %v not exist already.", objKey))
-		} else {
-			log.V(1).Info("Check pvc %v whether need to delete.", objKey)
-			deleting := false
-			logMsg := "Not deleting because of deletion scope not matches."
-			if volume.Lifecycle == pipelinev1.Persistent {
-				logMsg = "Not deleting because of pvc has persistent lifecycle."
-			}
-			if volume.Lifecycle == pipelinev1.PipelineScope && deletionType == pipelinev1.PipelineDeleted {
-				deleting = true
-				logMsg = "Deleting pipeline scope lifecycle pvc due to pipeline deletion."
-			}
-			if volume.Lifecycle == pipelinev1.DefaultPipelineScope && deletionType == pipelinev1.PipelineDeleted {
-				deleting = true
-				logMsg = "Deleting default (pipeline scope) lifecycle pvc due to pipeline deletion."
-			}
-			if volume.Lifecycle == pipelinev1.RunScope && deletionType == pipelinev1.RunDeleted {
-				deleting = true
-				logMsg = "Deleting run scope lifecycle pvc due to run deletion."
-			}
-			log.V(1).Info(logMsg, objKey)
-			if deleting {
-				if err := r.Delete(ctx, pvcQuery); err != nil {
-					log.V(1).Error(err, "deleteExternalResources() -> delete: unknown error")
-					return err
-				}
-			}
-		}
-	}
-	return nil
 }
 
 func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.Run) error {
@@ -248,11 +195,22 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				return err
 			}
 
-			// Relation owner pipeline -> pvc(owner)
-			// Not setting owner to run because pvc is not run scoped, managed by volumeResource lifecycle
-			if err := ctrl.SetControllerReference(pipeline, pvc, r.Scheme); err != nil {
-				log.V(1).Error(err, "unable to reference between pipeline and new pvc")
-				return err
+			var controlled metav1.Object
+
+			if volume.Lifecycle == pipelinev1.PipelineScope || volume.Lifecycle == pipelinev1.DefaultPipelineScope {
+				// Relation owner pipeline -> pvc(owner)
+				controlled = pvc
+			}
+			if volume.Lifecycle == pipelinev1.RunScope {
+				// Relation owner run -> pvc(owner)
+				controlled = run
+			}
+
+			if volume.Lifecycle != pipelinev1.Persistent {
+				if err := ctrl.SetControllerReference(pipeline, controlled, r.Scheme); err != nil {
+					log.V(1).Error(err, "unable to reference between pipeline or run and new pvc")
+					return err
+				}
 			}
 
 			if err := r.Create(ctx, pvc); err != nil {
