@@ -8,6 +8,9 @@ spec:
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
     # storage 미정의 혹은 empty string으로 정의시 Default StorageClass 사용
     # storage: standard
+    # lifecycle 미정의시 pipeline scope로 동작
+    # persistent / run / pipeline (crd 정의 참고)
+    # lifecycle: persistent
   resource:
     cpu: 200m
     memory: 100Mi
