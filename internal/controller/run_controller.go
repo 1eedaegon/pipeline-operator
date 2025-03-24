@@ -240,13 +240,12 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				owner = run
 			}
 
+			pvcQuery.OwnerReferences = make([]metav1.OwnerReference, 0)
 			if volume.Lifecycle != pipelinev1.Persistent {
 				if err := ctrl.SetControllerReference(owner, pvcQuery, r.Scheme); err != nil {
 					log.V(1).Error(err, "unable to reference between pipeline or run and new pvc")
 					return err
 				}
-			} else {
-				pvcQuery.OwnerReferences = make([]metav1.OwnerReference, 0)
 			}
 
 			if err := r.Update(ctx, pvcQuery); err != nil {
