@@ -60,32 +60,12 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 	log := log.FromContext(ctx)
 	run := &pipelinev1.Run{}
 
-	pipelineNamespacedName := apitypes.NamespacedName{
-		Namespace: req.NamespacedName.Namespace,
-		Name:      run.ObjectMeta.Labels[pipelinev1.PipelineNameLabel],
-	}
-
 	pipeline := &pipelinev1.Pipeline{}
 
 	log.Info("Reconciling run.")
 
-	var err error
-	notFound := false
-
-	// Checking pipeline CR
-	if err = r.Get(ctx, pipelineNamespacedName, pipeline); err != nil {
-		var errorMsg string
-		// If network error, return unknown
-		if !apierrors.IsNotFound(err) {
-			errorMsg = "unable to fetch pipeline of run: unknown error"
-		} else {
-			errorMsg = "unable to fetch pipeline of run: pipeline not exists"
-		}
-		log.V(1).Error(err, errorMsg)
-		notFound = true
-	}
-
-	if err = r.Get(ctx, req.NamespacedName, run); err != nil {
+	// Checking run CR
+	if err := r.Get(ctx, req.NamespacedName, run); err != nil {
 		var errorMsg string
 		// If network error, return unknown
 		if !apierrors.IsNotFound(err) {
@@ -94,10 +74,24 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 			errorMsg = "unable to fetch run: run not exists"
 		}
 		log.V(1).Error(err, errorMsg)
-		notFound = true
+		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	if notFound {
+	pipelineNamespacedName := apitypes.NamespacedName{
+		Namespace: req.NamespacedName.Namespace,
+		Name:      run.ObjectMeta.Labels[pipelinev1.PipelineNameLabel],
+	}
+
+	// Checking pipeline CR
+	if err := r.Get(ctx, pipelineNamespacedName, pipeline); err != nil {
+		var errorMsg string
+		// If network error, return unknown
+		if !apierrors.IsNotFound(err) {
+			errorMsg = "unable to fetch pipeline of run: unknown error"
+		} else {
+			errorMsg = "unable to fetch pipeline of run: pipeline not exists"
+		}
+		log.V(1).Error(err, errorMsg)
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
