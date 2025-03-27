@@ -8128,6 +8128,11 @@ spec:
               volumes:
                 items:
                   properties:
+                    accessModes:
+                      default: '["ReadWriteOnce"]'
+                      items:
+                        type: string
+                      type: array
                     capacity:
                       type: string
                     lifecycle:
