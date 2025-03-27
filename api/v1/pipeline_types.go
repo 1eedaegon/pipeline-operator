@@ -88,6 +88,9 @@ type VolumeResource struct {
 	// +kubebuilder:validation:Enum="";persistent;pipeline;run
 	// +kubebuilder:default:=""
 	Lifecycle VolumeLifecycle `json:"lifecycle,omitempty"`
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=["ReadWriteOnce"]
+	AccessModes []corev1.PersistentVolumeAccessMode `json:"accessModes,omitempty"`
 }
 
 // Pipeline / Task 내 Input / Output 정의에 필요한 Spec
