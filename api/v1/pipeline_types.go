@@ -89,7 +89,7 @@ type VolumeResource struct {
 	// +kubebuilder:default:=""
 	Lifecycle VolumeLifecycle `json:"lifecycle,omitempty"`
 	// +kubebuilder:validation:Optional
-	// +kubebuilder:default:=["ReadWriteOnce"]
+	// +kubebuilder:default:={"ReadWriteOnce"}
 	AccessModes []corev1.PersistentVolumeAccessMode `json:"accessModes,omitempty"`
 }
 

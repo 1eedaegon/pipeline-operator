@@ -8112,7 +8112,8 @@ spec:
                 items:
                   properties:
                     accessModes:
-                      default: '["ReadWriteOnce"]'
+                      default:
+                      - ReadWriteOnce
                       items:
                         type: string
                       type: array
