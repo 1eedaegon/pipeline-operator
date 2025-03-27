@@ -9096,6 +9096,10 @@ definitions:
             items:
               type: object
               properties:
+                accessModes:
+                  type: array
+                  items:
+                    type: string
                 capacity:
                   type: string
                 lifecycle:
@@ -16884,6 +16888,10 @@ definitions:
             items:
               type: object
               properties:
+                accessModes:
+                  type: array
+                  items:
+                    type: string
                 capacity:
                   type: string
                 lifecycle:
