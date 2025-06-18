@@ -700,6 +700,9 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 					subPathWithIntermediateDirectory = intermediateDirectoryName + "/" + subPath
 				}
 
+				subPathWithIntermediateDirectory = strings.TrimPrefix(subPathWithIntermediateDirectory, "/")
+				subPathWithIntermediateDirectory = strings.TrimSuffix(subPathWithIntermediateDirectory, "/")
+
 				volumeMounts = append(volumeMounts, corev1.VolumeMount{
 					Name:      volumeName,
 					MountPath: mountPathPrefix + "/" + mountPath,
