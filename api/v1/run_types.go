@@ -333,7 +333,7 @@ func newRunScopeInputOutputsFromPipeline(ctx context.Context, run *Run, pipeline
 		res := []IOVolumeSpec{}
 
 		for _, e := range es {
-			res = append(res, IOVolumeSpec{Name: e.Name, UseIntermediateDirectory: true, IntermediateDirectoryName: run.ObjectMeta.Name})
+			res = append(res, IOVolumeSpec{Name: e.Name, UseIntermediateDirectory: true, IntermediateDirectoryName: run.ObjectMeta.Name, MountPrefix: e.MountPrefix})
 		}
 		initialRunIOs = append(initialRunIOs, res)
 	}
@@ -681,7 +681,7 @@ func parseVolumeWithPVCFromJob(ctx context.Context, run *Run, job Job) ([]corev1
 }
 
 const (
-	mountPathPrefix string = "/data/pipeline"
+	mountPathDefaultPrefix string = "/data/pipeline"
 )
 
 // Parsing Volume mount for using containers
@@ -697,6 +697,18 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 				}
 
 				subPath := strings.Join(mountCorpus[1:], "/")
+
+				var mountPathPrefix string
+
+				if e.MountPrefix != "" {
+					mountPathPrefix = e.MountPrefix
+				} else {
+					mountPathPrefix = mountPathDefaultPrefix
+				}
+
+				if !strings.HasPrefix(mountPathPrefix, "/") {
+					mountPathPrefix = "/" + mountPathPrefix
+				}
 
 				subPathWithIntermediateDirectory := subPath
 				if e.UseIntermediateDirectory && e.IntermediateDirectoryName != "" {
