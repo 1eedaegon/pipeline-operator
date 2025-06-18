@@ -25,7 +25,8 @@ spec:
     memory: 100Mi
   inputs:
   - name: yennefer-something/global-share-input # RO
-    useIntermediateDirectory: false
+    # Optional: Without specification, Operator treating it as same as false.
+    # useIntermediateDirectory: false
   - name: yennefer-something/tasks-share-input # RO
     useIntermediateDirectory: true
   outputs:
