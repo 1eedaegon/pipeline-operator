@@ -693,6 +693,8 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 				if len(mountCorpus) > 1 {
 					subPath = strings.Join(mountCorpus[1:], "/")
 				}
+				subPath = strings.TrimPrefix(subPath, "/")
+				subPath = strings.TrimSuffix(subPath, "/")
 
 				var mountPathPrefix string
 
@@ -716,6 +718,7 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 				}
 
 				mountPath = strings.TrimPrefix(mountPath, "/")
+				mountPath = strings.TrimSuffix(mountPath, "/")
 
 				subPathWithIntermediateDirectory := subPath
 				if e.UseIntermediateDirectory && e.IntermediateDirectoryName != "" {
@@ -853,6 +856,8 @@ func splitVolumeCorpus(ctx context.Context, volumeString string) ([]string, erro
 	log := log.FromContext(ctx)
 
 	volumeString = strings.TrimPrefix(volumeString, "/")
+	volumeString = strings.TrimSuffix(volumeString, "/")
+
 	volumeCorpus := strings.Split(volumeString, "/")
 	if len(volumeCorpus) <= 0 || volumeCorpus[0] == "" {
 		return nil, errors.New(fmt.Sprintf("volumeString '%s' has no name", volumeString))
