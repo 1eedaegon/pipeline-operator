@@ -31,6 +31,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
 // TODO: error codes should be in one place for each concepts
@@ -642,7 +643,7 @@ func parseVolumeWithPVCFromJob(ctx context.Context, run *Run, job Job) ([]corev1
 	volumeStringList = append(volumeStringList, job.Outputs...)
 
 	for _, e := range volumeStringList {
-		volumeCorpus, err := splitVolumeCorpus(e.Name)
+		volumeCorpus, err := splitVolumeCorpus(ctx, e.Name)
 		if err != nil {
 			return nil, err
 		}
@@ -674,12 +675,15 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 	for _, ios := range [][][]IOVolumeSpec{{run.Spec.Inputs, run.Spec.Outputs}, {job.Inputs, job.Outputs}} {
 		for i, es := range ios {
 			for _, e := range es {
-				mountCorpus, err := splitVolumeCorpus(e.Name)
+				mountCorpus, err := splitVolumeCorpus(ctx, e.Name)
 				if err != nil {
 					return nil, err
 				}
 
-				subPath := strings.Join(mountCorpus[1:], "/")
+				subPath := ""
+				if len(mountCorpus) > 1 {
+					subPath = strings.Join(mountCorpus[1:], "/")
+				}
 
 				var mountPathPrefix string
 
@@ -834,13 +838,21 @@ func defaultImageRegistry(imagePath string) string {
 }
 
 // volume 이름의 "/"를 기준으로 자른다. (corpus)
-// 자른 이름의 0 index를 pvc의 이름으로 사용, 2.. index를 subpath로 사용한다.
+// 자른 이름의 0 index를 pvc의 이름으로 사용, 1.. index를 subpath로 사용한다.
 // This function doesn't handle IOVolumeSpec.intermediateDirectoryName.
-func splitVolumeCorpus(volumeString string) ([]string, error) {
+func splitVolumeCorpus(ctx context.Context, volumeString string) ([]string, error) {
+	log := log.FromContext(ctx)
+
+	volumeString = strings.TrimPrefix(volumeString, "/")
 	volumeCorpus := strings.Split(volumeString, "/")
-	if len(volumeCorpus) <= 0 || volumeCorpus[1] == "" {
-		return nil, errors.New("volume has no prefix or postfix like: 'volumeName/filePath'")
+	if len(volumeCorpus) <= 0 || volumeCorpus[0] == "" {
+		return nil, errors.New(fmt.Sprintf("volumeString '%s' has no name", volumeString))
 	}
+
+	if len(volumeCorpus) == 1 {
+		log.Info(fmt.Sprintf("volumeString only name '%s'; Safely returning without error and subPath", volumeString))
+	}
+
 	return volumeCorpus, nil
 }
 
