@@ -21,6 +21,7 @@ import (
 	"errors"
 	"fmt"
 	"hash/fnv"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -290,13 +291,13 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 	}
 
 	// Construct run input/output from pipeline
-	inputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(pipeline.Spec.Inputs, run.ObjectMeta.Name)
-	if err != nil {
+	inputs := slices.Clone(pipeline.Spec.Inputs)
+	if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&inputs, run.ObjectMeta.Name); err != nil {
 		return err
 	}
 
-	outputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(pipeline.Spec.Outputs, run.ObjectMeta.Name)
-	if err != nil {
+	outputs := slices.Clone(pipeline.Spec.Outputs)
+	if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&outputs, run.ObjectMeta.Name); err != nil {
 		return err
 	}
 
@@ -346,13 +347,13 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 
 		IntermediateDirectoryName := run.ObjectMeta.Name
 
-		uniqInputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Inputs, IntermediateDirectoryName)
-		if err != nil {
+		inputs := slices.Clone(task.Inputs)
+		if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&inputs, IntermediateDirectoryName); err != nil {
 			return err
 		}
 
-		uniqOutputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Outputs, IntermediateDirectoryName)
-		if err != nil {
+		outputs := slices.Clone(task.Outputs)
+		if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&outputs, IntermediateDirectoryName); err != nil {
 			return err
 		}
 
@@ -384,8 +385,8 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			Resource:                 task.Resource,
 			Trigger:                  task.Trigger.TriggerString(),
 			RunBefore:                jobRunBeforeList,
-			Inputs:                   uniqInputs,
-			Outputs:                  uniqOutputs,
+			Inputs:                   inputs,
+			Outputs:                  outputs,
 			Env:                      task.Env,
 			AdditionalContainerSpecs: additionalContainerSpecs,
 			AdditionalPodSpecs:       additionalPodSpecs,
@@ -397,14 +398,11 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 	return nil
 }
 
-func toInsertIntermediateDirectoryNameOnIOVolumeSpecs(ioVolumeSpecs []IOVolumeSpec, IntermediateDirectoryName string) ([]IOVolumeSpec, error) {
-	res := []IOVolumeSpec{}
-	for _, v := range ioVolumeSpecs {
-		e := v
-		e.IntermediateDirectoryName = IntermediateDirectoryName
-		res = append(res, e)
+func toInsertIntermediateDirectoryNameOnIOVolumeSpecs(ioVolumeSpecs *[]IOVolumeSpec, IntermediateDirectoryName string) error {
+	for i, _ := range *ioVolumeSpecs {
+		(*ioVolumeSpecs)[i].IntermediateDirectoryName = IntermediateDirectoryName
 	}
-	return res, nil
+	return nil
 }
 
 func toInsertIfHasIntermediateDirectoryFromIOVolumeSpecs(pathList []IOVolumeSpec, insertPath string) ([]string, error) {
