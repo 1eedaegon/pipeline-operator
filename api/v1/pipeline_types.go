@@ -105,8 +105,6 @@ type IOVolumeSpec struct {
 	MountPrefix string `json:"mountPrefix,omitempty"`
 	// pvc root 하위의 run별로 격리된 hashed path를 subPath로 사용할 것인지 정의한다. (PipelineSpec 참고)
 	UseIntermediateDirectory bool `json:"useIntermediateDirectory,omitempty"`
-	// parseVolumeMountList() parameter까지 run 정의를 넘겨줄 수 없기에 사용하는 private field.
-	IntermediateDirectoryName string `json:"-"`
 }
 
 type ScheduleDate string

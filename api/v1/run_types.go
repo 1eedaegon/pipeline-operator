@@ -21,7 +21,6 @@ import (
 	"errors"
 	"fmt"
 	"hash/fnv"
-	"slices"
 	"strconv"
 	"strings"
 
@@ -294,18 +293,8 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 	log.Info(fmt.Sprintf("run.ObjectMeta.Name from ConstructRunFromPipeline: %s", run.ObjectMeta.Name))
 
 	// Construct run input/output from pipeline
-	inputs := slices.Clone(pipeline.Spec.Inputs)
-	if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&inputs, run.ObjectMeta.Name); err != nil {
-		return err
-	}
-
-	outputs := slices.Clone(pipeline.Spec.Outputs)
-	if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&outputs, run.ObjectMeta.Name); err != nil {
-		return err
-	}
-
-	run.Spec.Inputs = inputs
-	run.Spec.Outputs = outputs
+	run.Spec.Inputs = pipeline.Spec.Inputs
+	run.Spec.Outputs = pipeline.Spec.Outputs
 
 	// Construct run spec from pipeline
 	run.Spec.Schedule = pipeline.Spec.Schedule
@@ -348,20 +337,8 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 		hsByString := run.ObjectMeta.Name + run.ObjectMeta.Namespace
 		jobName := getShortHashPostFix(task.Name, hsByString)
 
-		IntermediateDirectoryName := run.ObjectMeta.Name
-
 		log := log.FromContext(ctx)
 		log.Info(fmt.Sprintf("run.ObjectMeta.Name from newRunJobFromPipeline: %s", run.ObjectMeta.Name))
-
-		inputs := slices.Clone(task.Inputs)
-		if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&inputs, IntermediateDirectoryName); err != nil {
-			return err
-		}
-
-		outputs := slices.Clone(task.Outputs)
-		if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&outputs, IntermediateDirectoryName); err != nil {
-			return err
-		}
 
 		jobRunBeforeList := []string{}
 		for _, taskRunBefore := range task.RunBefore {
@@ -391,8 +368,8 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 			Resource:                 task.Resource,
 			Trigger:                  task.Trigger.TriggerString(),
 			RunBefore:                jobRunBeforeList,
-			Inputs:                   inputs,
-			Outputs:                  outputs,
+			Inputs:                   task.Inputs,
+			Outputs:                  task.Outputs,
 			Env:                      task.Env,
 			AdditionalContainerSpecs: additionalContainerSpecs,
 			AdditionalPodSpecs:       additionalPodSpecs,
@@ -401,13 +378,6 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 	}
 	run.Spec.Jobs = jobs
 	// Construct Job
-	return nil
-}
-
-func toInsertIntermediateDirectoryNameOnIOVolumeSpecs(ioVolumeSpecs *[]IOVolumeSpec, IntermediateDirectoryName string) error {
-	for i, _ := range *ioVolumeSpecs {
-		(*ioVolumeSpecs)[i].IntermediateDirectoryName = IntermediateDirectoryName
-	}
 	return nil
 }
 
@@ -725,8 +695,9 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 				mountPath = strings.TrimSuffix(mountPath, "/")
 
 				subPathWithIntermediateDirectory := subPath
-				if e.UseIntermediateDirectory && e.IntermediateDirectoryName != "" {
-					subPathWithIntermediateDirectory = e.IntermediateDirectoryName + "/" + subPath
+				intermediateDirectoryName := run.ObjectMeta.Name
+				if e.UseIntermediateDirectory {
+					subPathWithIntermediateDirectory = intermediateDirectoryName + "/" + subPath
 				}
 
 				volumeMounts = append(volumeMounts, corev1.VolumeMount{
@@ -855,7 +826,7 @@ func defaultImageRegistry(imagePath string) string {
 
 // volume 이름의 "/"를 기준으로 자른다. (corpus)
 // 자른 이름의 0 index를 pvc의 이름으로 사용, 1.. index를 subpath로 사용한다.
-// This function doesn't handle IOVolumeSpec.intermediateDirectoryName.
+// This function doesn't handle intermediateDirectoryName.
 func splitVolumeCorpus(ctx context.Context, volumeString string) ([]string, error) {
 	log := log.FromContext(ctx)
 
