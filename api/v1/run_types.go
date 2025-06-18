@@ -333,7 +333,7 @@ func newRunScopeInputOutputsFromPipeline(ctx context.Context, run *Run, pipeline
 		res := []IOVolumeSpec{}
 
 		for _, e := range es {
-			res = append(res, IOVolumeSpec{Name: e.Name, UseIntermediateDirectory: true, IntermediateDirectoryName: run.ObjectMeta.Name, MountPrefix: e.MountPrefix})
+			res = append(res, IOVolumeSpec{Name: e.Name, MountPathOverride: e.MountPathOverride, MountPrefix: e.MountPrefix, UseIntermediateDirectory: true, IntermediateDirectoryName: run.ObjectMeta.Name})
 		}
 		initialRunIOs = append(initialRunIOs, res)
 	}
@@ -710,15 +710,25 @@ func parseVolumeMountList(ctx context.Context, run *Run, job Job) ([]corev1.Volu
 					mountPathPrefix = "/" + mountPathPrefix
 				}
 
+				var mountPath string
+				volumeName := mountCorpus[0]
+
+				if e.MountPathOverride != "" {
+					mountPath = e.MountPathOverride
+				} else {
+					mountPath = volumeName + "/" + subPath
+				}
+
+				mountPath = strings.TrimPrefix(mountPath, "/")
+
 				subPathWithIntermediateDirectory := subPath
 				if e.UseIntermediateDirectory && e.IntermediateDirectoryName != "" {
 					subPathWithIntermediateDirectory = e.IntermediateDirectoryName + "/" + subPath
 				}
 
-				volumeName := mountCorpus[0]
 				volumeMounts = append(volumeMounts, corev1.VolumeMount{
 					Name:      volumeName,
-					MountPath: mountPathPrefix + "/" + volumeName + "/" + subPath,
+					MountPath: mountPathPrefix + "/" + mountPath,
 					SubPath:   subPathWithIntermediateDirectory,
 					ReadOnly:  i == 0,
 				})

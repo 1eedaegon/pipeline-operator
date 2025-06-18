@@ -97,6 +97,9 @@ type VolumeResource struct {
 type IOVolumeSpec struct {
 	// Volume의 name과 동일해야 한다. (기존 or 신규 생성 Volume 공통)
 	Name string `json:"name,omitempty"`
+	// mountPathPrefix + "/" + volumeName + "/" + subPath로 구성된 mountPath내의 volumeName + "/" + subPath 값을 override한다.
+	// 값이 주어지지 않았을 경우 상기의 mountPath expression을 사용한다.
+	MountPathOverride string `json:"mountPathOverride,omitempty"`
 	// IOVolumeSpec에 대응되는 KJob Pod volumeMounts item의 mountPathPrefix를 정의한다.
 	// 값이 주어지지 않았을 경우 Operator 로직에 의해 /data/pipeline을 기본값으로 사용하며, Pipeline / Run등의 Resource에 해당 값이 반영되지 않는다.
 	MountPrefix string `json:"mountPrefix,omitempty"`
