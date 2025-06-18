@@ -289,10 +289,21 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 		return err
 	}
 
-	// Construct run spec from pipeline
-	run.Spec.Inputs = pipeline.Spec.Inputs
-	run.Spec.Outputs = pipeline.Spec.Outputs
+	// Construct run input/output from pipeline
+	inputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(pipeline.Spec.Inputs, run.ObjectMeta.Name)
+	if err != nil {
+		return err
+	}
 
+	outputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(pipeline.Spec.Outputs, run.ObjectMeta.Name)
+	if err != nil {
+		return err
+	}
+
+	run.Spec.Inputs = inputs
+	run.Spec.Outputs = outputs
+
+	// Construct run spec from pipeline
 	run.Spec.Schedule = pipeline.Spec.Schedule
 	run.Spec.HistoryLimit = pipeline.Spec.HistoryLimit
 	run.Spec.RunBefore = pipeline.Spec.RunBefore
@@ -335,14 +346,12 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 
 		IntermediateDirectoryName := run.ObjectMeta.Name
 
-		inputs := append(pipeline.Spec.Inputs, task.Inputs...)
-		uniqInputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(inputs, IntermediateDirectoryName)
+		uniqInputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Inputs, IntermediateDirectoryName)
 		if err != nil {
 			return err
 		}
 
-		outputs := append(pipeline.Spec.Outputs, task.Outputs...)
-		uniqOutputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(outputs, IntermediateDirectoryName)
+		uniqOutputs, err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(task.Outputs, IntermediateDirectoryName)
 		if err != nil {
 			return err
 		}
