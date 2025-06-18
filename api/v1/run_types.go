@@ -290,6 +290,9 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 		return err
 	}
 
+	log := log.FromContext(ctx)
+	log.Info(fmt.Sprintf("run.ObjectMeta.Name from ConstructRunFromPipeline: %s", run.ObjectMeta.Name))
+
 	// Construct run input/output from pipeline
 	inputs := slices.Clone(pipeline.Spec.Inputs)
 	if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&inputs, run.ObjectMeta.Name); err != nil {
@@ -346,6 +349,9 @@ func newRunJobFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) er
 		jobName := getShortHashPostFix(task.Name, hsByString)
 
 		IntermediateDirectoryName := run.ObjectMeta.Name
+
+		log := log.FromContext(ctx)
+		log.Info(fmt.Sprintf("run.ObjectMeta.Name from newRunJobFromPipeline: %s", run.ObjectMeta.Name))
 
 		inputs := slices.Clone(task.Inputs)
 		if err := toInsertIntermediateDirectoryNameOnIOVolumeSpecs(&inputs, IntermediateDirectoryName); err != nil {
