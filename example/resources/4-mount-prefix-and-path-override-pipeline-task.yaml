@@ -19,6 +19,9 @@ spec:
   inputs:
     - name: yennefer-task-broadcastee
       # Optional: Without specification, Operator treating it as same as false.
+      useIntermediateDirectory: true
+    - name: yennefer-task-broadcastee/without-intermediate-directory
+      # Optional: Without specification, Operator treating it as same as false.
       # useIntermediateDirectory: false
   resource:
     cpu: 200m
@@ -39,6 +42,10 @@ spec:
       # Optional: Overrides default mount path (volumeName + "/" + subPath)
       # It is recommended to trim / prefix, but operator handles and omits it on reconciler (not resource or mutatingWebhook) safely
       mountPathOverride: /input
+    - name: yennefer-something/input-without-intermediate-directory
+      useIntermediateDirectory: false
+      mountPrefix: /yennefer
+      mountPathOverride: /input-without-intermediate-directory
     outputs:
     - name: yennefer-something/output # RWX
       useIntermediateDirectory: true
@@ -47,6 +54,10 @@ spec:
       # Optional: Overrides default mount path (volumeName + "/" + subPath)
       # It is recommended to trim / prefix, but operator handles and omits it on reconciler (not resource or mutatingWebhook) safely
       mountPathOverride: /output
+    - name: yennefer-something/output-without-intermediate-directory
+      useIntermediateDirectory: false
+      mountPrefix: /yennefer
+      mountPathOverride: /output-without-intermediate-directory
     runBefore: []
   # Below are optional fields, So You could safely omit without specifying null.
   additionalContainerSpecs: null
