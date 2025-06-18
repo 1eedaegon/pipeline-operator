@@ -3,7 +3,7 @@
 apiVersion: pipeline.1eedaegon.github.io/v1
 kind: Pipeline
 metadata:
-  name: pipeline-chain-test
+  name: pipeline-chain-test-3
 spec:
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. 
   volumes:

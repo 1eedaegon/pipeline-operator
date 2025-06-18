@@ -1,7 +1,7 @@
 apiVersion: pipeline.1eedaegon.github.io/v1
 kind: Pipeline
 metadata:
-  name: pipeline-chain-test
+  name: pipeline-chain-test-2
 spec:
   volumes:
   - name: yennefer-something # 이미 있으면 생성하지 않고 사용
