@@ -4042,6 +4042,10 @@ spec:
               inputs:
                 items:
                   properties:
+                    mountPathOverride:
+                      type: string
+                    mountPrefix:
+                      type: string
                     name:
                       type: string
                     useIntermediateDirectory:
@@ -8040,6 +8044,10 @@ spec:
                     inputs:
                       items:
                         properties:
+                          mountPathOverride:
+                            type: string
+                          mountPrefix:
+                            type: string
                           name:
                             type: string
                           useIntermediateDirectory:
@@ -8053,6 +8061,10 @@ spec:
                     outputs:
                       items:
                         properties:
+                          mountPathOverride:
+                            type: string
+                          mountPrefix:
+                            type: string
                           name:
                             type: string
                           useIntermediateDirectory:
@@ -8091,6 +8103,10 @@ spec:
               outputs:
                 items:
                   properties:
+                    mountPathOverride:
+                      type: string
+                    mountPrefix:
+                      type: string
                     name:
                       type: string
                     useIntermediateDirectory:
