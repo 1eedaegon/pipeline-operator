@@ -224,6 +224,7 @@ paths:
           name: dryRun
           in: query
         - $ref: '#/parameters/gracePeriodSeconds--K5HaBOS'
+        - $ref: '#/parameters/ignoreStoreReadErrorWithClusterBreakingPotential-QbNkfIqj'
         - $ref: '#/parameters/orphanDependents-uRB25kX5'
         - $ref: '#/parameters/propagationPolicy-6jk3prlO'
       responses:
@@ -635,6 +636,7 @@ paths:
           name: dryRun
           in: query
         - $ref: '#/parameters/gracePeriodSeconds--K5HaBOS'
+        - $ref: '#/parameters/ignoreStoreReadErrorWithClusterBreakingPotential-QbNkfIqj'
         - $ref: '#/parameters/orphanDependents-uRB25kX5'
         - $ref: '#/parameters/propagationPolicy-6jk3prlO'
       responses:
@@ -1046,6 +1048,7 @@ paths:
           name: dryRun
           in: query
         - $ref: '#/parameters/gracePeriodSeconds--K5HaBOS'
+        - $ref: '#/parameters/ignoreStoreReadErrorWithClusterBreakingPotential-QbNkfIqj'
         - $ref: '#/parameters/orphanDependents-uRB25kX5'
         - $ref: '#/parameters/propagationPolicy-6jk3prlO'
       responses:
@@ -2020,6 +2023,9 @@ definitions:
         description: The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
         type: integer
         format: int64
+      ignoreStoreReadErrorWithClusterBreakingPotential:
+        description: 'if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it'
+        type: boolean
       kind:
         description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
         type: string
@@ -2119,6 +2125,9 @@ definitions:
         version: v1
       - group: coordination.k8s.io
         kind: DeleteOptions
+        version: v1alpha2
+      - group: coordination.k8s.io
+        kind: DeleteOptions
         version: v1beta1
       - group: discovery.k8s.io
         kind: DeleteOptions
@@ -2188,7 +2197,13 @@ definitions:
         version: v1beta1
       - group: resource.k8s.io
         kind: DeleteOptions
-        version: v1alpha2
+        version: v1alpha3
+      - group: resource.k8s.io
+        kind: DeleteOptions
+        version: v1beta1
+      - group: resource.k8s.io
+        kind: DeleteOptions
+        version: v1beta2
       - group: scheduling.k8s.io
         kind: DeleteOptions
         version: v1
@@ -2210,6 +2225,25 @@ definitions:
       - group: storagemigration.k8s.io
         kind: DeleteOptions
         version: v1alpha1
+  io.k8s.apimachinery.pkg.apis.meta.v1.FieldSelectorRequirement:
+    description: FieldSelectorRequirement is a selector that contains values, a key, and an operator that relates the key and values.
+    type: object
+    required:
+      - key
+      - operator
+    properties:
+      key:
+        description: key is the field selector key that the requirement applies to.
+        type: string
+      operator:
+        description: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. The list of operators may grow in the future.
+        type: string
+      values:
+        description: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.
+        type: array
+        items:
+          type: string
+        x-kubernetes-list-type: atomic
   io.k8s.apimachinery.pkg.apis.meta.v1.FieldsV1:
     description: |-
       FieldsV1 stores a set of fields in a data structure like a Trie, in JSON format.
@@ -2489,9 +2523,6 @@ definitions:
       - group: ""
         kind: Status
         version: v1
-      - group: resource.k8s.io
-        kind: Status
-        version: v1alpha2
   io.k8s.apimachinery.pkg.apis.meta.v1.StatusCause:
     description: StatusCause provides more information about an api.Status failure, including cases when multiple errors are encountered.
     type: object
@@ -2644,6 +2675,9 @@ definitions:
         version: v1
       - group: coordination.k8s.io
         kind: WatchEvent
+        version: v1alpha2
+      - group: coordination.k8s.io
+        kind: WatchEvent
         version: v1beta1
       - group: discovery.k8s.io
         kind: WatchEvent
@@ -2713,7 +2747,13 @@ definitions:
         version: v1beta1
       - group: resource.k8s.io
         kind: WatchEvent
-        version: v1alpha2
+        version: v1alpha3
+      - group: resource.k8s.io
+        kind: WatchEvent
+        version: v1beta1
+      - group: resource.k8s.io
+        kind: WatchEvent
+        version: v1beta2
       - group: scheduling.k8s.io
         kind: WatchEvent
         version: v1
@@ -2798,6 +2838,12 @@ definitions:
         type: string
       compiler:
         type: string
+      emulationMajor:
+        description: EmulationMajor is the major version of the emulation version
+        type: string
+      emulationMinor:
+        description: EmulationMinor is the minor version of the emulation version
+        type: string
       gitCommit:
         type: string
       gitTreeState:
@@ -2807,8 +2853,16 @@ definitions:
       goVersion:
         type: string
       major:
+        description: Major is the major version of the binary version
+        type: string
+      minCompatibilityMajor:
+        description: MinCompatibilityMajor is the major version of the minimum compatibility version
+        type: string
+      minCompatibilityMinor:
+        description: MinCompatibilityMinor is the minor version of the minimum compatibility version
         type: string
       minor:
+        description: Minor is the minor version of the binary version
         type: string
       platform:
         type: string
