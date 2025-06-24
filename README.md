@@ -1,5 +1,7 @@
 # pipeline-operator
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/pipeline-operator-dps0340-fork)](https://artifacthub.io/packages/helm/pipeline-operator-dps0340-fork/pipeline-operator)
+
 > Pipeline operator for k8s native
 
 ## Description
