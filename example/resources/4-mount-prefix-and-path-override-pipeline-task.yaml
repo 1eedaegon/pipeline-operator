@@ -17,17 +17,17 @@ spec:
   - name: yennefer-task-broadcastee
     capacity: 2G
   inputs:
-    - name: yennefer-task-broadcastee
+    - name: yennefer-task-broadcastee/input
       # Optional: Without specification, Operator treating it as same as false.
       useIntermediateDirectory: true
-    - name: yennefer-task-broadcastee/without-intermediate-directory
+    - name: yennefer-task-broadcastee/input-without-intermediate-directory
       # Optional: Without specification, Operator treating it as same as false.
       # useIntermediateDirectory: false
   resource:
     cpu: 200m
     memory: 100Mi
   tasks:
-  - name: pipeline-1 # import task type without image version
+  - name: pipeline-4-1 # import task type without image version
     image: amazon/aws-cli
     trigger: false
     args:
