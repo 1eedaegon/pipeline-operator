@@ -18,7 +18,7 @@ spec:
     cpu: 200m
     memory: 100Mi
   tasks:
-  - name: pipeline-1 # import task type without image version
+  - name: pipeline-3-1 # import task type without image version
     image: amazon/aws-cli
     trigger: false
     args:
@@ -32,7 +32,7 @@ spec:
     - name: yennefer-something/output # RWX
       useIntermediateDirectory: true
     runBefore: []
-  - name: pipeline-2-1 # import task type without image version
+  - name: pipeline-3-2-1 # import task type without image version
     image: amazon/aws-cli
     trigger: false
     args:
@@ -45,8 +45,8 @@ spec:
     - name: yennefer-something/pipeline-2-1-output # RWX
       useIntermediateDirectory: true
     runBefore:
-    - pipeline-1
-  - name: pipeline-2-2 # import task type without image version
+    - pipeline-3-1
+  - name: pipeline-3-2-2 # import task type without image version
     image: amazon/aws-cli
     trigger: false
     args:
@@ -59,8 +59,8 @@ spec:
     - name: yennefer-something/pipeline-2-2-output # RWX
       useIntermediateDirectory: true
     runBefore:
-    - pipeline-1
-  - name: pipeline-2-1-1 # import task type without image version
+    - pipeline-3-1
+  - name: pipeline-3-2-2-1 # import task type without image version
     image: amazon/aws-cli
     trigger: false
     args:
@@ -73,8 +73,8 @@ spec:
     - name: yennefer-something/pipeline-2-1-1-output # RWX
       useIntermediateDirectory: true
     runBefore:
-    - pipeline-2-1
-  - name: pipeline-3 # import task type without image version
+    - pipeline-3-2-1
+  - name: pipeline-3-3 # import task type without image version
     image: amazon/aws-cli
     trigger: false
     args:
@@ -89,8 +89,8 @@ spec:
     - name: yennefer-something/pipeline-3-out # RWX
       useIntermediateDirectory: true
     runBefore:
-    - pipeline-2-2
-    - pipeline-2-1-1
+    - pipeline-3-2-2
+    - pipeline-3-2-1-1
   # Below are optional fields, So You could safely omit without specifying null.
   additionalContainerSpecs: null
   additionalPodSpecs: null

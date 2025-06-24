@@ -35,7 +35,7 @@ spec:
   - name: yennefer-something/tasks-share-output # RO
     useIntermediateDirectory: true
   tasks:
-  - name: pipeline-init-pipeline # import task type without image version
+  - name: pipeline-1-1 # import task type without image version
     image: amazon/aws-cli
     schedule:
       scheduleDate: 1d
