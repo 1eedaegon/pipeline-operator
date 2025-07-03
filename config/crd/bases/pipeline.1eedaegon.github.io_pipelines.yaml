@@ -4071,7 +4071,11 @@ spec:
               schedule:
                 properties:
                   endDate:
+                    format: date-time
                     type: string
+                  repeat:
+                    default: true
+                    type: boolean
                   scheduleDate:
                     type: string
                 type: object
@@ -8113,7 +8117,11 @@ spec:
                     schedule:
                       properties:
                         endDate:
+                          format: date-time
                           type: string
+                        repeat:
+                          default: true
+                          type: boolean
                         scheduleDate:
                           type: string
                       type: object
@@ -8159,6 +8167,29 @@ spec:
                 type: string
               runs:
                 type: integer
+              schedule:
+                properties:
+                  endDate:
+                    format: date-time
+                    type: string
+                  repeat:
+                    default: true
+                    type: boolean
+                  scheduleDate:
+                    type: string
+                type: object
+              scheduleLastExecutedDate:
+                format: date-time
+                type: string
+              schedulePendingExecutionDate:
+                format: date-time
+                type: string
+              scheduleRepeated:
+                default: 0
+                type: integer
+              scheduleStartDate:
+                format: date-time
+                type: string
             type: object
         type: object
     served: true

@@ -1,6 +1,6 @@
 {
   "name": "pipeline-operator-ts-axios-sdk",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Pipeline operator for k8s native",
   "main": "index.ts",
   "scripts": {
