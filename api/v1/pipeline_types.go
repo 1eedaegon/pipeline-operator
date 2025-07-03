@@ -146,7 +146,7 @@ func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
 func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
 	// cron parser
 	cronExpr, err := cron.ParseStandard(string(sd))
-	duration := cronExpr.Next(time.Now()).Sub(time.Now())
+	duration := time.Until(cronExpr.Next(time.Now()))
 	if err != nil {
 		return 0, err
 	}
@@ -165,9 +165,13 @@ func (sd ScheduleDate) Duration() (time.Duration, error) {
 }
 
 type Schedule struct {
-	// ScheduleType ScheduleType `json:"type,omitempty"`         // ScheduleType이 cron이면 cron의 최초 도달시점, date면 시스템 시간에 시작
+	// +kubebuilder:validation:Optional
 	ScheduleDate ScheduleDate `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
-	EndDate      string       `json:"endDate,omitempty"`      // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
+	// +kubebuilder:validation:Optional
+	EndDate *metav1.Time `json:"endDate,omitempty"` // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=true
+	Repeat bool `json:"repeat,omitempty"` // Schedule의 1회 수행 혹은 반복 여부를 정의
 }
 
 type ModeType string
@@ -236,9 +240,16 @@ type PipelineSpec struct {
 type PipelineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Runs            int          `json:"runs,omitempty"`            // Number of run
-	CreatedDate     *metav1.Time `json:"createdDate,omitempty"`     // Date of created pipeline
-	LastUpdatedDate *metav1.Time `json:"lastUpdatedDate,omitempty"` // Last modified date pipeline
+	Runs                          int          `json:"runs,omitempty"`                         // Number of run
+	CreatedDate                   *metav1.Time `json:"createdDate,omitempty"`                  // Date of created pipeline
+	LastUpdatedDate               *metav1.Time `json:"lastUpdatedDate,omitempty"`              // Last modified date pipeline
+	Schedule                      *Schedule    `json:"schedule,omitempty"`                     // Currently applied schedule for checking diff
+	ScheduleStartDate             *metav1.Time `json:"scheduleStartDate,omitempty"`            // Current Schedule Start Date
+	SchedulePendingExecuctionDate *metav1.Time `json:"schedulePendingExecutionDate,omitempty"` // Schedule Pending Next Execution Date (now() >= x)
+	ScheduleLastExecutedDate      *metav1.Time `json:"scheduleLastExecutedDate,omitempty"`     // Schedule Last Executed Date (now() <= x)
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=0
+	ScheduleRepeated int `json:"scheduleRepeated,omitempty"` // Repeated (executed) runs count by current schedule
 }
 
 // +kubebuilder:object:root=true

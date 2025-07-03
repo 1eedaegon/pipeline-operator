@@ -34,7 +34,6 @@ import (
 
 	pipelinev1 "github.com/dps0340/pipeline-operator/api/v1"
 	"github.com/r3labs/diff/v3"
-	"github.com/robfig/cron/v3"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
@@ -146,7 +145,7 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 	run := &pipelinev1.Run{}
 
 	if err := pipelinev1.ConstructRunFromPipeline(ctx, pipeline, run); err != nil {
-		log.V(1).Error(err, "Unable to parse from pipeline")
+		log.V(1).Error(err, "Unable to parse run from pipeline")
 		return err
 	}
 	objKey := client.ObjectKey{
@@ -201,10 +200,80 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 		pipeline.Status.CreatedDate = &pipeline.ObjectMeta.CreationTimestamp
 		pipeline.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
+		changelog, err := diff.Diff(pipeline.Spec.Schedule, pipeline.Status.Schedule)
+		if err != nil {
+			return err
+		}
+
+		if len(changelog) > 0 {
+			pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
+			pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
+			duration, err := pipelinev1.Duration(pipeline.Spec.Schedule.ScheduleDate)
+			if err != nil {
+				return err
+			}
+
+			pipeline.Status.SchedulePendingExecuctionDate = &metav1.Time{Time: pipeline.Status.ScheduleStartDate.Add(duration)}
+			if pipeline.Spec.Schedule.EndDate != nil && pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.Before(pipeline.Spec.Schedule.EndDate) {
+				log.V(1).Info(fmt.Sprintf("ScheduleExecutionDate is before than EndDate; Do not schedule for run. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
+				pipeline.Status.SchedulePendingExecuctionDate = nil
+			} else {
+				go r.ScheduleExecution(ctx, *pipeline.DeepCopy())
+			}
+		}
+
 		return r.Status().Update(ctx, pipeline)
 	}); err != nil {
 		return err
 	}
+	return nil
+}
+
+func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline pipelinev1.Pipeline) error {
+	scheduledTime := time.Now()
+
+	pendingDuration := pipeline.Status.SchedulePendingExecuctionDate.Sub(scheduledTime)
+
+	time.After(pendingDuration)
+
+	objKey := client.ObjectKey{
+		Name:      pipeline.ObjectMeta.Name,
+		Namespace: pipeline.ObjectMeta.Namespace,
+	}
+
+	currentPipeline := &pipelinev1.Pipeline{}
+
+	if err := r.Get(ctx, objKey, currentPipeline); err != nil {
+		return err
+	}
+
+	log := log.FromContext(ctx)
+
+	if pipeline.Status.ScheduleStartDate != currentPipeline.Status.ScheduleStartDate {
+		log.V(1).Info(fmt.Sprintf("SchduleStartDate of currentPipeline changed. Aborting Creating Run."))
+		return nil
+	}
+
+	if pipeline.Status.SchedulePendingExecuctionDate != currentPipeline.Status.SchedulePendingExecuctionDate {
+		log.V(1).Info(fmt.Sprintf("SchedulePendingExecutionDate of currentPipeline changed. Aborting Creating Run."))
+		return nil
+	}
+
+	run := &pipelinev1.Run{}
+
+	if err := pipelinev1.ConstructRunFromPipeline(ctx, currentPipeline, run); err != nil {
+		log.V(1).Error(err, "Unable to parse run from currentPipeline during Schedule Execution")
+		return err
+	}
+
+	now := time.Now()
+	run.Status.ScheduleExecutedDate = &metav1.Time{Time: now}
+
+	if err := r.Create(ctx, run); err != nil {
+		log.V(1).Error(err, "Unable to create run")
+		return err
+	}
+
 	return nil
 }
 
