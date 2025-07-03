@@ -204,6 +204,10 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			return r.Status().Update(ctx, pipeline)
 		}
 
+		if pipeline.Spec.Schedule.ScheduleDate == "" && pipeline.Status.Schedule.ScheduleDate == "" {
+			return r.Status().Update(ctx, pipeline)
+		}
+
 		hasDiff := true
 
 		if pipeline.Spec.Schedule != nil && pipeline.Status.Schedule != nil {
@@ -228,6 +232,11 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
 			pipeline.Status.ScheduleLastExecutedDate = nil
 			pipeline.Status.ScheduleRepeated = 0
+
+			if pipeline.Spec.Schedule.ScheduleDate == "" {
+				pipeline.Status.ScheduleStartDate = nil
+				return r.Status().Update(ctx, pipeline)
+			}
 
 			duration, err := pipeline.Spec.Schedule.ScheduleDate.Duration()
 			if err != nil {
