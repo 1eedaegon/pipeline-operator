@@ -200,6 +200,10 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 		pipeline.Status.CreatedDate = &pipeline.ObjectMeta.CreationTimestamp
 		pipeline.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
+		if pipeline.Spec.Schedule == nil && pipeline.Status.Schedule == nil {
+			return r.Status().Update(ctx, pipeline)
+		}
+
 		hasDiff := true
 
 		if pipeline.Spec.Schedule != nil && pipeline.Status.Schedule != nil {
