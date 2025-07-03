@@ -211,7 +211,7 @@ type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
-	Schedule Schedule `json:"schedule,omitempty"`
+	Schedule *Schedule `json:"schedule,omitempty"`
 	/*
 		단일 pipeline의 run들은 동일한 volume을 사용한다.
 		hashed intermediate directory (IOVolumeSpec.UseIntermediateDirectory) 구성에 따른 영향과 목적은 다음과 같다.

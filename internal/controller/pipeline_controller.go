@@ -200,12 +200,15 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 		pipeline.Status.CreatedDate = &pipeline.ObjectMeta.CreationTimestamp
 		pipeline.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
-		changelog, err := diff.Diff(pipeline.Spec.Schedule, pipeline.Status.Schedule)
-		if err != nil {
+		if pipeline.Spec.Schedule == nil {
+			return r.Status().Update(ctx, pipeline)
+		}
+		changelog, err := diff.Diff(*pipeline.Spec.Schedule, *pipeline.Status.Schedule)
+		if pipeline.Status.Schedule != nil && err != nil {
 			return err
 		}
 
-		if len(changelog) > 0 {
+		if pipeline.Status.Schedule == nil || len(changelog) > 0 {
 			pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
 			pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
 			pipeline.Status.ScheduleLastExecutedDate = nil
@@ -220,11 +223,13 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			if pipeline.Spec.Schedule.EndDate != nil && pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.Before(pipeline.Spec.Schedule.EndDate) {
 				log.V(1).Info(fmt.Sprintf("ScheduleExecutionDate is before than EndDate; Do not schedule for run. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
 				pipeline.Status.SchedulePendingExecuctionDate = nil
-			} else if !pipeline.Spec.Schedule.Repeat && pipeline.Status.ScheduleRepeated > 0 {
-				log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
-			} else {
-				go r.ScheduleExecution(ctx, *pipeline.DeepCopy())
+				return r.Status().Update(ctx, pipeline)
 			}
+			if !pipeline.Spec.Schedule.Repeat && pipeline.Status.ScheduleRepeated > 0 {
+				log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
+				return r.Status().Update(ctx, pipeline)
+			}
+			go r.ScheduleExecution(ctx, *pipeline.DeepCopy())
 		}
 
 		return r.Status().Update(ctx, pipeline)
