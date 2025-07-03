@@ -298,7 +298,7 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 	run.Spec.Outputs = pipeline.Spec.Outputs
 
 	// Construct run spec from pipeline
-	run.Spec.Schedule = pipeline.Spec.Schedule
+	run.Spec.Schedule = *pipeline.Spec.Schedule.DeepCopy()
 	run.Spec.HistoryLimit = pipeline.Spec.HistoryLimit
 	run.Spec.RunBefore = pipeline.Spec.RunBefore
 	run.Spec.Resource = pipeline.Spec.Resource
