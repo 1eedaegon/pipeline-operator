@@ -320,14 +320,15 @@ func newRunMetaFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) e
 	run.ObjectMeta.Namespace = pipeline.ObjectMeta.Namespace
 	run.ObjectMeta.Labels[PipelineNameLabel] = pipeline.ObjectMeta.Name
 	run.ObjectMeta.Annotations[ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
-
-	endDate, err := pipeline.Spec.Schedule.EndDate.MarshalText()
-	if err != nil {
-		return err
-	}
-
-	run.ObjectMeta.Annotations[EndDateAnnotation] = string(endDate[:])
 	run.ObjectMeta.Annotations[TriggerAnnotation] = pipeline.Spec.Trigger.String()
+
+	if pipeline.Spec.Schedule != nil && pipeline.Spec.Schedule.EndDate != nil {
+		endDate, err := pipeline.Spec.Schedule.EndDate.MarshalText()
+		if err != nil {
+			return err
+		}
+		run.ObjectMeta.Annotations[EndDateAnnotation] = string(endDate[:])
+	}
 	return nil
 }
 
