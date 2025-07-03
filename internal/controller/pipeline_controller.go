@@ -200,15 +200,26 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 		pipeline.Status.CreatedDate = &pipeline.ObjectMeta.CreationTimestamp
 		pipeline.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
-		if pipeline.Spec.Schedule == nil {
-			return r.Status().Update(ctx, pipeline)
-		}
-		changelog, err := diff.Diff(*pipeline.Spec.Schedule, *pipeline.Status.Schedule)
-		if pipeline.Status.Schedule != nil && err != nil {
-			return err
+		hasDiff := true
+
+		if pipeline.Spec.Schedule != nil && pipeline.Status.Schedule != nil {
+			changelog, err := diff.Diff(*pipeline.Spec.Schedule, *pipeline.Status.Schedule)
+			if err != nil {
+				return err
+			}
+			hasDiff = len(changelog) > 0
 		}
 
-		if pipeline.Status.Schedule == nil || len(changelog) > 0 {
+		if pipeline.Spec.Schedule == nil && pipeline.Status.Schedule != nil {
+			pipeline.Status.Schedule = nil
+			pipeline.Status.ScheduleStartDate = nil
+			pipeline.Status.ScheduleLastExecutedDate = nil
+			pipeline.Status.ScheduleRepeated = 0
+			pipeline.Status.SchedulePendingExecuctionDate = nil
+			return r.Status().Update(ctx, pipeline)
+		}
+
+		if hasDiff {
 			pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
 			pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
 			pipeline.Status.ScheduleLastExecutedDate = nil
