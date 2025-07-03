@@ -1,4 +1,4 @@
-module github.com/1eedaegon/pipeline-operator
+module github.com/dps0340/pipeline-operator
 
 go 1.21.0
 
@@ -12,7 +12,12 @@ require (
 	sigs.k8s.io/controller-runtime v0.17.0
 )
 
-require dario.cat/mergo v1.0.1 // indirect
+require (
+	dario.cat/mergo v1.0.1 // indirect
+	github.com/r3labs/diff/v3 v3.0.1 // indirect
+	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
+	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
+)
 
 require (
 	github.com/1eedaegon/go-hashset v0.0.2

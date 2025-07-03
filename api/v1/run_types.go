@@ -228,18 +228,19 @@ type RunSpec struct {
 
 // RunStatus defines the observed state of Run
 type RunStatus struct {
-	RunState        RunState      `json:"runState,omitempty"` // run > pre-run > post-run
-	CreatedDate     *metav1.Time  `json:"createdDate,omitempty"`
-	LastUpdatedDate *metav1.Time  `json:"lastUpdateDate,omitempty"`
-	JobStates       []RunJobState `json:"JobStates,omitempty"`    // current-working-job-name(string)
-	Initializing    *int          `json:"initializing,omitempty"` // initializing/total
-	Waiting         *int          `json:"waiting,omitempty"`      // waiting/total
-	Stopping        *int          `json:"stopping,omitempty"`     // stopping/total
-	Running         *int          `json:"running,omitempty"`      // running/total
-	Deleting        *int          `json:"deleting,omitempty"`     // deleting/total
-	Completed       *int          `json:"completed,omitempty"`    // completed/total
-	Deleted         *int          `json:"deleted,omitempty"`      // deleted/total
-	Failed          *int          `json:"failed,omitempty"`       // failed/total
+	RunState           RunState      `json:"runState,omitempty"` // run > pre-run > post-run
+	CreatedDate        *metav1.Time  `json:"createdDate,omitempty"`
+	LastUpdatedDate    *metav1.Time  `json:"lastUpdateDate,omitempty"`
+	ScheduleModifyDate *metav1.Time  `json:"scheduleModifyDate,omitempty"` // Run Schedule Modify Date
+	JobStates          []RunJobState `json:"JobStates,omitempty"`          // current-working-job-name(string)
+	Initializing       *int          `json:"initializing,omitempty"`       // initializing/total
+	Waiting            *int          `json:"waiting,omitempty"`            // waiting/total
+	Stopping           *int          `json:"stopping,omitempty"`           // stopping/total
+	Running            *int          `json:"running,omitempty"`            // running/total
+	Deleting           *int          `json:"deleting,omitempty"`           // deleting/total
+	Completed          *int          `json:"completed,omitempty"`          // completed/total
+	Deleted            *int          `json:"deleted,omitempty"`            // deleted/total
+	Failed             *int          `json:"failed,omitempty"`             // failed/total
 }
 
 // +kubebuilder:object:root=true

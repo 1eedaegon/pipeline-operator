@@ -34,8 +34,8 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	pipelinev1 "github.com/1eedaegon/pipeline-operator/api/v1"
-	"github.com/1eedaegon/pipeline-operator/internal/controller"
+	pipelinev1 "github.com/dps0340/pipeline-operator/api/v1"
+	"github.com/dps0340/pipeline-operator/internal/controller"
 	//+kubebuilder:scaffold:imports
 )
 
