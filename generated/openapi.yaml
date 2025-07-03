@@ -5235,6 +5235,9 @@ definitions:
             properties:
               endDate:
                 type: string
+                format: date-time
+              repeat:
+                type: boolean
               scheduleDate:
                 type: string
           tasks:
@@ -9101,6 +9104,9 @@ definitions:
                   properties:
                     endDate:
                       type: string
+                      format: date-time
+                    repeat:
+                      type: boolean
                     scheduleDate:
                       type: string
                 trigger:
@@ -9140,6 +9146,27 @@ definitions:
             format: date-time
           runs:
             type: integer
+          schedule:
+            type: object
+            properties:
+              endDate:
+                type: string
+                format: date-time
+              repeat:
+                type: boolean
+              scheduleDate:
+                type: string
+          scheduleLastExecutedDate:
+            type: string
+            format: date-time
+          schedulePendingExecutionDate:
+            type: string
+            format: date-time
+          scheduleRepeated:
+            type: integer
+          scheduleStartDate:
+            type: string
+            format: date-time
     x-kubernetes-group-version-kind:
       - group: pipeline.1eedaegon.github.io
         kind: Pipeline
@@ -16869,6 +16896,9 @@ definitions:
                   properties:
                     endDate:
                       type: string
+                      format: date-time
+                    repeat:
+                      type: boolean
                     scheduleDate:
                       type: string
                 trigger:
@@ -16909,6 +16939,9 @@ definitions:
             properties:
               endDate:
                 type: string
+                format: date-time
+              repeat:
+                type: boolean
               scheduleDate:
                 type: string
           trigger:
@@ -16971,6 +17004,9 @@ definitions:
             type: string
           running:
             type: integer
+          scheduleExecutedDate:
+            type: string
+            format: date-time
           stopping:
             type: integer
           waiting:
