@@ -248,12 +248,12 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline pip
 
 	currentPipeline := &pipelinev1.Pipeline{}
 
+	log := log.FromContext(ctx)
+
 	if err := r.Get(ctx, objKey, currentPipeline); err != nil {
 		log.V(1).Info(fmt.Sprintf("Unable to get currentPipeline: %v", err))
 		return err
 	}
-
-	log := log.FromContext(ctx)
 
 	if pipeline.Status.ScheduleStartDate != currentPipeline.Status.ScheduleStartDate {
 		log.V(1).Info(fmt.Sprintf("SchduleStartDate of currentPipeline changed. Aborting Creating Run."))
