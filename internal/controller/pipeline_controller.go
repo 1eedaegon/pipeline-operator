@@ -201,21 +201,16 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 		pipeline.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
 		if pipeline.Spec.Schedule == nil && pipeline.Status.Schedule == nil {
-			return r.Status().Update(ctx, pipeline)
+			return nil
 		}
 
-		if pipeline.Spec.Schedule.ScheduleDate == "" && pipeline.Status.Schedule.ScheduleDate == "" {
+		if pipeline.Spec.Schedule != nil && pipeline.Status.Schedule == nil {
+			pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
+			pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
+			pipeline.Status.ScheduleLastExecutedDate = nil
+			pipeline.Status.ScheduleRepeated = 0
+			pipeline.Status.SchedulePendingExecuctionDate = nil
 			return r.Status().Update(ctx, pipeline)
-		}
-
-		hasDiff := true
-
-		if pipeline.Spec.Schedule != nil && pipeline.Status.Schedule != nil {
-			changelog, err := diff.Diff(*pipeline.Spec.Schedule, *pipeline.Status.Schedule)
-			if err != nil {
-				return err
-			}
-			hasDiff = len(changelog) > 0
 		}
 
 		if pipeline.Spec.Schedule == nil && pipeline.Status.Schedule != nil {
@@ -226,6 +221,14 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			pipeline.Status.SchedulePendingExecuctionDate = nil
 			return r.Status().Update(ctx, pipeline)
 		}
+
+		hasDiff := true
+
+		changelog, err := diff.Diff(*pipeline.Spec.Schedule, *pipeline.Status.Schedule)
+		if err != nil {
+			return err
+		}
+		hasDiff = len(changelog) > 0
 
 		if hasDiff {
 			pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
