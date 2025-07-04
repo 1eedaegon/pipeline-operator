@@ -263,7 +263,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 				return err
 			}
 			log.V(1).Info(fmt.Sprintf("Scheduling pipeline %v on %v", pipeline.ObjectMeta.Name, pipeline.Status.SchedulePendingExecuctionDate))
-			go r.ScheduleExecution(ctx, *pipeline.DeepCopy())
+			go r.ScheduleExecution(ctx, pipeline.DeepCopy())
 		}
 
 		return r.Update(ctx, pipeline)
@@ -273,8 +273,15 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 	return nil
 }
 
-func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline pipelinev1.Pipeline) error {
+func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
 	scheduledTime := time.Now()
+
+	if pipeline.Status.Schedule == nil {
+		return nil
+	}
+	if pipeline.Status.SchedulePendingExecuctionDate == nil {
+		return nil
+	}
 
 	pendingDuration := pipeline.Status.SchedulePendingExecuctionDate.Sub(scheduledTime)
 
