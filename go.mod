@@ -4,19 +4,14 @@ go 1.21.0
 
 require (
 	dario.cat/mergo v1.0.1
+	github.com/1eedaegon/pipeline-operator v0.0.1
 	github.com/onsi/ginkgo/v2 v2.14.0
 	github.com/onsi/gomega v1.30.0
-	github.com/r3labs/diff/v3 v3.0.1
 	github.com/robfig/cron/v3 v3.0.1
 	k8s.io/api v0.29.0
 	k8s.io/apimachinery v0.29.0
 	k8s.io/client-go v0.29.0
 	sigs.k8s.io/controller-runtime v0.17.0
-)
-
-require (
-	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
-	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 )
 
 require (
