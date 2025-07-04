@@ -9156,7 +9156,10 @@ definitions:
                 type: boolean
               scheduleDate:
                 type: string
-          scheduleLastExecutedDate:
+          scheduleLastExecutionEndDate:
+            type: string
+            format: date-time
+          scheduleLastExecutionStartDate:
             type: string
             format: date-time
           schedulePendingExecutionDate:
