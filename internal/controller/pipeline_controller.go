@@ -215,7 +215,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			pipeline.Status.ScheduleLastExecutedDate = nil
 			pipeline.Status.ScheduleRepeated = 0
 			pipeline.Status.SchedulePendingExecuctionDate = nil
-			return r.Status().Update(ctx, pipeline)
+			return r.Update(ctx, pipeline)
 		}
 
 		if pipeline.Spec.Schedule == nil && pipeline.Status.Schedule != nil {
@@ -224,7 +224,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			pipeline.Status.ScheduleLastExecutedDate = nil
 			pipeline.Status.ScheduleRepeated = 0
 			pipeline.Status.SchedulePendingExecuctionDate = nil
-			return r.Status().Update(ctx, pipeline)
+			return r.Update(ctx, pipeline)
 		}
 
 		hasDiff := true
@@ -243,7 +243,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 
 			if pipeline.Spec.Schedule.ScheduleDate == "" {
 				pipeline.Status.ScheduleStartDate = nil
-				return r.Status().Update(ctx, pipeline)
+				return r.Update(ctx, pipeline)
 			}
 
 			duration, err := pipeline.Spec.Schedule.ScheduleDate.Duration()
@@ -255,19 +255,19 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			if pipeline.Spec.Schedule.EndDate != nil && pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.Before(pipeline.Spec.Schedule.EndDate) {
 				log.V(1).Info(fmt.Sprintf("ScheduleExecutionDate is before than EndDate; Do not schedule for run. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
 				pipeline.Status.SchedulePendingExecuctionDate = nil
-				return r.Status().Update(ctx, pipeline)
+				return r.Update(ctx, pipeline)
 			}
 			if !pipeline.Spec.Schedule.Repeat && pipeline.Status.ScheduleRepeated > 0 {
 				log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
-				return r.Status().Update(ctx, pipeline)
+				return r.Update(ctx, pipeline)
 			}
-			if err := r.Status().Update(ctx, pipeline); err != nil {
+			if err := r.Update(ctx, pipeline); err != nil {
 				return err
 			}
 			go r.ScheduleExecution(ctx, *pipeline.DeepCopy())
 		}
 
-		return r.Status().Update(ctx, pipeline)
+		return r.Update(ctx, pipeline)
 	}); err != nil {
 		return err
 	}
@@ -325,7 +325,7 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline pip
 	currentPipeline.Status.ScheduleRepeated = currentPipeline.Status.ScheduleRepeated + 1
 	currentPipeline.Status.ScheduleLastExecutedDate = &metav1.Time{Time: now}
 
-	if err := r.Status().Update(ctx, currentPipeline); err != nil {
+	if err := r.Update(ctx, currentPipeline); err != nil {
 		log.V(1).Error(err, "Unable to update pipeline status")
 		return err
 	}
