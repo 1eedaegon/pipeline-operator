@@ -211,7 +211,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 		pipeline.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
 		if pipeline.Spec.Schedule == nil && pipeline.Status.Schedule == nil {
-			return nil
+			return r.Status().Update(ctx, pipeline)
 		}
 
 		if pipeline.Spec.Schedule == nil && pipeline.Status.Schedule != nil {
@@ -301,23 +301,28 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pi
 		return err
 	}
 
-	if pipeline.Status.ScheduleStartDate != currentPipeline.Status.ScheduleStartDate {
+	if !pipeline.Status.ScheduleStartDate.Equal(currentPipeline.Status.ScheduleStartDate) {
 		log.V(1).Info(fmt.Sprintf("SchduleStartDate of currentPipeline changed. Aborting Creating Run."))
 		return nil
 	}
 
-	if pipeline.Status.SchedulePendingExecuctionDate != currentPipeline.Status.SchedulePendingExecuctionDate {
+	if !pipeline.Status.SchedulePendingExecuctionDate.Equal(currentPipeline.Status.SchedulePendingExecuctionDate) {
 		log.V(1).Info(fmt.Sprintf("SchedulePendingExecutionDate of currentPipeline changed. Aborting Creating Run."))
 		return nil
 	}
 
-	if pipeline.Status.Schedule.EndDate != currentPipeline.Status.Schedule.EndDate {
+	if !pipeline.Status.Schedule.EndDate.Equal(currentPipeline.Status.Schedule.EndDate) {
 		log.V(1).Info(fmt.Sprintf("EndDate of currentPipeline changed. Aborting Creating Run."))
 		return nil
 	}
 
 	if pipeline.Status.Schedule.Repeat != currentPipeline.Status.Schedule.Repeat {
 		log.V(1).Info(fmt.Sprintf("Repeat of currentPipeline changed. Aborting Creating Run."))
+		return nil
+	}
+
+	if pipeline.Status.ScheduleRepeated != currentPipeline.Status.ScheduleRepeated {
+		log.V(1).Info(fmt.Sprintf("ScheduleRepeated of currentPipeline changed. Aborting Creating Run."))
 		return nil
 	}
 
