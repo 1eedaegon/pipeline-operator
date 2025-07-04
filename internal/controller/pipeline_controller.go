@@ -130,9 +130,12 @@ func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipelin
 		if objectMeta.Labels == nil {
 			objectMeta.Labels = make(map[string]string)
 		}
-		objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
 		objectMeta.Annotations[pipelinev1.TriggerAnnotation] = pipeline.Spec.Trigger.String()
 		objectMeta.Labels[pipelinev1.PipelineNameLabel] = pipeline.ObjectMeta.Name
+
+		if pipeline.Spec.Schedule != nil && pipeline.Spec.Schedule.ScheduleDate != "" {
+			objectMeta.Annotations[pipelinev1.ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
+		}
 
 		if !reflect.DeepEqual(pipeline.ObjectMeta, objectMeta) {
 			pipeline.ObjectMeta = objectMeta
