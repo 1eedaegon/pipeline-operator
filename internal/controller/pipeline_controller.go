@@ -262,7 +262,7 @@ func (r *PipelineReconciler) ensureScheduleExecution(ctx context.Context, pipeli
 
 	if pipeline.Status.ScheduleLastExecutionStartDate != nil && pipeline.Status.ScheduleLastExecutionEndDate == nil {
 		log.V(1).Info(fmt.Sprintf("Do not execute due to previous execution is running (ScheduleLastExecutionStartDate: %v, ScheduleLastExecutionEndDate: %v)", pipeline.Status.ScheduleLastExecutionStartDate, pipeline.Status.ScheduleLastExecutionEndDate))
-		return &ctrl.Result{RequeueAfter: time.Second * 3}, nil
+		return nil, nil
 	}
 
 	if pipeline.Spec.Schedule.ScheduleDate == "" {
