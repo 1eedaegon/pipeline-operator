@@ -4,7 +4,6 @@ go 1.21.0
 
 require (
 	dario.cat/mergo v1.0.1
-	github.com/1eedaegon/pipeline-operator v0.0.1
 	github.com/onsi/ginkgo/v2 v2.14.0
 	github.com/onsi/gomega v1.30.0
 	github.com/robfig/cron/v3 v3.0.1
