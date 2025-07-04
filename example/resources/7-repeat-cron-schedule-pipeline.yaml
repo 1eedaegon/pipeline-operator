@@ -1,0 +1,66 @@
+# Yennefer pipeline yaml
+
+apiVersion: pipeline.1eedaegon.github.io/v1
+kind: Pipeline
+metadata:
+  name: pipeline-chain-test-7
+spec:
+  schedule:
+    scheduleDate: "* * * * *"
+    repeat: true
+  volumes:
+  - name: yennefer-something-7 # 이미 있으면 생성하지 않고 사용
+    capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
+    # storage 미정의 혹은 empty string으로 정의시 Default StorageClass 사용
+    # storage: standard
+    # lifecycle 미정의시 pipeline scope로 동작
+    # persistent / run / pipeline (crd 정의 참고)
+    # lifecycle: persistent
+  - name: yennefer-task-broadcastee-7
+    capacity: 2G
+  inputs:
+    - name: yennefer-task-broadcastee-7/input
+      # Optional: Without specification, Operator treating it as same as false.
+      useIntermediateDirectory: true
+    - name: yennefer-task-broadcastee-7/input-without-intermediate-directory
+      # Optional: Without specification, Operator treating it as same as false.
+      # useIntermediateDirectory: false
+  resource:
+    cpu: 200m
+    memory: 100Mi
+  tasks:
+  - name: pipeline-7-1 # import task type without image version
+    image: amazon/aws-cli
+    trigger: false
+    args:
+    - --version
+    - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
+    inputs:
+    # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
+    - name: yennefer-something-7/input # RO
+      useIntermediateDirectory: true
+      # Optional: Overrides default mount prefix (/data/pipeline)
+      mountPrefix: /yennefer
+      # Optional: Overrides default mount path (volumeName + "/" + subPath)
+      # It is recommended to trim / prefix, but operator handles and omits it on reconciler (not resource or mutatingWebhook) safely
+      mountPathOverride: /input
+    - name: yennefer-something-7/input-without-intermediate-directory
+      useIntermediateDirectory: false
+      mountPrefix: /yennefer
+      mountPathOverride: /input-without-intermediate-directory
+    outputs:
+    - name: yennefer-something-7/output # RWX
+      useIntermediateDirectory: true
+      # Optional: Overrides default mount prefix (/data/pipeline)
+      mountPrefix: /yennefer
+      # Optional: Overrides default mount path (volumeName + "/" + subPath)
+      # It is recommended to trim / prefix, but operator handles and omits it on reconciler (not resource or mutatingWebhook) safely
+      mountPathOverride: /output
+    - name: yennefer-something-7/output-without-intermediate-directory
+      useIntermediateDirectory: false
+      mountPrefix: /yennefer
+      mountPathOverride: /output-without-intermediate-directory
+    runBefore: []
+  # Below are optional fields, So You could safely omit without specifying null.
+  additionalContainerSpecs: null
+  additionalPodSpecs: null
