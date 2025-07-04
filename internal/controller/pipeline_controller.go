@@ -89,6 +89,12 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 		log.V(1).Error(err, "Unable to ensure pipeline")
 		return ctrl.Result{}, err
 	}
+	log.V(1).Info("Pipeline resource after ensurepipelinemetadata: %v", pipeline)
+
+	if err := r.Get(ctx, req.NamespacedName, pipeline); err != nil {
+		log.V(1).Error(err, "unable to fetch pipeline")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
 
 	// Check the list of runs and create one if there are changes or none
 	if err := r.ensureRunExists(ctx, pipeline); err != nil {
@@ -325,7 +331,7 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline pip
 	currentPipeline.Status.ScheduleRepeated = currentPipeline.Status.ScheduleRepeated + 1
 	currentPipeline.Status.ScheduleLastExecutedDate = &metav1.Time{Time: now}
 
-	if err := r.Update(ctx, currentPipeline); err != nil {
+	if err := r.Status().Update(ctx, currentPipeline); err != nil {
 		log.V(1).Error(err, "Unable to update pipeline status")
 		return err
 	}
