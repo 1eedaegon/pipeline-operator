@@ -209,7 +209,7 @@ type RunSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name      string   `json:"name,omitempty"` - Name은 Spec이 아니라 metadata이다.
-	Schedule Schedule `json:"schedule,omitempty"`
+	Schedule *Schedule `json:"schedule,omitempty"`
 	// See comments on api/v1/run_types.go
 	Volumes      []VolumeResource  `json:"volumes,omitempty"`
 	Trigger      TriggerString     `json:"trigger,omitempty"`
@@ -298,7 +298,11 @@ func ConstructRunFromPipeline(ctx context.Context, pipeline *Pipeline, run *Run)
 	run.Spec.Outputs = pipeline.Spec.Outputs
 
 	// Construct run spec from pipeline
-	run.Spec.Schedule = *pipeline.Spec.Schedule.DeepCopy()
+	if pipeline.Spec.Schedule != nil {
+		run.Spec.Schedule = pipeline.Spec.Schedule.DeepCopy()
+	} else {
+		run.Spec.Schedule = nil
+	}
 	run.Spec.HistoryLimit = pipeline.Spec.HistoryLimit
 	run.Spec.RunBefore = pipeline.Spec.RunBefore
 	run.Spec.Resource = pipeline.Spec.Resource
