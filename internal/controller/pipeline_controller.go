@@ -294,7 +294,8 @@ func (r *PipelineReconciler) ensureScheduleExecution(ctx context.Context, pipeli
 		pipeline.Status.ScheduleRepeated = 0
 	}
 
-	pendingExecutionDate := &metav1.Time{Time: pipeline.Status.ScheduleStartDate.Add(duration)}
+	scheduleStartDate := time.Now()
+	pendingExecutionDate := &metav1.Time{Time: scheduleStartDate.Add(duration)}
 
 	if pendingExecutionDate.Before(pipeline.Spec.Schedule.EndDate) {
 		log.V(1).Info(fmt.Sprintf("Current SchedulePendingExecutionDate is before than EndDate; Do not schedule for run. (SchedulePendingExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
@@ -302,7 +303,7 @@ func (r *PipelineReconciler) ensureScheduleExecution(ctx context.Context, pipeli
 	}
 
 	pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
-	pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
+	pipeline.Status.ScheduleStartDate = &metav1.Time{Time: scheduleStartDate}
 	pipeline.Status.SchedulePendingExecuctionDate = pendingExecutionDate.DeepCopy()
 
 	if err := r.Status().Update(ctx, pipeline); err != nil {
