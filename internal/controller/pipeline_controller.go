@@ -317,6 +317,14 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline pip
 		return nil
 	}
 
+	currentPipeline.Status.ScheduleRepeated = currentPipeline.Status.ScheduleRepeated + 1
+	currentPipeline.Status.ScheduleLastExecutedDate = &metav1.Time{Time: now}
+
+	if err := r.Status().Update(ctx, currentPipeline); err != nil {
+		log.V(1).Error(err, "Unable to update pipeline status")
+		return err
+	}
+
 	run := &pipelinev1.Run{}
 
 	if err := pipelinev1.ConstructRunFromPipeline(ctx, currentPipeline, run); err != nil {
@@ -328,14 +336,6 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline pip
 
 	if err := r.Create(ctx, run); err != nil {
 		log.V(1).Error(err, "Unable to create run")
-		return err
-	}
-
-	currentPipeline.Status.ScheduleRepeated++
-	currentPipeline.Status.ScheduleLastExecutedDate = &metav1.Time{Time: now}
-
-	if err := r.Status().Update(ctx, currentPipeline); err != nil {
-		log.V(1).Error(err, "Unable to update pipeline status")
 		return err
 	}
 
