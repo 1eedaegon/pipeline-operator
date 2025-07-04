@@ -281,6 +281,8 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 
 		log.V(1).Info(fmt.Sprintf("Scheduling pipeline %v at %v", pipeline.ObjectMeta.Name, pipeline.Status.SchedulePendingExecuctionDate))
 		go r.ScheduleExecution(ctx, pipeline.DeepCopy())
+
+		return nil
 	}); err != nil {
 		return err
 	}
