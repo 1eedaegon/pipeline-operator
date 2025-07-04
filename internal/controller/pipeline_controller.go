@@ -149,7 +149,7 @@ func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipelin
 }
 
 func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
-	if pipeline.Spec.Schedule.ScheduleDate != "" {
+	if pipeline.Spec.Schedule != nil && pipeline.Spec.Schedule.ScheduleDate != "" {
 		return nil
 	}
 
