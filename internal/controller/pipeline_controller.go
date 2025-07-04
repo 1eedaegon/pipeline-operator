@@ -256,6 +256,9 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 				log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
 				return r.Status().Update(ctx, pipeline)
 			}
+			if err := r.Status().Update(ctx, pipeline); err != nil {
+				return err
+			}
 			go r.ScheduleExecution(ctx, *pipeline.DeepCopy())
 		}
 
