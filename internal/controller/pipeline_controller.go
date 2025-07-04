@@ -297,8 +297,8 @@ func (r *PipelineReconciler) ensureScheduleExecution(ctx context.Context, pipeli
 	scheduleStartDate := time.Now()
 	pendingExecutionDate := &metav1.Time{Time: scheduleStartDate.Add(duration)}
 
-	if pendingExecutionDate.Before(pipeline.Spec.Schedule.EndDate) {
-		log.V(1).Info(fmt.Sprintf("Current SchedulePendingExecutionDate is before than EndDate; Do not schedule for run. (SchedulePendingExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
+	if pipeline.Spec.Schedule.EndDate != nil && pendingExecutionDate.Before(pipeline.Spec.Schedule.EndDate) {
+		log.V(1).Info(fmt.Sprintf("Current SchedulePendingExecutionDate is before than EndDate; Do not schedule for run. (SchedulePendingExecutionDate: %v, EndDate: %v)", pendingExecutionDate, pipeline.Spec.Schedule.EndDate))
 		return nil, nil
 	}
 
