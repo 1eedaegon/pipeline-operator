@@ -475,6 +475,32 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		run.Status.CreatedDate = &run.ObjectMeta.CreationTimestamp
 		run.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
+		if Complete+Deleted+Failed == len(run.Spec.Jobs) {
+			pipelineName := ""
+			for _, ref := range run.ObjectMeta.OwnerReferences {
+				if ref.APIVersion == pipelinev1.ApiVersion && ref.Kind == "Pipeline" {
+					pipelineName = ref.Name
+					break
+				}
+			}
+			if pipelineName == "" {
+				return fmt.Errorf("No pipeline OwnerReferences are run %v/%v", run.ObjectMeta.Namespace, run.ObjectMeta.Name)
+			}
+			objKey := client.ObjectKey{
+				Name:      pipelineName,
+				Namespace: run.ObjectMeta.Namespace,
+			}
+
+			pipeline := &pipelinev1.Pipeline{}
+			r.Get(ctx, objKey, pipeline)
+
+			pipeline.Status.ScheduleLastExecutionEndDate = &metav1.Time{Time: time.Now()}
+
+			if err := r.Status().Update(ctx, pipeline); err != nil {
+				return err
+			}
+		}
+
 		return r.Status().Update(ctx, run)
 	}); err != nil {
 		return err

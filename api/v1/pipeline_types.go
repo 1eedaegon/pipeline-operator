@@ -29,6 +29,7 @@ import (
 )
 
 const (
+	ApiVersion             = "pipeline.1eedaegon.github.io/v1"
 	ScheduleDateAnnotation = "pipeline.1eedaegon.github.io/schedule-date"
 	EndDateAnnotation      = "pipeline.1eedaegon.github.io/end-date"
 	ScheduledAtAnnotation  = "pipeline.1eedaegon.github.io/scheduled-at"
@@ -244,13 +245,14 @@ type PipelineSpec struct {
 type PipelineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Runs                          int          `json:"runs,omitempty"`                         // Number of run
-	CreatedDate                   *metav1.Time `json:"createdDate,omitempty"`                  // Date of created pipeline
-	LastUpdatedDate               *metav1.Time `json:"lastUpdatedDate,omitempty"`              // Last modified date pipeline
-	Schedule                      *Schedule    `json:"schedule,omitempty"`                     // Currently applied schedule for checking diff
-	ScheduleStartDate             *metav1.Time `json:"scheduleStartDate,omitempty"`            // Current Schedule Start Date
-	SchedulePendingExecuctionDate *metav1.Time `json:"schedulePendingExecutionDate,omitempty"` // Schedule Pending Next Execution Date (now() >= x)
-	ScheduleLastExecutedDate      *metav1.Time `json:"scheduleLastExecutedDate,omitempty"`     // Schedule Last Executed Date (now() <= x)
+	Runs                           int          `json:"runs,omitempty"`                           // Number of run
+	CreatedDate                    *metav1.Time `json:"createdDate,omitempty"`                    // Date of created pipeline
+	LastUpdatedDate                *metav1.Time `json:"lastUpdatedDate,omitempty"`                // Last modified date pipeline
+	Schedule                       *Schedule    `json:"schedule,omitempty"`                       // Currently applied schedule for checking diff
+	ScheduleStartDate              *metav1.Time `json:"scheduleStartDate,omitempty"`              // Current Schedule Start Date
+	SchedulePendingExecuctionDate  *metav1.Time `json:"schedulePendingExecutionDate,omitempty"`   // Schedule Pending Next Execution Date (now() >= x)
+	ScheduleLastExecutionStartDate *metav1.Time `json:"scheduleLastExecutionStartDate,omitempty"` // Schedule Last Execution Started Date (now() <= x)
+	ScheduleLastExecutionEndDate   *metav1.Time `json:"scheduleLastExecutionEndDate,omitempty"`   // Schedule Last Execution Ended Date ow() <= x)
 	// +kubebuilder:validation:Optional
 	// +kubebuilder:default:=0
 	ScheduleRepeated int `json:"scheduleRepeated,omitempty"` // Repeated (executed) runs count by current schedule

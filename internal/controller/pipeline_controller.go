@@ -221,7 +221,8 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			log.V(1).Info(fmt.Sprintf("Removing schedule status due to schedule spec removal."))
 			pipeline.Status.Schedule = nil
 			pipeline.Status.ScheduleStartDate = nil
-			pipeline.Status.ScheduleLastExecutedDate = nil
+			pipeline.Status.ScheduleLastExecutionStartDate = nil
+			pipeline.Status.ScheduleLastExecutionEndDate = nil
 			pipeline.Status.ScheduleRepeated = 0
 			pipeline.Status.SchedulePendingExecuctionDate = nil
 			return r.Status().Update(ctx, pipeline)
@@ -273,7 +274,8 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 		}
 
 		if pipeline.Status.Schedule == nil || pipeline.Status.Schedule.ScheduleDate != pipeline.Spec.Schedule.ScheduleDate {
-			pipeline.Status.ScheduleLastExecutedDate = nil
+			pipeline.Status.ScheduleLastExecutionStartDate = nil
+			pipeline.Status.ScheduleLastExecutionEndDate = nil
 			pipeline.Status.ScheduleRepeated = 0
 		}
 
@@ -378,7 +380,7 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pi
 	}
 
 	currentPipeline.Status.ScheduleRepeated = currentPipeline.Status.ScheduleRepeated + 1
-	currentPipeline.Status.ScheduleLastExecutedDate = &metav1.Time{Time: now}
+	currentPipeline.Status.ScheduleLastExecutionStartDate = &metav1.Time{Time: now}
 	currentPipeline.Status.SchedulePendingExecuctionDate = nil
 
 	if err := r.Status().Update(ctx, currentPipeline); err != nil {

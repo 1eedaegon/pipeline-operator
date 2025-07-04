@@ -275,8 +275,12 @@ func (in *PipelineStatus) DeepCopyInto(out *PipelineStatus) {
 		in, out := &in.SchedulePendingExecuctionDate, &out.SchedulePendingExecuctionDate
 		*out = (*in).DeepCopy()
 	}
-	if in.ScheduleLastExecutedDate != nil {
-		in, out := &in.ScheduleLastExecutedDate, &out.ScheduleLastExecutedDate
+	if in.ScheduleLastExecutionStartDate != nil {
+		in, out := &in.ScheduleLastExecutionStartDate, &out.ScheduleLastExecutionStartDate
+		*out = (*in).DeepCopy()
+	}
+	if in.ScheduleLastExecutionEndDate != nil {
+		in, out := &in.ScheduleLastExecutionEndDate, &out.ScheduleLastExecutionEndDate
 		*out = (*in).DeepCopy()
 	}
 }

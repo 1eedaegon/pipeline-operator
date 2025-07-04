@@ -8176,7 +8176,10 @@ spec:
                   scheduleDate:
                     type: string
                 type: object
-              scheduleLastExecutedDate:
+              scheduleLastExecutionEndDate:
+                format: date-time
+                type: string
+              scheduleLastExecutionStartDate:
                 format: date-time
                 type: string
               schedulePendingExecutionDate:
