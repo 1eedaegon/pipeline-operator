@@ -4074,7 +4074,6 @@ spec:
                     format: date-time
                     type: string
                   repeat:
-                    default: true
                     type: boolean
                   scheduleDate:
                     type: string
@@ -8120,7 +8119,6 @@ spec:
                           format: date-time
                           type: string
                         repeat:
-                          default: true
                           type: boolean
                         scheduleDate:
                           type: string
@@ -8173,7 +8171,6 @@ spec:
                     format: date-time
                     type: string
                   repeat:
-                    default: true
                     type: boolean
                   scheduleDate:
                     type: string
