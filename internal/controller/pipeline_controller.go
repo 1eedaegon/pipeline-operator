@@ -269,11 +269,14 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			return nil
 		}
 
+		if pipeline.Status.Schedule.ScheduleDate != pipeline.Spec.Schedule.ScheduleDate {
+			pipeline.Status.ScheduleLastExecutedDate = nil
+			pipeline.Status.ScheduleRepeated = 0
+		}
+
 		pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
 		pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
-		pipeline.Status.ScheduleLastExecutedDate = nil
 		pipeline.Status.SchedulePendingExecuctionDate = &metav1.Time{Time: pipeline.Status.ScheduleStartDate.Add(duration)}
-		pipeline.Status.ScheduleRepeated = 0
 
 		if err := r.Status().Update(ctx, pipeline); err != nil {
 			return err
