@@ -186,14 +186,16 @@ const (
 type PipelineTask struct {
 	// Inline 타입이면 Task를 수동으로 기입해줘야한다. inline에서 정의한 task가 task 템플릿으로 들어가진 않는다.
 	// Import 타입이면 이미있는 Task를 기준으로 Task가 채워진다.
-	TaskSpec  `json:",inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
-	Schedule  Schedule                   `json:"schedule,omitempty"`
-	Resource  Resource                   `json:"resource,omitempty"`
-	Trigger   Trigger                    `json:"trigger,omitempty"`
-	RunBefore []string                   `json:"runBefore,omitempty"`
-	Inputs    []IOVolumeSpec             `json:"inputs,omitempty"`
-	Outputs   []IOVolumeSpec             `json:"outputs,omitempty"`
-	Env       map[string]string          `json:"env,omitempty"`
+	TaskSpec `json:",inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
+	Schedule Schedule                   `json:"schedule,omitempty"`
+	Resource Resource                   `json:"resource,omitempty"`
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=false
+	Trigger   Trigger           `json:"trigger,omitempty"`
+	RunBefore []string          `json:"runBefore,omitempty"`
+	Inputs    []IOVolumeSpec    `json:"inputs,omitempty"`
+	Outputs   []IOVolumeSpec    `json:"outputs,omitempty"`
+	Env       map[string]string `json:"env,omitempty"`
 	// +kubebuilder:validation:Optional
 	AdditionalContainerSpecs *corev1.Container `json:"additionalContainerSpecs,omitempty"`
 	// +kubebuilder:validation:Optional
