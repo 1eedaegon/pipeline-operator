@@ -38,7 +38,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	pipelinev1 "github.com/1eedaegon/pipeline-operator/api/v1"
+	pipelinev1 "github.com/dps0340/pipeline-operator/api/v1"
 )
 
 const (
@@ -49,6 +49,7 @@ const (
 type RunReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
+	pr     *PipelineReconciler
 }
 
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs,verbs=get;list;watch;create;update;patch;delete
@@ -496,7 +497,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 
 			pipeline.Status.ScheduleLastExecutionEndDate = &metav1.Time{Time: time.Now()}
 
-			if err := r.Status().Update(ctx, pipeline); err != nil {
+			if err := r.pr.Status().Update(ctx, pipeline); err != nil {
 				return err
 			}
 		}

@@ -27,7 +27,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	pipelinev1 "github.com/1eedaegon/pipeline-operator/api/v1"
+	pipelinev1 "github.com/dps0340/pipeline-operator/api/v1"
 )
 
 var _ = Describe("Run Controller", func() {

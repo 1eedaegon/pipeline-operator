@@ -1,4 +1,4 @@
-module github.com/1eedaegon/pipeline-operator
+module github.com/dps0340/pipeline-operator
 
 go 1.21.0
 

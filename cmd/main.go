@@ -34,8 +34,8 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	pipelinev1 "github.com/1eedaegon/pipeline-operator/api/v1"
-	"github.com/1eedaegon/pipeline-operator/internal/controller"
+	pipelinev1 "github.com/dps0340/pipeline-operator/api/v1"
+	"github.com/dps0340/pipeline-operator/internal/controller"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -122,24 +122,37 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controller.PipelineReconciler{
+	var pr *controller.PipelineReconciler
+	var tr *controller.TaskReconciler
+	var rr *controller.RunReconciler
+
+	pr = &controller.PipelineReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
+	}
+
+	if err = pr.SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Pipeline")
 		os.Exit(1)
 	}
-	if err = (&controller.TaskReconciler{
+
+	tr = &controller.TaskReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
+	}
+
+	if err = tr.SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Task")
 		os.Exit(1)
 	}
-	if err = (&controller.RunReconciler{
+
+	rr = &controller.RunReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
+		pr:     pr,
+	}
+
+	if err = rr.SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Run")
 		os.Exit(1)
 	}
