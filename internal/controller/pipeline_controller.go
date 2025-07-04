@@ -89,7 +89,6 @@ func (r *PipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 		log.V(1).Error(err, "Unable to ensure pipeline")
 		return ctrl.Result{}, err
 	}
-	log.V(1).Info("Pipeline resource after ensurepipelinemetadata: %v", pipeline)
 
 	if err := r.Get(ctx, req.NamespacedName, pipeline); err != nil {
 		log.V(1).Error(err, "unable to fetch pipeline")
