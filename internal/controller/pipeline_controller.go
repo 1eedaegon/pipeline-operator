@@ -269,7 +269,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			return nil
 		}
 
-		if pipeline.Status.Schedule.ScheduleDate != pipeline.Spec.Schedule.ScheduleDate {
+		if pipeline.Status.Schedule == nil || pipeline.Status.Schedule.ScheduleDate != pipeline.Spec.Schedule.ScheduleDate {
 			pipeline.Status.ScheduleLastExecutedDate = nil
 			pipeline.Status.ScheduleRepeated = 0
 		}
