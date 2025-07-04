@@ -141,6 +141,10 @@ func (r *PipelineReconciler) ensurePipelineMetadata(ctx context.Context, pipelin
 }
 
 func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
+	if pipeline.Spec.Schedule.ScheduleDate != "" {
+		return nil
+	}
+
 	log := log.FromContext(ctx)
 	run := &pipelinev1.Run{}
 
@@ -148,6 +152,7 @@ func (r *PipelineReconciler) ensureRunExists(ctx context.Context, pipeline *pipe
 		log.V(1).Error(err, "Unable to parse run from pipeline")
 		return err
 	}
+
 	objKey := client.ObjectKey{
 		Name:      run.ObjectMeta.Name,
 		Namespace: run.ObjectMeta.Namespace,
