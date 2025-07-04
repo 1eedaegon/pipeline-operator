@@ -234,53 +234,53 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			hasDiff = len(changelog) > 0
 		}
 
-		if hasDiff {
-			if pipeline.Status.SchedulePendingExecuctionDate != nil {
-				log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
-				return r.Status().Update(ctx, pipeline)
-			}
-
-			if pipeline.Spec.Schedule.ScheduleDate == "" {
-				pipeline.Status.ScheduleStartDate = nil
-				return r.Status().Update(ctx, pipeline)
-			}
-
-			duration, err := pipeline.Spec.Schedule.ScheduleDate.Duration()
-			if err != nil {
-				return err
-			}
-
-			if pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.After(time.Now()) && pipeline.Spec.Schedule.ScheduleDate == pipeline.Status.Schedule.ScheduleDate {
-				log.V(1).Info(fmt.Sprintf("Do not modify schedule on status due to schedule is already running (SchedulePendingExecutionDate: %v, ScheduleDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.ScheduleDate))
-				return nil
-			}
-
-			if pipeline.Spec.Schedule.EndDate != nil && pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.Before(pipeline.Spec.Schedule.EndDate) {
-				log.V(1).Info(fmt.Sprintf("ScheduleExecutionDate is before than EndDate; Do not schedule for run. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
-				pipeline.Status.SchedulePendingExecuctionDate = nil
-				return r.Status().Update(ctx, pipeline)
-			}
-
-			if !pipeline.Spec.Schedule.Repeat && pipeline.Status.ScheduleRepeated > 0 {
-				log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
-				return nil
-			}
-
-			pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
-			pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
-			pipeline.Status.ScheduleLastExecutedDate = nil
-			pipeline.Status.SchedulePendingExecuctionDate = &metav1.Time{Time: pipeline.Status.ScheduleStartDate.Add(duration)}
-			pipeline.Status.ScheduleRepeated = 0
-
-			if err := r.Status().Update(ctx, pipeline); err != nil {
-				return err
-			}
-
-			log.V(1).Info(fmt.Sprintf("Scheduling pipeline %v on %v", pipeline.ObjectMeta.Name, pipeline.Status.SchedulePendingExecuctionDate))
-			go r.ScheduleExecution(ctx, pipeline.DeepCopy())
+		if !hasDiff {
+			return r.Status().Update(ctx, pipeline)
 		}
 
-		return r.Update(ctx, pipeline)
+		if pipeline.Status.SchedulePendingExecuctionDate != nil {
+			log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
+			return r.Status().Update(ctx, pipeline)
+		}
+
+		if pipeline.Spec.Schedule.ScheduleDate == "" {
+			pipeline.Status.ScheduleStartDate = nil
+			return r.Status().Update(ctx, pipeline)
+		}
+
+		duration, err := pipeline.Spec.Schedule.ScheduleDate.Duration()
+		if err != nil {
+			return err
+		}
+
+		if pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.After(time.Now()) && pipeline.Spec.Schedule.ScheduleDate == pipeline.Status.Schedule.ScheduleDate {
+			log.V(1).Info(fmt.Sprintf("Do not modify schedule on status due to schedule is already running (SchedulePendingExecutionDate: %v, ScheduleDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.ScheduleDate))
+			return nil
+		}
+
+		if pipeline.Spec.Schedule.EndDate != nil && pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.Before(pipeline.Spec.Schedule.EndDate) {
+			log.V(1).Info(fmt.Sprintf("ScheduleExecutionDate is before than EndDate; Do not schedule for run. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
+			pipeline.Status.SchedulePendingExecuctionDate = nil
+			return r.Status().Update(ctx, pipeline)
+		}
+
+		if !pipeline.Spec.Schedule.Repeat && pipeline.Status.ScheduleRepeated > 0 {
+			log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
+			return nil
+		}
+
+		pipeline.Status.Schedule = pipeline.Spec.Schedule.DeepCopy()
+		pipeline.Status.ScheduleStartDate = &metav1.Time{Time: time.Now()}
+		pipeline.Status.ScheduleLastExecutedDate = nil
+		pipeline.Status.SchedulePendingExecuctionDate = &metav1.Time{Time: pipeline.Status.ScheduleStartDate.Add(duration)}
+		pipeline.Status.ScheduleRepeated = 0
+
+		if err := r.Status().Update(ctx, pipeline); err != nil {
+			return err
+		}
+
+		log.V(1).Info(fmt.Sprintf("Scheduling pipeline %v at %v", pipeline.ObjectMeta.Name, pipeline.Status.SchedulePendingExecuctionDate))
+		go r.ScheduleExecution(ctx, pipeline.DeepCopy())
 	}); err != nil {
 		return err
 	}
@@ -288,6 +288,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 }
 
 func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pipelinev1.Pipeline) error {
+	log := log.FromContext(ctx)
 	scheduledTime := time.Now()
 
 	if pipeline.Status.Schedule == nil {
@@ -306,9 +307,11 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pi
 		Namespace: pipeline.ObjectMeta.Namespace,
 	}
 
-	currentPipeline := &pipelinev1.Pipeline{}
+	now := time.Now()
 
-	log := log.FromContext(ctx)
+	log.V(1).Info(fmt.Sprintf("Executing schedule at expected time %v, actual time %v", pipeline.Status.SchedulePendingExecuctionDate, now))
+
+	currentPipeline := &pipelinev1.Pipeline{}
 
 	if err := r.Get(ctx, objKey, currentPipeline); err != nil {
 		log.V(1).Info(fmt.Sprintf("Unable to get currentPipeline: %v", err))
@@ -345,7 +348,7 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pi
 		return nil
 	}
 
-	now := time.Now()
+	now = time.Now()
 
 	if pipeline.Status.Schedule.EndDate != nil && now.After(pipeline.Status.Schedule.EndDate.Time) {
 		log.V(1).Info(fmt.Sprintf("Executed time is after EndDate. Aborting Creating Run."))
