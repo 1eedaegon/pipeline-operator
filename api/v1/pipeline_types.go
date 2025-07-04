@@ -169,9 +169,7 @@ type Schedule struct {
 	ScheduleDate ScheduleDate `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
 	// +kubebuilder:validation:Optional
 	EndDate *metav1.Time `json:"endDate,omitempty"` // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
-	// +kubebuilder:validation:Optional
-	// +kubebuilder:default:=true
-	Repeat bool `json:"repeat,omitempty"` // Schedule의 1회 수행 혹은 반복 여부를 정의
+	Repeat  bool         `json:"repeat,omitempty"`  // Schedule의 1회 수행 혹은 반복 여부를 정의
 }
 
 type ModeType string
