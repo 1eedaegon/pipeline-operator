@@ -220,7 +220,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			pipeline.Status.ScheduleLastExecutedDate = nil
 			pipeline.Status.ScheduleRepeated = 0
 			pipeline.Status.SchedulePendingExecuctionDate = nil
-			return r.Update(ctx, pipeline)
+			return r.Status().Update(ctx, pipeline)
 		}
 
 		hasDiff := true
@@ -241,7 +241,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 
 			if pipeline.Spec.Schedule.ScheduleDate == "" {
 				pipeline.Status.ScheduleStartDate = nil
-				return r.Update(ctx, pipeline)
+				return r.Status().Update(ctx, pipeline)
 			}
 
 			duration, err := pipeline.Spec.Schedule.ScheduleDate.Duration()
@@ -253,13 +253,13 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			if pipeline.Spec.Schedule.EndDate != nil && pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.Before(pipeline.Spec.Schedule.EndDate) {
 				log.V(1).Info(fmt.Sprintf("ScheduleExecutionDate is before than EndDate; Do not schedule for run. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
 				pipeline.Status.SchedulePendingExecuctionDate = nil
-				return r.Update(ctx, pipeline)
+				return r.Status().Update(ctx, pipeline)
 			}
 			if !pipeline.Spec.Schedule.Repeat && pipeline.Status.ScheduleRepeated > 0 {
 				log.V(1).Info(fmt.Sprintf("Do not create schedule for run due to repeat is disabled and schedule is already executed. (ScheduleExecutionDate: %v, EndDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.EndDate))
-				return r.Update(ctx, pipeline)
+				return r.Status().Update(ctx, pipeline)
 			}
-			if err := r.Update(ctx, pipeline); err != nil {
+			if err := r.Status().Update(ctx, pipeline); err != nil {
 				return err
 			}
 			log.V(1).Info(fmt.Sprintf("Scheduling pipeline %v on %v", pipeline.ObjectMeta.Name, pipeline.Status.SchedulePendingExecuctionDate))
