@@ -311,7 +311,12 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pi
 		return nil
 	}
 
-	if !pipeline.Status.Schedule.EndDate.Equal(currentPipeline.Status.Schedule.EndDate) {
+	if (pipeline.Status.Schedule.EndDate == nil && currentPipeline.Status.Schedule.EndDate != nil) || (pipeline.Status.Schedule.EndDate != nil && currentPipeline.Status.Schedule.EndDate == nil) {
+		log.V(1).Info(fmt.Sprintf("EndDate of currentPipeline changed. Aborting Creating Run."))
+		return nil
+	}
+
+	if pipeline.Status.Schedule.EndDate != nil && currentPipeline.Status.Schedule.EndDate != nil && !pipeline.Status.Schedule.EndDate.Equal(currentPipeline.Status.Schedule.EndDate) {
 		log.V(1).Info(fmt.Sprintf("EndDate of currentPipeline changed. Aborting Creating Run."))
 		return nil
 	}
@@ -328,7 +333,7 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pi
 
 	now := time.Now()
 
-	if now.After(pipeline.Spec.Schedule.EndDate.Time) {
+	if pipeline.Status.Schedule.EndDate != nil && now.After(pipeline.Status.Schedule.EndDate.Time) {
 		log.V(1).Info(fmt.Sprintf("Executed time is after EndDate. Aborting Creating Run."))
 		return nil
 	}
