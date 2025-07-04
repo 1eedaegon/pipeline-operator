@@ -302,7 +302,7 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pi
 
 	pendingDuration := pipeline.Status.SchedulePendingExecuctionDate.Sub(scheduledTime)
 
-	time.After(pendingDuration)
+	time.Sleep(pendingDuration)
 
 	objKey := client.ObjectKey{
 		Name:      pipeline.ObjectMeta.Name,
