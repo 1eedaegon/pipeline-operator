@@ -8125,6 +8125,7 @@ spec:
                           type: string
                       type: object
                     trigger:
+                      default: false
                       type: boolean
                   type: object
                 type: array
