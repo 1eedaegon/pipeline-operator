@@ -146,6 +146,9 @@ func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
 func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
 	// cron parser
 	cronExpr, err := cron.ParseStandard(string(sd))
+	if err != nil {
+		return 0, err
+	}
 	duration := time.Until(cronExpr.Next(time.Now()))
 	if err != nil {
 		return 0, err
@@ -156,7 +159,7 @@ func (sd ScheduleDate) Duration() (time.Duration, error) {
 	cronDuration, err := sd.durationFromCron()
 	dateDuration, err2 := sd.durationFromDateString()
 	if err != nil && err2 != nil {
-		return 0, fmt.Errorf("unknown format schedule")
+		return 0, fmt.Errorf("unknown format schedule: cron parsing error is %v, date parsing error is %v", err, err2)
 	}
 	if err != nil {
 		return dateDuration, nil
