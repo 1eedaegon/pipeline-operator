@@ -319,8 +319,11 @@ func newRunMetaFromPipeline(ctx context.Context, run *Run, pipeline *Pipeline) e
 	run.ObjectMeta.Name = runName
 	run.ObjectMeta.Namespace = pipeline.ObjectMeta.Namespace
 	run.ObjectMeta.Labels[PipelineNameLabel] = pipeline.ObjectMeta.Name
-	run.ObjectMeta.Annotations[ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
 	run.ObjectMeta.Annotations[TriggerAnnotation] = pipeline.Spec.Trigger.String()
+
+	if pipeline.Spec.Schedule != nil && pipeline.Spec.Schedule.ScheduleDate != "" {
+		run.ObjectMeta.Annotations[ScheduleDateAnnotation] = string(pipeline.Spec.Schedule.ScheduleDate)
+	}
 
 	if pipeline.Spec.Schedule != nil && pipeline.Spec.Schedule.EndDate != nil {
 		endDate, err := pipeline.Spec.Schedule.EndDate.MarshalText()
@@ -514,7 +517,9 @@ func constructKjobPodMetaFromJob(ctx context.Context, runMeta metav1.ObjectMeta,
 		Annotations: make(map[string]string),
 		Labels:      make(map[string]string),
 	}
-	podTempMeta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
+	if job.Schedule.ScheduleDate != "" {
+		podTempMeta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
+	}
 	podTempMeta.Labels[PipelineNameLabel] = runMeta.Labels[PipelineNameLabel]
 	podTempMeta.Labels[RunNameLabel] = runMeta.Name
 	return podTempMeta
@@ -528,7 +533,11 @@ func constructKjobMetaFromJob(ctx context.Context, runMeta metav1.ObjectMeta, jo
 	hsByString := job.Name + runMeta.Name + runMeta.Namespace
 	meta.Name = getShortHashPostFix(job.Name, hsByString)
 	meta.Namespace = job.Namespace
-	meta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
+
+	if job.Schedule.ScheduleDate != "" {
+		meta.Annotations[ScheduleDateAnnotation] = string(job.Schedule.ScheduleDate)
+	}
+
 	meta.Annotations[TriggerAnnotation] = job.Trigger.String()
 	meta.Labels[PipelineNameLabel] = runMeta.Labels[PipelineNameLabel]
 	meta.Labels[RunNameLabel] = runMeta.Name
