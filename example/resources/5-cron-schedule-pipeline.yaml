@@ -6,7 +6,7 @@ metadata:
   name: pipeline-chain-test-5
 spec:
   schedule:
-    scheduleDate: "0 * * * *"
+    scheduleDate: "* * * * *"
     repeat: false
   volumes:
   - name: yennefer-something # 이미 있으면 생성하지 않고 사용
