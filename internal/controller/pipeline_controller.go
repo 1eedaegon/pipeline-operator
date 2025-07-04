@@ -252,6 +252,11 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 			}
 		}
 
+		if pipeline.Status.ScheduleLastExecutionStartDate != nil && pipeline.Status.ScheduleLastExecutionEndDate == nil {
+			log.V(1).Info(fmt.Sprintf("Do not execute due to current execution is running (ScheduleLastExecutionStartDate: %v, ScheduleLastExecutionEndDate: %v)", pipeline.Status.ScheduleLastExecutionStartDate, pipeline.Status.ScheduleLastExecutionEndDate))
+			return nil
+		}
+
 		if pipeline.Spec.Schedule.ScheduleDate == "" {
 			pipeline.Status.ScheduleStartDate = nil
 			return r.Status().Update(ctx, pipeline)
@@ -381,6 +386,7 @@ func (r *PipelineReconciler) ScheduleExecution(ctx context.Context, pipeline *pi
 
 	currentPipeline.Status.ScheduleRepeated = currentPipeline.Status.ScheduleRepeated + 1
 	currentPipeline.Status.ScheduleLastExecutionStartDate = &metav1.Time{Time: now}
+	currentPipeline.Status.ScheduleLastExecutionEndDate = nil
 	currentPipeline.Status.SchedulePendingExecuctionDate = nil
 
 	if err := r.Status().Update(ctx, currentPipeline); err != nil {
