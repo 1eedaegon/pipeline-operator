@@ -215,6 +215,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 		}
 
 		if pipeline.Spec.Schedule == nil && pipeline.Status.Schedule != nil {
+			log.V(1).Info(fmt.Sprintf("Removing schedule status due to schedule spec removal."))
 			pipeline.Status.Schedule = nil
 			pipeline.Status.ScheduleStartDate = nil
 			pipeline.Status.ScheduleLastExecutedDate = nil
@@ -249,7 +250,7 @@ func (r *PipelineReconciler) updatePipelineStatus(ctx context.Context, pipeline 
 				return err
 			}
 
-			if pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Spec.Schedule.ScheduleDate == pipeline.Status.Schedule.ScheduleDate {
+			if pipeline.Status.SchedulePendingExecuctionDate != nil && pipeline.Status.SchedulePendingExecuctionDate.After(time.Now()) && pipeline.Spec.Schedule.ScheduleDate == pipeline.Status.Schedule.ScheduleDate {
 				log.V(1).Info(fmt.Sprintf("Do not modify schedule on status due to schedule is already running (SchedulePendingExecutionDate: %v, ScheduleDate: %v)", pipeline.Status.SchedulePendingExecuctionDate, pipeline.Spec.Schedule.ScheduleDate))
 				return nil
 			}
