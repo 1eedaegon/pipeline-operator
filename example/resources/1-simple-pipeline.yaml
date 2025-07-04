@@ -13,7 +13,7 @@ metadata:
 spec:
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. 
   volumes:
-  - name: yennefer-something # 이미 있으면 생성하지 않고 사용
+  - name: yennefer-something-1 # 이미 있으면 생성하지 않고 사용
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
     # storage 미정의 혹은 empty string으로 정의시 Default StorageClass 사용
     # storage: standard
@@ -24,15 +24,15 @@ spec:
     cpu: 200m
     memory: 100Mi
   inputs:
-  - name: yennefer-something/global-share-input # RO
+  - name: yennefer-something-1/global-share-input # RO
     # Optional: Without specification, Operator treating it as same as false.
     # useIntermediateDirectory: false
-  - name: yennefer-something/tasks-share-input # RO
+  - name: yennefer-something-1/tasks-share-input # RO
     useIntermediateDirectory: true
   outputs:
-  - name: yennefer-something/global-share-output # RO
+  - name: yennefer-something-1/global-share-output # RO
     useIntermediateDirectory: false
-  - name: yennefer-something/tasks-share-output # RO
+  - name: yennefer-something-1/tasks-share-output # RO
     useIntermediateDirectory: true
   tasks:
   - name: pipeline-1-1 # import task type without image version
@@ -45,10 +45,10 @@ spec:
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
     # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    - name: yennefer-something/input # RO
+    - name: yennefer-something-1/input # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/init-output # RWX
+    - name: yennefer-something-1/init-output # RWX
       useIntermediateDirectory: true
     # Below are optional fields, So You could safely omit without specifying null.
     additionalContainerSpecs:

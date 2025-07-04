@@ -4,7 +4,7 @@ metadata:
   name: pipeline-chain-test-2
 spec:
   volumes:
-  - name: yennefer-something # 이미 있으면 생성하지 않고 사용
+  - name: yennefer-something-2 # 이미 있으면 생성하지 않고 사용
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
     # storage 미정의 혹은 empty string으로 정의시 Default StorageClass 사용
     # storage: standard
@@ -22,10 +22,10 @@ spec:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
-    - name: yennefer-something/input # RO
+    - name: yennefer-something-2/input # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/init-output # RWX
+    - name: yennefer-something-2/init-output # RWX
       useIntermediateDirectory: true
     runBefore: []
     additionalContainerSpecs: null
@@ -37,10 +37,10 @@ spec:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
-    - name: yennefer-something/input # RO
+    - name: yennefer-something-2/input # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/init-output # RWX
+    - name: yennefer-something-2/init-output # RWX
       useIntermediateDirectory: true
     runBefore:
     - pipeline-2-1
@@ -53,10 +53,10 @@ spec:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
-    - name: yennefer-something/input # RO
+    - name: yennefer-something-2/input # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/init-output # RWX
+    - name: yennefer-something-2/init-output # RWX
       useIntermediateDirectory: true
     runBefore:
     - pipeline-2-2

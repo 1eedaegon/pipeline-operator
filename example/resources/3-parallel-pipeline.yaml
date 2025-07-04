@@ -7,7 +7,7 @@ metadata:
 spec:
   schedule: # Schedule의 cron과 runAfter/runBefore가 동시에 걸리면 경고를 띄운다. 
   volumes:
-  - name: yennefer-something # 이미 있으면 생성하지 않고 사용
+  - name: yennefer-something-3 # 이미 있으면 생성하지 않고 사용
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
     # storage 미정의 혹은 empty string으로 정의시 Default StorageClass 사용
     # storage: standard
@@ -26,10 +26,10 @@ spec:
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
     # runBefore와 inputs가 동시에 걸리고 runBefore의 task에 output이 없으면 경고를 띄운다.
-    - name: yennefer-something/input # RO
+    - name: yennefer-something-3/input # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/output # RWX
+    - name: yennefer-something-3/output # RWX
       useIntermediateDirectory: true
     runBefore: []
   - name: pipeline-3-2-1 # import task type without image version
@@ -39,10 +39,10 @@ spec:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
-    - name: yennefer-something/input # RO
+    - name: yennefer-something-3/input # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/pipeline-2-1-output # RWX
+    - name: yennefer-something-3/pipeline-2-1-output # RWX
       useIntermediateDirectory: true
     runBefore:
     - pipeline-3-1
@@ -53,10 +53,10 @@ spec:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
-    - name: yennefer-something/output # RO
+    - name: yennefer-something-3/output # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/pipeline-2-2-output # RWX
+    - name: yennefer-something-3/pipeline-2-2-output # RWX
       useIntermediateDirectory: true
     runBefore:
     - pipeline-3-1
@@ -67,10 +67,10 @@ spec:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
-    - name: yennefer-something/pipeline-2-2-output # RO
+    - name: yennefer-something-3/pipeline-2-2-output # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/pipeline-2-1-1-output # RWX
+    - name: yennefer-something-3/pipeline-2-1-1-output # RWX
       useIntermediateDirectory: true
     runBefore:
     - pipeline-3-2-1
@@ -81,12 +81,12 @@ spec:
     - --version
     - if [ -z "$SAMPLE" ]; then echo "no" else echo $SAMPLE fi
     inputs:
-    - name: yennefer-something/pipeline-2-1-1-output # RO
+    - name: yennefer-something-3/pipeline-2-1-1-output # RO
       useIntermediateDirectory: true
-    - name: yennefer-something/pipeline-2-2-output # RO
+    - name: yennefer-something-3/pipeline-2-2-output # RO
       useIntermediateDirectory: true
     outputs:
-    - name: yennefer-something/pipeline-3-out # RWX
+    - name: yennefer-something-3/pipeline-3-out # RWX
       useIntermediateDirectory: true
     runBefore:
     - pipeline-3-2-2
