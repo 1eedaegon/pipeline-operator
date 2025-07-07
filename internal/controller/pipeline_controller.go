@@ -348,18 +348,28 @@ func (r *PipelineReconciler) scheduleExecution(ctx context.Context, pipeline *pi
 		return err
 	}
 
-	if !pipeline.Status.ScheduleStartDate.Time.Equal(currentPipeline.Status.ScheduleStartDate.Time) {
+	if (pipeline.Status.ScheduleStartDate == nil && currentPipeline.Status.ScheduleStartDate != nil) || (pipeline.Status.ScheduleStartDate != nil && currentPipeline.Status.ScheduleStartDate == nil) {
 		log.V(1).Info(fmt.Sprintf("SchduleStartDate of currentPipeline changed. Aborting Creating Run."))
 		return nil
 	}
 
-	if !pipeline.Status.SchedulePendingExecuctionDate.Time.Equal(currentPipeline.Status.SchedulePendingExecuctionDate.Time) {
+	if (pipeline.Status.SchedulePendingExecuctionDate == nil && currentPipeline.Status.SchedulePendingExecuctionDate != nil) || (pipeline.Status.SchedulePendingExecuctionDate != nil && currentPipeline.Status.SchedulePendingExecuctionDate == nil) {
 		log.V(1).Info(fmt.Sprintf("SchedulePendingExecutionDate of currentPipeline changed. Aborting Creating Run."))
 		return nil
 	}
 
 	if (pipeline.Status.Schedule.EndDate == nil && currentPipeline.Status.Schedule.EndDate != nil) || (pipeline.Status.Schedule.EndDate != nil && currentPipeline.Status.Schedule.EndDate == nil) {
 		log.V(1).Info(fmt.Sprintf("EndDate of currentPipeline changed. Aborting Creating Run."))
+		return nil
+	}
+
+	if pipeline.Status.ScheduleStartDate != nil && currentPipeline.Status.ScheduleStartDate != nil && !pipeline.Status.ScheduleStartDate.Time.Equal(currentPipeline.Status.ScheduleStartDate.Time) {
+		log.V(1).Info(fmt.Sprintf("SchduleStartDate of currentPipeline changed. Aborting Creating Run."))
+		return nil
+	}
+
+	if pipeline.Status.SchedulePendingExecuctionDate != nil && currentPipeline.Status.SchedulePendingExecuctionDate != nil && !pipeline.Status.SchedulePendingExecuctionDate.Time.Equal(currentPipeline.Status.SchedulePendingExecuctionDate.Time) {
+		log.V(1).Info(fmt.Sprintf("SchedulePendingExecutionDate of currentPipeline changed. Aborting Creating Run."))
 		return nil
 	}
 
