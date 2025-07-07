@@ -378,6 +378,9 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		client.MatchingLabels(labels.Set{pipelinev1.RunNameLabel: run.ObjectMeta.Name}),
 	}
 
+	runName := run.ObjectMeta.Name
+	pipelineName := run.ObjectMeta.Labels[pipelinev1.PipelineNameLabel]
+
 	objKey := client.ObjectKey{
 		Name:      run.ObjectMeta.Name,
 		Namespace: run.ObjectMeta.Namespace,
@@ -476,11 +479,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		run.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
 		if Complete+Deleted+Failed == len(run.Spec.Jobs) {
-			pipelineName := run.ObjectMeta.Labels[pipelinev1.PipelineNameLabel]
-			objKey := client.ObjectKey{
-				Name:      pipelineName,
-				Namespace: run.ObjectMeta.Namespace,
-			}
+			objKey.Name = pipelineName
 
 			pipeline := &pipelinev1.Pipeline{}
 			r.Get(ctx, objKey, pipeline)
@@ -488,6 +487,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 			pipeline.Status.ScheduleLastExecutionEndDate = &metav1.Time{Time: time.Now()}
 
 			if err := r.Status().Update(ctx, pipeline); err != nil {
+				log.V(1).Error(err, fmt.Sprintf("Pipeline not found (run %v, pipeline %v)", runName, pipelineName))
 				return err
 			}
 		}
