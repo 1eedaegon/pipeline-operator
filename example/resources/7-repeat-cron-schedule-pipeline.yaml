@@ -8,6 +8,7 @@ spec:
   schedule:
     scheduleDate: "* * * * *"
     repeat: true
+    # endDate: "2025-06-07T03:10:00Z"
   volumes:
   - name: yennefer-something-7 # 이미 있으면 생성하지 않고 사용
     capacity: 2G # 최대값  # Requests: 2Gi 최소값, csi드라이버 마다 구현이 달라서 통제가 어려움
