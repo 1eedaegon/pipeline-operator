@@ -49,7 +49,6 @@ const (
 type RunReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
-	pr     *PipelineReconciler
 }
 
 // +kubebuilder:rbac:groups=pipeline.1eedaegon.github.io,resources=runs,verbs=get;list;watch;create;update;patch;delete
@@ -477,16 +476,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		run.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
 		if Complete+Deleted+Failed == len(run.Spec.Jobs) {
-			pipelineName := ""
-			for _, ref := range run.ObjectMeta.OwnerReferences {
-				if ref.APIVersion == pipelinev1.ApiVersion && ref.Kind == "Pipeline" {
-					pipelineName = ref.Name
-					break
-				}
-			}
-			if pipelineName == "" {
-				return fmt.Errorf("No pipeline OwnerReferences are run %v/%v", run.ObjectMeta.Namespace, run.ObjectMeta.Name)
-			}
+			pipelineName := run.ObjectMeta.Annotations[pipelinev1.PipelineNameLabel]
 			objKey := client.ObjectKey{
 				Name:      pipelineName,
 				Namespace: run.ObjectMeta.Namespace,
@@ -497,7 +487,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 
 			pipeline.Status.ScheduleLastExecutionEndDate = &metav1.Time{Time: time.Now()}
 
-			if err := r.pr.Status().Update(ctx, pipeline); err != nil {
+			if err := r.Status().Update(ctx, pipeline); err != nil {
 				return err
 			}
 		}

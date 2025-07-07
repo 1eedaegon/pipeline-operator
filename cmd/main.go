@@ -149,7 +149,6 @@ func main() {
 	rr = &controller.RunReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
-		pr:     pr,
 	}
 
 	if err = rr.SetupWithManager(mgr); err != nil {
