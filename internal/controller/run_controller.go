@@ -476,7 +476,7 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		run.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
 
 		if Complete+Deleted+Failed == len(run.Spec.Jobs) {
-			pipelineName := run.ObjectMeta.Annotations[pipelinev1.PipelineNameLabel]
+			pipelineName := run.ObjectMeta.Labels[pipelinev1.PipelineNameLabel]
 			objKey := client.ObjectKey{
 				Name:      pipelineName,
 				Namespace: run.ObjectMeta.Namespace,
