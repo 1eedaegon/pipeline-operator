@@ -8099,6 +8099,9 @@ spec:
                           type: boolean
                         scheduleDate:
                           type: string
+                        startDate:
+                          format: date-time
+                          type: string
                       type: object
                     trigger:
                       type: string
@@ -8143,6 +8146,9 @@ spec:
                   repeat:
                     type: boolean
                   scheduleDate:
+                    type: string
+                  startDate:
+                    format: date-time
                     type: string
                 type: object
               trigger:

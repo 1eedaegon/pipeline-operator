@@ -5240,6 +5240,9 @@ definitions:
                 type: boolean
               scheduleDate:
                 type: string
+              startDate:
+                type: string
+                format: date-time
           tasks:
             type: array
             items:
@@ -9109,6 +9112,9 @@ definitions:
                       type: boolean
                     scheduleDate:
                       type: string
+                    startDate:
+                      type: string
+                      format: date-time
                 trigger:
                   type: boolean
           trigger:
@@ -9156,6 +9162,9 @@ definitions:
                 type: boolean
               scheduleDate:
                 type: string
+              startDate:
+                type: string
+                format: date-time
           scheduleLastExecutionEndDate:
             type: string
             format: date-time
@@ -16904,6 +16913,9 @@ definitions:
                       type: boolean
                     scheduleDate:
                       type: string
+                    startDate:
+                      type: string
+                      format: date-time
                 trigger:
                   type: string
           outputs:
@@ -16947,6 +16959,9 @@ definitions:
                 type: boolean
               scheduleDate:
                 type: string
+              startDate:
+                type: string
+                format: date-time
           trigger:
             type: string
           volumes:

@@ -4077,6 +4077,9 @@ spec:
                     type: boolean
                   scheduleDate:
                     type: string
+                  startDate:
+                    format: date-time
+                    type: string
                 type: object
               tasks:
                 items:
@@ -8122,6 +8125,9 @@ spec:
                           type: boolean
                         scheduleDate:
                           type: string
+                        startDate:
+                          format: date-time
+                          type: string
                       type: object
                     trigger:
                       default: false
@@ -8174,6 +8180,9 @@ spec:
                   repeat:
                     type: boolean
                   scheduleDate:
+                    type: string
+                  startDate:
+                    format: date-time
                     type: string
                 type: object
               scheduleLastExecutionEndDate:
