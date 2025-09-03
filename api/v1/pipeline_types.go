@@ -110,8 +110,12 @@ type IOVolumeSpec struct {
 
 type ScheduleDate string
 
-func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
+func (sd ScheduleDate) durationFromDateString(start time.Time) (time.Duration, error) {
 	var duration time.Duration
+	now := time.Now()
+	if start.After(now) {
+		duration += start.Sub(now)
+	}
 	// date string parser
 	scheduleDatePattern := `(\d+)([smhdMy])`
 	re := regexp.MustCompile(scheduleDatePattern)
@@ -144,21 +148,25 @@ func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
 	return duration, nil
 }
 
-func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
+func (sd ScheduleDate) durationFromCron(start time.Time) (time.Duration, error) {
 	// cron parser
 	cronExpr, err := cron.ParseStandard(string(sd))
 	if err != nil {
 		return 0, err
 	}
-	duration := time.Until(cronExpr.Next(time.Now()))
-	if err != nil {
-		return 0, err
-	}
+	duration := time.Until(cronExpr.Next(start))
 	return duration, nil
 }
-func (sd ScheduleDate) Duration() (time.Duration, error) {
-	cronDuration, err := sd.durationFromCron()
-	dateDuration, err2 := sd.durationFromDateString()
+func (sd ScheduleDate) Duration(startDate *metav1.Time) (time.Duration, error) {
+	var start time.Time
+	now := time.Now()
+	if startDate == nil || start.Before(now) {
+		start = now
+	} else {
+		start = startDate.Time
+	}
+	cronDuration, err := sd.durationFromCron(start)
+	dateDuration, err2 := sd.durationFromDateString(start)
 	if err != nil && err2 != nil {
 		return 0, fmt.Errorf("unknown format schedule: cron parsing error is %v, date parsing error is %v", err, err2)
 	}
@@ -170,9 +178,11 @@ func (sd ScheduleDate) Duration() (time.Duration, error) {
 
 type Schedule struct {
 	// +kubebuilder:validation:Optional
-	ScheduleDate ScheduleDate `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
+	StartDate *metav1.Time `json:"startDate,omitempty"` // StartDate가 정의되어 있다면 해당 date부터 Scheduling 시작
 	// +kubebuilder:validation:Optional
-	EndDate *metav1.Time `json:"endDate,omitempty"` // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
+	ScheduleDate ScheduleDate `json:"scheduleDate,omitempty"` // Scheduling의 기준, cron or basic expression
+	// +kubebuilder:validation:Optional
+	EndDate *metav1.Time `json:"endDate,omitempty"` // EndDate가 정의되었고 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
 	// +kubebuilder:validation:Optional
 	Repeat bool `json:"repeat,omitempty"` // Schedule의 1회 수행 혹은 반복 여부를 정의
 }

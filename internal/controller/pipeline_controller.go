@@ -271,7 +271,7 @@ func (r *PipelineReconciler) ensureScheduleExecution(ctx context.Context, pipeli
 		return nil, nil
 	}
 
-	duration, err := pipeline.Spec.Schedule.ScheduleDate.Duration()
+	duration, err := pipeline.Spec.Schedule.ScheduleDate.Duration(pipeline.Spec.Schedule.StartDate)
 	if err != nil {
 		return nil, err
 	}
