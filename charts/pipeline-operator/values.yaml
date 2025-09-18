@@ -31,7 +31,7 @@ controllerManager:
         drop:
         - ALL
     image:
-      repository: ghcr.io/dps0340/pipeline-operator
+      repository: ghcr.io/1eedaegon/pipeline-operator
       tag: v1.0.12
     resources:
       limits:

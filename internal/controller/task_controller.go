@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	pipelinev1 "github.com/dps0340/pipeline-operator/api/v1"
+	pipelinev1 "github.com/1eedaegon/pipeline-operator/api/v1"
 )
 
 // TaskReconciler reconciles a Task object

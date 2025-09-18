@@ -7,6 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "1eedaegon & pipeline operator authors",
-  "repository": "https://github.com/DPS0340/pipeline-operator",
+  "repository": "https://github.com/1eedaegon/pipeline-operator",
   "license": "Apache-2.0"
 }

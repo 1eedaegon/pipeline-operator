@@ -24,7 +24,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	"github.com/dps0340/pipeline-operator/test/utils"
+	"github.com/1eedaegon/pipeline-operator/test/utils"
 )
 
 const namespace = "pipeline-operator-system"

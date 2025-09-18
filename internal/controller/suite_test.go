@@ -32,7 +32,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	pipelinev1 "github.com/dps0340/pipeline-operator/api/v1"
+	pipelinev1 "github.com/1eedaegon/pipeline-operator/api/v1"
 	//+kubebuilder:scaffold:imports
 )
 
