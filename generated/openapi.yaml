@@ -17511,9 +17511,6 @@ definitions:
         version: v1
       - group: networking.k8s.io
         kind: DeleteOptions
-        version: v1alpha1
-      - group: networking.k8s.io
-        kind: DeleteOptions
         version: v1beta1
       - group: node.k8s.io
         kind: DeleteOptions
@@ -17539,6 +17536,9 @@ definitions:
       - group: rbac.authorization.k8s.io
         kind: DeleteOptions
         version: v1beta1
+      - group: resource.k8s.io
+        kind: DeleteOptions
+        version: v1
       - group: resource.k8s.io
         kind: DeleteOptions
         version: v1alpha3
@@ -18061,9 +18061,6 @@ definitions:
         version: v1
       - group: networking.k8s.io
         kind: WatchEvent
-        version: v1alpha1
-      - group: networking.k8s.io
-        kind: WatchEvent
         version: v1beta1
       - group: node.k8s.io
         kind: WatchEvent
@@ -18089,6 +18086,9 @@ definitions:
       - group: rbac.authorization.k8s.io
         kind: WatchEvent
         version: v1beta1
+      - group: resource.k8s.io
+        kind: WatchEvent
+        version: v1
       - group: resource.k8s.io
         kind: WatchEvent
         version: v1alpha3
