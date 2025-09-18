@@ -26,3 +26,6 @@ go.work
 *.swp
 *.swo
 *~
+
+pipeline-operator-*.tgz
+index.yaml

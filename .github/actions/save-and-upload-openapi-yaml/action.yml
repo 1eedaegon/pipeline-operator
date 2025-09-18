@@ -1,0 +1,103 @@
+name: Save openapi.yaml as artifact
+description: fetch & save openapi.yaml from kube-apiserver and publish it using redoc & github actions
+inputs: {}
+outputs: {}
+runs:
+  using: "composite"
+  steps:
+  - name: checkout
+    uses: actions/checkout@v2
+  - name: Start minikube
+    uses: medyagh/setup-minikube@master
+  - name: Generate helm definitions
+    shell: bash
+    run: make helm
+  - name: Deploy helm
+    shell: bash
+    run: make helm-deploy
+  - name: Run kubectl proxy
+    shell: bash
+    run: nohup kubectl proxy &
+  - name: Fetch openapi.yaml
+    shell: bash
+    run: |
+      rm -f ./generated/openapi.yaml
+      mkdir -p ./generated ; curl -k localhost:8001/openapi/v2 | yq -P > ./generated/openapi.yaml
+  - name: envsubst openapi.yaml
+    shell: bash
+    run: |
+      yq '.paths | with_entries(select(.key | test("pipeline")))' ./generated/openapi.yaml > ./generated/openapi.paths.yaml
+      sed -i 's/^/  /' ./generated/openapi.paths.yaml
+
+      yq '.definitions | with_entries(select(.key | (test("pipeline") or test("io.k8s.apimachinery"))))' ./generated/openapi.yaml > ./generated/openapi.definitions.yaml
+      sed -i 's/^/  /' ./generated/openapi.definitions.yaml
+
+      yq '.parameters' ./generated/openapi.yaml > ./generated/openapi.parameters.yaml
+      sed -i 's/^/  /' ./generated/openapi.parameters.yaml
+
+      rm -f ./generated/openapi.yaml 
+
+      cp ./generated/openapi.template.yaml ./generated/openapi.yaml
+
+      echo -e "paths:\n" >> ./generated/openapi.yaml
+      cat ./generated/openapi.paths.yaml >> ./generated/openapi.yaml
+
+      echo -e "definitions:\n" >> ./generated/openapi.yaml
+      cat ./generated/openapi.definitions.yaml >> ./generated/openapi.yaml
+
+      echo -e "parameters:\n" >> ./generated/openapi.yaml
+      cat ./generated/openapi.parameters.yaml >> ./generated/openapi.yaml
+
+      rm -f ./generated/openapi.paths.yaml ./generated/openapi.definitions.yaml ./generated/openapi.parameters.yaml
+  - name: Upload openapi.yaml as artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: openapi.yaml
+      path: ./generated/openapi.yaml
+      if-no-files-found: error
+    continue-on-error: true
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 'latest'
+      registry-url: 'https://registry.npmjs.org'
+  - name: Compile redoc static pages
+    shell: bash
+    run: |
+      mkdir -p ./generated/docs
+      mkdir -p ./generated/docs/redoc
+      npx --node-options='--max-old-space-size=16384' @redocly/cli build-docs ./generated/openapi.yaml -o ./generated/docs/redoc/index.html
+  - name: Push to remote repo
+    shell: bash
+    run: |
+      set +e
+
+      git config --global user.name "${GIT_USER_NAME}"
+      git config --global user.email "${GIT_USER_EMAIL}"
+
+      echo $BRANCH_NAME
+
+      git add .
+      git commit -m "[skip ci] Commit redoc static page definitions"
+      git pull origin $BRANCH_NAME
+      git push origin $BRANCH_NAME
+
+      set -e
+      exit 0
+    env:
+      BRANCH_NAME: ${{ github.ref }}
+      GIT_USER_NAME: github-actions[bot]
+      GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  - name: tar & index helm chart
+    shell: bash
+    run: |
+      cd ./generated
+      helm package ../charts/pipeline-operator
+      helm repo index ./
+  - name: Upload GitHub Pages artifact
+    uses: actions/upload-pages-artifact@v3.0.1
+    with:
+      path: ./generated
+    continue-on-error: true
+  - name: Deploy to GitHub Pages
+    uses: actions/deploy-pages@v4
+    continue-on-error: true

@@ -99,6 +99,18 @@ export interface IoGithub1eedaegonPipelineV1PipelineList {
 export interface IoGithub1eedaegonPipelineV1PipelineSpec {
     /**
      * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpec
+     */
+    'additionalContainerSpecs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpec
+     */
+    'additionalPodSpecs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs;
+    /**
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof IoGithub1eedaegonPipelineV1PipelineSpec
      */
@@ -111,16 +123,16 @@ export interface IoGithub1eedaegonPipelineV1PipelineSpec {
     'historyLimit'?: IoGithub1eedaegonPipelineV1PipelineSpecHistoryLimit;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>}
      * @memberof IoGithub1eedaegonPipelineV1PipelineSpec
      */
-    'inputs'?: Array<string>;
+    'inputs'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>}
      * @memberof IoGithub1eedaegonPipelineV1PipelineSpec
      */
-    'outputs'?: Array<string>;
+    'outputs'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>;
     /**
      * 
      * @type {IoGithub1eedaegonPipelineV1PipelineSpecResource}
@@ -161,6 +173,3260 @@ export interface IoGithub1eedaegonPipelineV1PipelineSpec {
 /**
  * 
  * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'args'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'command'?: Array<string>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'env'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'envFrom'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'image'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'imagePullPolicy'?: string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecycle}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'lifecycle'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecycle;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'livenessProbe'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'ports'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'readinessProbe'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResizePolicyInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'resizePolicy'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResizePolicyInner>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'resources'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'restartPolicy'?: string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'securityContext'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'startupProbe'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'stdin'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'stdinOnce'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'terminationMessagePath'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'terminationMessagePolicy'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'tty'?: boolean;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeDevicesInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'volumeDevices'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeDevicesInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'volumeMounts'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs
+     */
+    'workingDir'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInnerConfigMapRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner
+     */
+    'configMapRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInnerConfigMapRef;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner
+     */
+    'prefix'?: string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInnerConfigMapRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner
+     */
+    'secretRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInnerConfigMapRef;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInnerConfigMapRef
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInnerConfigMapRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInnerConfigMapRef
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInnerConfigMapRef
+     */
+    'optional'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner
+     */
+    'value'?: string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFrom}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner
+     */
+    'valueFrom'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFrom;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFrom
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFrom {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFrom
+     */
+    'configMapKeyRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromFieldRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFrom
+     */
+    'fieldRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromFieldRef;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFrom
+     */
+    'resourceFieldRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFrom
+     */
+    'secretKeyRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromConfigMapKeyRef
+     */
+    'optional'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromFieldRef
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromFieldRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromFieldRef
+     */
+    'apiVersion'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromFieldRef
+     */
+    'fieldPath': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef
+     */
+    'containerName'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef
+     */
+    'divisor'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef
+     */
+    'resource': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecycle
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecycle {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecycle
+     */
+    'postStart'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecycle
+     */
+    'preStop'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartExec}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart
+     */
+    'exec'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartExec;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart
+     */
+    'httpGet'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartSleep}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart
+     */
+    'sleep'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartSleep;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartTcpSocket}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStart
+     */
+    'tcpSocket'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartTcpSocket;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartExec
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartExec {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartExec
+     */
+    'command'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet
+     */
+    'host'?: string;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGetHttpHeadersInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet
+     */
+    'httpHeaders'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGetHttpHeadersInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet
+     */
+    'path'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet
+     */
+    'port': object;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet
+     */
+    'scheme'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGetHttpHeadersInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGetHttpHeadersInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGetHttpHeadersInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGetHttpHeadersInner
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartSleep
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartSleep {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartSleep
+     */
+    'seconds': number;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartTcpSocket
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartTcpSocket {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartTcpSocket
+     */
+    'host'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartTcpSocket
+     */
+    'port': object;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartExec}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'exec'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartExec;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'failureThreshold'?: number;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbeGrpc}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'grpc'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbeGrpc;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'httpGet'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGet;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'initialDelaySeconds'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'periodSeconds'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'successThreshold'?: number;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartTcpSocket}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'tcpSocket'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartTcpSocket;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'terminationGracePeriodSeconds'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe
+     */
+    'timeoutSeconds'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbeGrpc
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbeGrpc {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbeGrpc
+     */
+    'port': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbeGrpc
+     */
+    'service'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner
+     */
+    'containerPort': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner
+     */
+    'hostIP'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner
+     */
+    'hostPort'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner
+     */
+    'protocol'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResizePolicyInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResizePolicyInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResizePolicyInner
+     */
+    'resourceName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResizePolicyInner
+     */
+    'restartPolicy': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources {
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources
+     */
+    'claims'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner>;
+    /**
+     * 
+     * @type {{ [key: string]: object; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources
+     */
+    'limits'?: { [key: string]: object; };
+    /**
+     * 
+     * @type {{ [key: string]: object; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources
+     */
+    'requests'?: { [key: string]: object; };
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'allowPrivilegeEscalation'?: boolean;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextCapabilities}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'capabilities'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextCapabilities;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'privileged'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'procMount'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'readOnlyRootFilesystem'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'runAsGroup'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'runAsNonRoot'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'runAsUser'?: number;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'seLinuxOptions'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeccompProfile}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'seccompProfile'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeccompProfile;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext
+     */
+    'windowsOptions'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextCapabilities
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextCapabilities {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextCapabilities
+     */
+    'add'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextCapabilities
+     */
+    'drop'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions
+     */
+    'level'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions
+     */
+    'role'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions
+     */
+    'user'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeccompProfile
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeccompProfile {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeccompProfile
+     */
+    'localhostProfile'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeccompProfile
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions
+     */
+    'gmsaCredentialSpec'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions
+     */
+    'gmsaCredentialSpecName'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions
+     */
+    'hostProcess'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions
+     */
+    'runAsUserName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeDevicesInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeDevicesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeDevicesInner
+     */
+    'devicePath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeDevicesInner
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner
+     */
+    'mountPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner
+     */
+    'mountPropagation'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner
+     */
+    'subPath'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner
+     */
+    'subPathExpr'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'activeDeadlineSeconds'?: number;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinity}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'affinity'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinity;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'automountServiceAccountToken'?: boolean;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'containers': Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfig}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'dnsConfig'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfig;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'dnsPolicy'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'enableServiceLinks'?: boolean;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'ephemeralContainers'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsHostAliasesInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'hostAliases'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsHostAliasesInner>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'hostIPC'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'hostNetwork'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'hostPID'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'hostUsers'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'hostname'?: string;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'imagePullSecrets'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'initContainers'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'nodeName'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'nodeSelector'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'os'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner;
+    /**
+     * 
+     * @type {{ [key: string]: object; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'overhead'?: { [key: string]: object; };
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'preemptionPolicy'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'priority'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'priorityClassName'?: string;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsReadinessGatesInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'readinessGates'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsReadinessGatesInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'resourceClaims'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'restartPolicy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'runtimeClassName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'schedulerName'?: string;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'schedulingGates'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResourcesClaimsInner>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'securityContext'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'serviceAccount'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'serviceAccountName'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'setHostnameAsFQDN'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'shareProcessNamespace'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'subdomain'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'terminationGracePeriodSeconds'?: number;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'tolerations'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'topologySpreadConstraints'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs
+     */
+    'volumes'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinity
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinity {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinity}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinity
+     */
+    'nodeAffinity'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinity;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinity}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinity
+     */
+    'podAffinity'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinity;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinity}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinity
+     */
+    'podAntiAffinity'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinity;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinity
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinity {
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinity
+     */
+    'preferredDuringSchedulingIgnoredDuringExecution'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinity
+     */
+    'requiredDuringSchedulingIgnoredDuringExecution'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner
+     */
+    'preference': IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner
+     */
+    'weight': number;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference {
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference
+     */
+    'matchExpressions'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference
+     */
+    'matchFields'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner
+     */
+    'operator': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner
+     */
+    'values'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution
+     */
+    'nodeSelectorTerms': Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinity
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinity {
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinity
+     */
+    'preferredDuringSchedulingIgnoredDuringExecution'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinity
+     */
+    'requiredDuringSchedulingIgnoredDuringExecution'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner
+     */
+    'podAffinityTerm': IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInner
+     */
+    'weight': number;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm
+     */
+    'labelSelector'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm
+     */
+    'matchLabelKeys'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm
+     */
+    'mismatchLabelKeys'?: Array<string>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm
+     */
+    'namespaceSelector'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm
+     */
+    'namespaces'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTerm
+     */
+    'topologyKey': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector {
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector
+     */
+    'matchExpressions'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner>;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector
+     */
+    'matchLabels'?: { [key: string]: string; };
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfig
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfig {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfig
+     */
+    'nameservers'?: Array<string>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfigOptionsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfig
+     */
+    'options'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfigOptionsInner>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfig
+     */
+    'searches'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfigOptionsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfigOptionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfigOptionsInner
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsDnsConfigOptionsInner
+     */
+    'value'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'args'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'command'?: Array<string>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'env'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'envFrom'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvFromInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'image'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'imagePullPolicy'?: string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecycle}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'lifecycle'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecycle;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'livenessProbe'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'ports'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsPortsInner>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'readinessProbe'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResizePolicyInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'resizePolicy'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResizePolicyInner>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'resources'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsResources;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'restartPolicy'?: string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'securityContext'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContext;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'startupProbe'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLivenessProbe;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'stdin'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'stdinOnce'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'targetContainerName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'terminationMessagePath'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'terminationMessagePolicy'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'tty'?: boolean;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeDevicesInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'volumeDevices'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeDevicesInner>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'volumeMounts'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsVolumeMountsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsEphemeralContainersInner
+     */
+    'workingDir'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsHostAliasesInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsHostAliasesInner {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsHostAliasesInner
+     */
+    'hostnames'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsHostAliasesInner
+     */
+    'ip'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsReadinessGatesInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsReadinessGatesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsReadinessGatesInner
+     */
+    'conditionType': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInnerSource}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInner
+     */
+    'source'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInnerSource;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInnerSource
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInnerSource {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInnerSource
+     */
+    'resourceClaimName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsResourceClaimsInnerSource
+     */
+    'resourceClaimTemplateName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'fsGroup'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'fsGroupChangePolicy'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'runAsGroup'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'runAsNonRoot'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'runAsUser'?: number;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'seLinuxOptions'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeLinuxOptions;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeccompProfile}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'seccompProfile'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextSeccompProfile;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'supplementalGroups'?: Array<number>;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGetHttpHeadersInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'sysctls'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsLifecyclePostStartHttpGetHttpHeadersInner>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsSecurityContext
+     */
+    'windowsOptions'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsSecurityContextWindowsOptions;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner
+     */
+    'effect'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner
+     */
+    'key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner
+     */
+    'operator'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner
+     */
+    'tolerationSeconds'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTolerationsInner
+     */
+    'value'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+     */
+    'labelSelector'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+     */
+    'matchLabelKeys'?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+     */
+    'maxSkew': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+     */
+    'minDomains'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+     */
+    'nodeAffinityPolicy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+     */
+    'nodeTaintsPolicy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+     */
+    'topologyKey': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsTopologySpreadConstraintsInner
+     */
+    'whenUnsatisfiable': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAwsElasticBlockStore}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'awsElasticBlockStore'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAwsElasticBlockStore;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'azureDisk'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureFile}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'azureFile'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureFile;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'cephfs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCinder}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'cinder'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCinder;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMap}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'configMap'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMap;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'csi'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPI}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'downwardAPI'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPI;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEmptyDir}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'emptyDir'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEmptyDir;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeral}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'ephemeral'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeral;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'fc'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'flexVolume'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlocker}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'flocker'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlocker;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGcePersistentDisk}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'gcePersistentDisk'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGcePersistentDisk;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGitRepo}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'gitRepo'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGitRepo;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGlusterfs}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'glusterfs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGlusterfs;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerHostPath}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'hostPath'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerHostPath;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'iscsi'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerNfs}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'nfs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerNfs;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPersistentVolumeClaim}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'persistentVolumeClaim'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPersistentVolumeClaim;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPhotonPersistentDisk}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'photonPersistentDisk'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPhotonPersistentDisk;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPortworxVolume}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'portworxVolume'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPortworxVolume;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjected}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'projected'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjected;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'quobyte'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'rbd'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'scaleIO'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerSecret}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'secret'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerSecret;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'storageos'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerVsphereVolume}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInner
+     */
+    'vsphereVolume'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerVsphereVolume;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAwsElasticBlockStore
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAwsElasticBlockStore {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAwsElasticBlockStore
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAwsElasticBlockStore
+     */
+    'partition'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAwsElasticBlockStore
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAwsElasticBlockStore
+     */
+    'volumeID': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk
+     */
+    'cachingMode'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk
+     */
+    'diskName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk
+     */
+    'diskURI': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk
+     */
+    'kind'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureDisk
+     */
+    'readOnly'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureFile
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureFile {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureFile
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureFile
+     */
+    'secretName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerAzureFile
+     */
+    'shareName': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs
+     */
+    'monitors': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs
+     */
+    'path'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs
+     */
+    'secretFile'?: string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs
+     */
+    'secretRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCephfs
+     */
+    'user'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCinder
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCinder {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCinder
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCinder
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCinder
+     */
+    'secretRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCinder
+     */
+    'volumeID': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMap
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMap {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMap
+     */
+    'defaultMode'?: number;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMap
+     */
+    'items'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMap
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMap
+     */
+    'optional'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner
+     */
+    'key': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner
+     */
+    'mode'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner
+     */
+    'path': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi
+     */
+    'driver': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi
+     */
+    'nodePublishSecretRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerCsi
+     */
+    'volumeAttributes'?: { [key: string]: string; };
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPI
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPI {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPI
+     */
+    'defaultMode'?: number;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPI
+     */
+    'items'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromFieldRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner
+     */
+    'fieldRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromFieldRef;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner
+     */
+    'mode'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner
+     */
+    'path': string;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner
+     */
+    'resourceFieldRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecsEnvInnerValueFromResourceFieldRef;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEmptyDir
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEmptyDir {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEmptyDir
+     */
+    'medium'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEmptyDir
+     */
+    'sizeLimit'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeral
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeral {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplate}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeral
+     */
+    'volumeClaimTemplate'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplate;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplate
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplate {
+    /**
+     * 
+     * @type {object}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplate
+     */
+    'metadata'?: object;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplate
+     */
+    'spec': IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'accessModes'?: Array<string>;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSource}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'dataSource'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSource;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSourceRef}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'dataSourceRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSourceRef;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecResources}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'resources'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecResources;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'selector'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'storageClassName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'volumeAttributesClassName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'volumeMode'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpec
+     */
+    'volumeName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSource
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSource {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSource
+     */
+    'apiGroup'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSource
+     */
+    'kind': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSource
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSourceRef
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSourceRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSourceRef
+     */
+    'apiGroup'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSourceRef
+     */
+    'kind': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSourceRef
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecDataSourceRef
+     */
+    'namespace'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecResources
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecResources {
+    /**
+     * 
+     * @type {{ [key: string]: object; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecResources
+     */
+    'limits'?: { [key: string]: object; };
+    /**
+     * 
+     * @type {{ [key: string]: object; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerEphemeralVolumeClaimTemplateSpecResources
+     */
+    'requests'?: { [key: string]: object; };
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc
+     */
+    'lun'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc
+     */
+    'targetWWNs'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFc
+     */
+    'wwids'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume
+     */
+    'driver': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume
+     */
+    'options'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlexVolume
+     */
+    'secretRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlocker
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlocker {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlocker
+     */
+    'datasetName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerFlocker
+     */
+    'datasetUUID'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGcePersistentDisk
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGcePersistentDisk {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGcePersistentDisk
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGcePersistentDisk
+     */
+    'partition'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGcePersistentDisk
+     */
+    'pdName': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGcePersistentDisk
+     */
+    'readOnly'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGitRepo
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGitRepo {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGitRepo
+     */
+    'directory'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGitRepo
+     */
+    'repository': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGitRepo
+     */
+    'revision'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGlusterfs
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGlusterfs {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGlusterfs
+     */
+    'endpoints': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGlusterfs
+     */
+    'path': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerGlusterfs
+     */
+    'readOnly'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerHostPath
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerHostPath {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerHostPath
+     */
+    'path': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerHostPath
+     */
+    'type'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'chapAuthDiscovery'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'chapAuthSession'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'initiatorName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'iqn': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'iscsiInterface'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'lun': number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'portals'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'secretRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerIscsi
+     */
+    'targetPortal': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerNfs
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerNfs {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerNfs
+     */
+    'path': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerNfs
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerNfs
+     */
+    'server': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPersistentVolumeClaim
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPersistentVolumeClaim {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPersistentVolumeClaim
+     */
+    'claimName': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPersistentVolumeClaim
+     */
+    'readOnly'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPhotonPersistentDisk
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPhotonPersistentDisk {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPhotonPersistentDisk
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPhotonPersistentDisk
+     */
+    'pdID': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPortworxVolume
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPortworxVolume {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPortworxVolume
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPortworxVolume
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerPortworxVolume
+     */
+    'volumeID': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjected
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjected {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjected
+     */
+    'defaultMode'?: number;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjected
+     */
+    'sources'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner
+     */
+    'clusterTrustBundle'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner
+     */
+    'configMap'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerDownwardAPI}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner
+     */
+    'downwardAPI'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerDownwardAPI;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner
+     */
+    'secret'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerServiceAccountToken}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInner
+     */
+    'serviceAccountToken'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerServiceAccountToken;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle {
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle
+     */
+    'labelSelector'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPodAffinityTermLabelSelector;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle
+     */
+    'optional'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle
+     */
+    'path': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerClusterTrustBundle
+     */
+    'signerName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap {
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap
+     */
+    'items'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerConfigMap
+     */
+    'optional'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerDownwardAPI
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerDownwardAPI {
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerDownwardAPI
+     */
+    'items'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerDownwardAPIItemsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerServiceAccountToken
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerServiceAccountToken {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerServiceAccountToken
+     */
+    'audience'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerServiceAccountToken
+     */
+    'expirationSeconds'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerProjectedSourcesInnerServiceAccountToken
+     */
+    'path': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte
+     */
+    'group'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte
+     */
+    'registry': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte
+     */
+    'tenant'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte
+     */
+    'user'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerQuobyte
+     */
+    'volume': string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+     */
+    'image': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+     */
+    'keyring'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+     */
+    'monitors': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+     */
+    'pool'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+     */
+    'secretRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerRbd
+     */
+    'user'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'gateway': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'protectionDomain'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'secretRef': IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'sslEnabled'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'storageMode'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'storagePool'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'system': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerScaleIO
+     */
+    'volumeName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerSecret
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerSecret {
+    /**
+     * 
+     * @type {number}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerSecret
+     */
+    'defaultMode'?: number;
+    /**
+     * 
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner>}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerSecret
+     */
+    'items'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerConfigMapItemsInner>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerSecret
+     */
+    'optional'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerSecret
+     */
+    'secretName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos
+     */
+    'readOnly'?: boolean;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos
+     */
+    'secretRef'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsImagePullSecretsInner;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos
+     */
+    'volumeName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerStorageos
+     */
+    'volumeNamespace'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerVsphereVolume
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerVsphereVolume {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerVsphereVolume
+     */
+    'fsType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerVsphereVolume
+     */
+    'storagePolicyID'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerVsphereVolume
+     */
+    'storagePolicyName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecsVolumesInnerVsphereVolume
+     */
+    'volumePath': string;
+}
+/**
+ * 
+ * @export
  * @interface IoGithub1eedaegonPipelineV1PipelineSpecHistoryLimit
  */
 export interface IoGithub1eedaegonPipelineV1PipelineSpecHistoryLimit {
@@ -176,6 +3442,25 @@ export interface IoGithub1eedaegonPipelineV1PipelineSpecHistoryLimit {
      * @memberof IoGithub1eedaegonPipelineV1PipelineSpecHistoryLimit
      */
     'date'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface IoGithub1eedaegonPipelineV1PipelineSpecInputsInner
+ */
+export interface IoGithub1eedaegonPipelineV1PipelineSpecInputsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecInputsInner
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecInputsInner
+     */
+    'useIntermediateDirectory'?: boolean;
 }
 /**
  * 
@@ -248,6 +3533,18 @@ export interface IoGithub1eedaegonPipelineV1PipelineSpecSchedule {
 export interface IoGithub1eedaegonPipelineV1PipelineSpecTasksInner {
     /**
      * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecTasksInner
+     */
+    'additionalContainerSpecs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs}
+     * @memberof IoGithub1eedaegonPipelineV1PipelineSpecTasksInner
+     */
+    'additionalPodSpecs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof IoGithub1eedaegonPipelineV1PipelineSpecTasksInner
      */
@@ -272,10 +3569,10 @@ export interface IoGithub1eedaegonPipelineV1PipelineSpecTasksInner {
     'image'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>}
      * @memberof IoGithub1eedaegonPipelineV1PipelineSpecTasksInner
      */
-    'inputs'?: Array<string>;
+    'inputs'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>;
     /**
      * 
      * @type {string}
@@ -284,10 +3581,10 @@ export interface IoGithub1eedaegonPipelineV1PipelineSpecTasksInner {
     'name'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>}
      * @memberof IoGithub1eedaegonPipelineV1PipelineSpecTasksInner
      */
-    'outputs'?: Array<string>;
+    'outputs'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>;
     /**
      * 
      * @type {IoGithub1eedaegonPipelineV1PipelineSpecResource}
@@ -439,6 +3736,18 @@ export interface IoGithub1eedaegonPipelineV1RunList {
 export interface IoGithub1eedaegonPipelineV1RunSpec {
     /**
      * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs}
+     * @memberof IoGithub1eedaegonPipelineV1RunSpec
+     */
+    'additionalContainerSpecs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs}
+     * @memberof IoGithub1eedaegonPipelineV1RunSpec
+     */
+    'additionalPodSpecs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs;
+    /**
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof IoGithub1eedaegonPipelineV1RunSpec
      */
@@ -451,10 +3760,10 @@ export interface IoGithub1eedaegonPipelineV1RunSpec {
     'historyLimit'?: IoGithub1eedaegonPipelineV1PipelineSpecHistoryLimit;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>}
      * @memberof IoGithub1eedaegonPipelineV1RunSpec
      */
-    'inputs'?: Array<string>;
+    'inputs'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>;
     /**
      * 
      * @type {Array<IoGithub1eedaegonPipelineV1RunSpecJobsInner>}
@@ -463,10 +3772,10 @@ export interface IoGithub1eedaegonPipelineV1RunSpec {
     'jobs'?: Array<IoGithub1eedaegonPipelineV1RunSpecJobsInner>;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>}
      * @memberof IoGithub1eedaegonPipelineV1RunSpec
      */
-    'outputs'?: Array<string>;
+    'outputs'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>;
     /**
      * 
      * @type {IoGithub1eedaegonPipelineV1PipelineSpecResource}
@@ -506,6 +3815,18 @@ export interface IoGithub1eedaegonPipelineV1RunSpec {
 export interface IoGithub1eedaegonPipelineV1RunSpecJobsInner {
     /**
      * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs}
+     * @memberof IoGithub1eedaegonPipelineV1RunSpecJobsInner
+     */
+    'additionalContainerSpecs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalContainerSpecs;
+    /**
+     * 
+     * @type {IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs}
+     * @memberof IoGithub1eedaegonPipelineV1RunSpecJobsInner
+     */
+    'additionalPodSpecs'?: IoGithub1eedaegonPipelineV1PipelineSpecAdditionalPodSpecs;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof IoGithub1eedaegonPipelineV1RunSpecJobsInner
      */
@@ -530,10 +3851,10 @@ export interface IoGithub1eedaegonPipelineV1RunSpecJobsInner {
     'image'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>}
      * @memberof IoGithub1eedaegonPipelineV1RunSpecJobsInner
      */
-    'inputs'?: Array<string>;
+    'inputs'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>;
     /**
      * 
      * @type {string}
@@ -548,10 +3869,10 @@ export interface IoGithub1eedaegonPipelineV1RunSpecJobsInner {
     'namespace'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>}
      * @memberof IoGithub1eedaegonPipelineV1RunSpecJobsInner
      */
-    'outputs'?: Array<string>;
+    'outputs'?: Array<IoGithub1eedaegonPipelineV1PipelineSpecInputsInner>;
     /**
      * 
      * @type {IoGithub1eedaegonPipelineV1PipelineSpecResource}
@@ -680,6 +4001,12 @@ export interface IoGithub1eedaegonPipelineV1RunStatusJobStatesInner {
      * @memberof IoGithub1eedaegonPipelineV1RunStatusJobStatesInner
      */
     'reason'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IoGithub1eedaegonPipelineV1RunStatusJobStatesInner
+     */
+    'runJobName'?: string;
 }
 /**
  * 
@@ -1070,6 +4397,12 @@ export interface IoK8sApimachineryPkgApisMetaV1DeleteOptions {
      */
     'gracePeriodSeconds'?: number;
     /**
+     * if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+     * @type {boolean}
+     * @memberof IoK8sApimachineryPkgApisMetaV1DeleteOptions
+     */
+    'ignoreStoreReadErrorWithClusterBreakingPotential'?: boolean;
+    /**
      * Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
      * @type {string}
      * @memberof IoK8sApimachineryPkgApisMetaV1DeleteOptions
@@ -1093,6 +4426,31 @@ export interface IoK8sApimachineryPkgApisMetaV1DeleteOptions {
      * @memberof IoK8sApimachineryPkgApisMetaV1DeleteOptions
      */
     'propagationPolicy'?: string;
+}
+/**
+ * FieldSelectorRequirement is a selector that contains values, a key, and an operator that relates the key and values.
+ * @export
+ * @interface IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement
+ */
+export interface IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement {
+    /**
+     * key is the field selector key that the requirement applies to.
+     * @type {string}
+     * @memberof IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement
+     */
+    'key': string;
+    /**
+     * operator represents a key\'s relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. The list of operators may grow in the future.
+     * @type {string}
+     * @memberof IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement
+     */
+    'operator': string;
+    /**
+     * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.
+     * @type {Array<string>}
+     * @memberof IoK8sApimachineryPkgApisMetaV1FieldSelectorRequirement
+     */
+    'values'?: Array<string>;
 }
 /**
  * GroupVersion contains the \"group/version\" and \"version\" string of a version. It is made a struct to keep extensibility.
@@ -1627,19 +4985,22 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
     return {
         /**
          * create a Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPipeline1eedaegonGithubIoV1NamespacedPipeline: async (body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createPipeline1eedaegonGithubIoV1NamespacedPipeline: async (namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('createPipeline1eedaegonGithubIoV1NamespacedPipeline', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('createPipeline1eedaegonGithubIoV1NamespacedPipeline', 'body', body)
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines`;
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1654,8 +5015,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -1678,19 +5047,22 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * create a Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPipeline1eedaegonGithubIoV1NamespacedRun: async (body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createPipeline1eedaegonGithubIoV1NamespacedRun: async (namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('createPipeline1eedaegonGithubIoV1NamespacedRun', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('createPipeline1eedaegonGithubIoV1NamespacedRun', 'body', body)
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs`;
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1705,8 +5077,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -1729,19 +5109,22 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * create a Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPipeline1eedaegonGithubIoV1NamespacedTask: async (body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createPipeline1eedaegonGithubIoV1NamespacedTask: async (namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('createPipeline1eedaegonGithubIoV1NamespacedTask', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('createPipeline1eedaegonGithubIoV1NamespacedTask', 'body', body)
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks`;
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1756,8 +5139,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -1780,23 +5171,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * delete collection of Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines`;
+        deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline: async (namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline', 'namespace', namespace)
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1810,6 +5204,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
 
 
     
@@ -1824,23 +5262,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * delete collection of Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs`;
+        deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun: async (namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun', 'namespace', namespace)
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1854,6 +5295,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
 
 
     
@@ -1868,23 +5353,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * delete collection of Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks`;
+        deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask: async (namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask', 'namespace', namespace)
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1898,6 +5386,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
 
 
     
@@ -1913,21 +5445,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * delete a Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1NamespacedPipeline: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePipeline1eedaegonGithubIoV1NamespacedPipeline: async (name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('deletePipeline1eedaegonGithubIoV1NamespacedPipeline', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('deletePipeline1eedaegonGithubIoV1NamespacedPipeline', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1942,15 +5478,38 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
             }
 
+            if (gracePeriodSeconds !== undefined) {
+                localVarQueryParameter['gracePeriodSeconds'] = gracePeriodSeconds;
+            }
+
+            if (ignoreStoreReadErrorWithClusterBreakingPotential !== undefined) {
+                localVarQueryParameter['ignoreStoreReadErrorWithClusterBreakingPotential'] = ignoreStoreReadErrorWithClusterBreakingPotential;
+            }
+
+            if (orphanDependents !== undefined) {
+                localVarQueryParameter['orphanDependents'] = orphanDependents;
+            }
+
+            if (propagationPolicy !== undefined) {
+                localVarQueryParameter['propagationPolicy'] = propagationPolicy;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1960,21 +5519,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * delete a Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1NamespacedRun: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePipeline1eedaegonGithubIoV1NamespacedRun: async (name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('deletePipeline1eedaegonGithubIoV1NamespacedRun', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('deletePipeline1eedaegonGithubIoV1NamespacedRun', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1989,15 +5552,38 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
             }
 
+            if (gracePeriodSeconds !== undefined) {
+                localVarQueryParameter['gracePeriodSeconds'] = gracePeriodSeconds;
+            }
+
+            if (ignoreStoreReadErrorWithClusterBreakingPotential !== undefined) {
+                localVarQueryParameter['ignoreStoreReadErrorWithClusterBreakingPotential'] = ignoreStoreReadErrorWithClusterBreakingPotential;
+            }
+
+            if (orphanDependents !== undefined) {
+                localVarQueryParameter['orphanDependents'] = orphanDependents;
+            }
+
+            if (propagationPolicy !== undefined) {
+                localVarQueryParameter['propagationPolicy'] = propagationPolicy;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2007,21 +5593,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * delete a Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1NamespacedTask: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePipeline1eedaegonGithubIoV1NamespacedTask: async (name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('deletePipeline1eedaegonGithubIoV1NamespacedTask', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('deletePipeline1eedaegonGithubIoV1NamespacedTask', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2036,15 +5626,38 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
             }
 
+            if (gracePeriodSeconds !== undefined) {
+                localVarQueryParameter['gracePeriodSeconds'] = gracePeriodSeconds;
+            }
+
+            if (ignoreStoreReadErrorWithClusterBreakingPotential !== undefined) {
+                localVarQueryParameter['ignoreStoreReadErrorWithClusterBreakingPotential'] = ignoreStoreReadErrorWithClusterBreakingPotential;
+            }
+
+            if (orphanDependents !== undefined) {
+                localVarQueryParameter['orphanDependents'] = orphanDependents;
+            }
+
+            if (propagationPolicy !== undefined) {
+                localVarQueryParameter['propagationPolicy'] = propagationPolicy;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2053,23 +5666,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * list objects of kind Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1NamespacedPipeline: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines`;
+        listPipeline1eedaegonGithubIoV1NamespacedPipeline: async (namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('listPipeline1eedaegonGithubIoV1NamespacedPipeline', 'namespace', namespace)
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2083,6 +5699,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
 
 
     
@@ -2097,23 +5757,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * list objects of kind Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1NamespacedRun: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs`;
+        listPipeline1eedaegonGithubIoV1NamespacedRun: async (namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('listPipeline1eedaegonGithubIoV1NamespacedRun', 'namespace', namespace)
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2127,6 +5790,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
 
 
     
@@ -2141,23 +5848,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * list objects of kind Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1NamespacedTask: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks`;
+        listPipeline1eedaegonGithubIoV1NamespacedTask: async (namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('listPipeline1eedaegonGithubIoV1NamespacedTask', 'namespace', namespace)
+            const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2172,6 +5882,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2185,21 +5939,21 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * list objects of kind Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces: async (allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/pipelines`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2215,6 +5969,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2228,21 +6026,21 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * list objects of kind Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1RunForAllNamespaces: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listPipeline1eedaegonGithubIoV1RunForAllNamespaces: async (allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2258,6 +6056,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2271,21 +6113,21 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         },
         /**
          * list objects of kind Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1TaskForAllNamespaces: async (UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listPipeline1eedaegonGithubIoV1TaskForAllNamespaces: async (allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2301,6 +6143,50 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (allowWatchBookmarks !== undefined) {
+                localVarQueryParameter['allowWatchBookmarks'] = allowWatchBookmarks;
+            }
+
+            if (_continue !== undefined) {
+                localVarQueryParameter['continue'] = _continue;
+            }
+
+            if (fieldSelector !== undefined) {
+                localVarQueryParameter['fieldSelector'] = fieldSelector;
+            }
+
+            if (labelSelector !== undefined) {
+                localVarQueryParameter['labelSelector'] = labelSelector;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
+
+            if (resourceVersionMatch !== undefined) {
+                localVarQueryParameter['resourceVersionMatch'] = resourceVersionMatch;
+            }
+
+            if (sendInitialEvents !== undefined) {
+                localVarQueryParameter['sendInitialEvents'] = sendInitialEvents;
+            }
+
+            if (timeoutSeconds !== undefined) {
+                localVarQueryParameter['timeoutSeconds'] = timeoutSeconds;
+            }
+
+            if (watch !== undefined) {
+                localVarQueryParameter['watch'] = watch;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2315,21 +6201,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * partially update the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedPipeline: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchPipeline1eedaegonGithubIoV1NamespacedPipeline: async (name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedPipeline', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedPipeline', 'namespace', namespace)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedPipeline', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2344,19 +6235,34 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
                 localVarQueryParameter['fieldValidation'] = fieldValidation;
             }
 
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2366,21 +6272,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * partially update status of the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus: async (name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus', 'namespace', namespace)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2395,19 +6306,34 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
                 localVarQueryParameter['fieldValidation'] = fieldValidation;
             }
 
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2417,21 +6343,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * partially update the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedRun: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchPipeline1eedaegonGithubIoV1NamespacedRun: async (name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedRun', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedRun', 'namespace', namespace)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedRun', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2446,19 +6377,34 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
                 localVarQueryParameter['fieldValidation'] = fieldValidation;
             }
 
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2468,21 +6414,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * partially update status of the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedRunStatus: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchPipeline1eedaegonGithubIoV1NamespacedRunStatus: async (name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedRunStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedRunStatus', 'namespace', namespace)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedRunStatus', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2497,19 +6448,34 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
                 localVarQueryParameter['fieldValidation'] = fieldValidation;
             }
 
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2519,21 +6485,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * partially update the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedTask: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchPipeline1eedaegonGithubIoV1NamespacedTask: async (name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedTask', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedTask', 'namespace', namespace)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedTask', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2548,19 +6519,34 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
                 localVarQueryParameter['fieldValidation'] = fieldValidation;
             }
 
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2570,21 +6556,26 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * partially update status of the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus: async (name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus', 'namespace', namespace)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2599,19 +6590,34 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
                 localVarQueryParameter['fieldValidation'] = fieldValidation;
             }
 
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2621,17 +6627,20 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * read the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedPipeline: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        readPipeline1eedaegonGithubIoV1NamespacedPipeline: async (name: string, namespace: string, pretty?: string, resourceVersion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedPipeline', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedPipeline', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2645,6 +6654,14 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
 
 
     
@@ -2660,17 +6677,20 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * read status of the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus: async (name: string, namespace: string, pretty?: string, resourceVersion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2684,6 +6704,14 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
 
 
     
@@ -2699,17 +6727,20 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * read the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedRun: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        readPipeline1eedaegonGithubIoV1NamespacedRun: async (name: string, namespace: string, pretty?: string, resourceVersion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedRun', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedRun', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2723,6 +6754,14 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
 
 
     
@@ -2738,17 +6777,20 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * read status of the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedRunStatus: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        readPipeline1eedaegonGithubIoV1NamespacedRunStatus: async (name: string, namespace: string, pretty?: string, resourceVersion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedRunStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedRunStatus', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2762,6 +6804,14 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
 
 
     
@@ -2777,17 +6827,20 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * read the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedTask: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        readPipeline1eedaegonGithubIoV1NamespacedTask: async (name: string, namespace: string, pretty?: string, resourceVersion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedTask', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedTask', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2801,6 +6854,14 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
 
 
     
@@ -2816,17 +6877,20 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * read status of the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedTaskStatus: async (name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        readPipeline1eedaegonGithubIoV1NamespacedTaskStatus: async (name: string, namespace: string, pretty?: string, resourceVersion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedTaskStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('readPipeline1eedaegonGithubIoV1NamespacedTaskStatus', 'namespace', namespace)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2840,6 +6904,14 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
 
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
+
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
+            if (resourceVersion !== undefined) {
+                localVarQueryParameter['resourceVersion'] = resourceVersion;
+            }
 
 
     
@@ -2855,22 +6927,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * replace the specified Pipeline
          * @param {string} name name of the Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedPipeline: async (name: string, body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        replacePipeline1eedaegonGithubIoV1NamespacedPipeline: async (name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedPipeline', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedPipeline', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedPipeline', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2885,8 +6960,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -2910,22 +6993,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * replace status of the specified Pipeline
          * @param {string} name name of the Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus: async (name: string, body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus: async (name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/pipelines/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2940,8 +7026,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -2965,22 +7059,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * replace the specified Run
          * @param {string} name name of the Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedRun: async (name: string, body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        replacePipeline1eedaegonGithubIoV1NamespacedRun: async (name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedRun', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedRun', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedRun', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2995,8 +7092,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -3020,22 +7125,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * replace status of the specified Run
          * @param {string} name name of the Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedRunStatus: async (name: string, body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        replacePipeline1eedaegonGithubIoV1NamespacedRunStatus: async (name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedRunStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedRunStatus', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedRunStatus', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/runs/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3050,8 +7158,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -3075,22 +7191,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * replace the specified Task
          * @param {string} name name of the Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedTask: async (name: string, body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        replacePipeline1eedaegonGithubIoV1NamespacedTask: async (name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedTask', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedTask', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedTask', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3105,8 +7224,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -3130,22 +7257,25 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
         /**
          * replace status of the specified Task
          * @param {string} name name of the Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus: async (name: string, body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus: async (name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus', 'name', name)
+            // verify required parameter 'namespace' is not null or undefined
+            assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus', 'namespace', namespace)
             // verify required parameter 'body' is not null or undefined
             assertParamExists('replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus', 'body', body)
             const localVarPath = `/apis/pipeline.1eedaegon.github.io/v1/namespaces/{namespace}/tasks/{name}/status`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3160,8 +7290,16 @@ export const Pipeline1eedaegonGithubIoV1ApiAxiosParamCreator = function (configu
             // authentication BearerToken required
             await setApiKeyToObject(localVarHeaderParameter, "authorization", configuration)
 
+            if (pretty !== undefined) {
+                localVarQueryParameter['pretty'] = pretty;
+            }
+
             if (dryRun !== undefined) {
                 localVarQueryParameter['dryRun'] = dryRun;
+            }
+
+            if (fieldManager !== undefined) {
+                localVarQueryParameter['fieldManager'] = fieldManager;
             }
 
             if (fieldValidation !== undefined) {
@@ -3194,120 +7332,120 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
     return {
         /**
          * create a Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createPipeline1eedaegonGithubIoV1NamespacedPipeline(body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createPipeline1eedaegonGithubIoV1NamespacedPipeline(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async createPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.createPipeline1eedaegonGithubIoV1NamespacedPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * create a Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createPipeline1eedaegonGithubIoV1NamespacedRun(body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createPipeline1eedaegonGithubIoV1NamespacedRun(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async createPipeline1eedaegonGithubIoV1NamespacedRun(namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPipeline1eedaegonGithubIoV1NamespacedRun(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.createPipeline1eedaegonGithubIoV1NamespacedRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * create a Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createPipeline1eedaegonGithubIoV1NamespacedTask(body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createPipeline1eedaegonGithubIoV1NamespacedTask(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async createPipeline1eedaegonGithubIoV1NamespacedTask(namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPipeline1eedaegonGithubIoV1NamespacedTask(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.createPipeline1eedaegonGithubIoV1NamespacedTask']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * delete collection of Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options);
+        async deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * delete collection of Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options);
+        async deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * delete collection of Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options);
+        async deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3315,18 +7453,19 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * delete a Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options);
+        async deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.deletePipeline1eedaegonGithubIoV1NamespacedPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3334,18 +7473,19 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * delete a Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options);
+        async deletePipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.deletePipeline1eedaegonGithubIoV1NamespacedRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3353,153 +7493,154 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * delete a Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options);
+        async deletePipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.deletePipeline1eedaegonGithubIoV1NamespacedTask']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * list objects of kind Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPipeline1eedaegonGithubIoV1NamespacedPipeline(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1PipelineList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1NamespacedPipeline(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options);
+        async listPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1PipelineList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.listPipeline1eedaegonGithubIoV1NamespacedPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * list objects of kind Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPipeline1eedaegonGithubIoV1NamespacedRun(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1RunList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1NamespacedRun(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options);
+        async listPipeline1eedaegonGithubIoV1NamespacedRun(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1RunList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1NamespacedRun(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.listPipeline1eedaegonGithubIoV1NamespacedRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * list objects of kind Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPipeline1eedaegonGithubIoV1NamespacedTask(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1TaskList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1NamespacedTask(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options);
+        async listPipeline1eedaegonGithubIoV1NamespacedTask(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1TaskList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1NamespacedTask(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.listPipeline1eedaegonGithubIoV1NamespacedTask']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * list objects of kind Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1PipelineList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options);
+        async listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1PipelineList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * list objects of kind Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPipeline1eedaegonGithubIoV1RunForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1RunList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1RunForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options);
+        async listPipeline1eedaegonGithubIoV1RunForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1RunList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1RunForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.listPipeline1eedaegonGithubIoV1RunForAllNamespaces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * list objects of kind Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1TaskList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options);
+        async listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1TaskList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.listPipeline1eedaegonGithubIoV1TaskForAllNamespaces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3507,18 +7648,18 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * partially update the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options);
+        async patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.patchPipeline1eedaegonGithubIoV1NamespacedPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3526,18 +7667,18 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * partially update status of the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options);
+        async patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3545,18 +7686,18 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * partially update the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchPipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options);
+        async patchPipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.patchPipeline1eedaegonGithubIoV1NamespacedRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3564,18 +7705,18 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * partially update status of the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options);
+        async patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.patchPipeline1eedaegonGithubIoV1NamespacedRunStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3583,18 +7724,18 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * partially update the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchPipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options);
+        async patchPipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.patchPipeline1eedaegonGithubIoV1NamespacedTask']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3602,18 +7743,18 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * partially update status of the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options);
+        async patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3621,14 +7762,14 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * read the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options);
+        async readPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, pretty, resourceVersion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.readPipeline1eedaegonGithubIoV1NamespacedPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3636,14 +7777,14 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * read status of the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options);
+        async readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, pretty, resourceVersion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3651,14 +7792,14 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * read the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readPipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options);
+        async readPipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, pretty, resourceVersion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.readPipeline1eedaegonGithubIoV1NamespacedRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3666,14 +7807,14 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * read status of the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options);
+        async readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, pretty, resourceVersion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.readPipeline1eedaegonGithubIoV1NamespacedRunStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3681,14 +7822,14 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * read the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readPipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options);
+        async readPipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, pretty, resourceVersion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.readPipeline1eedaegonGithubIoV1NamespacedTask']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3696,14 +7837,14 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * read status of the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options);
+        async readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, pretty, resourceVersion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.readPipeline1eedaegonGithubIoV1NamespacedTaskStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3711,17 +7852,17 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * replace the specified Pipeline
          * @param {string} name name of the Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.replacePipeline1eedaegonGithubIoV1NamespacedPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3729,17 +7870,17 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * replace status of the specified Pipeline
          * @param {string} name name of the Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3747,17 +7888,17 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * replace the specified Run
          * @param {string} name name of the Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async replacePipeline1eedaegonGithubIoV1NamespacedRun(name: string, body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedRun(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async replacePipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.replacePipeline1eedaegonGithubIoV1NamespacedRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3765,17 +7906,17 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * replace status of the specified Run
          * @param {string} name name of the Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Run>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.replacePipeline1eedaegonGithubIoV1NamespacedRunStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3783,17 +7924,17 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * replace the specified Task
          * @param {string} name name of the Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async replacePipeline1eedaegonGithubIoV1NamespacedTask(name: string, body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedTask(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async replacePipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.replacePipeline1eedaegonGithubIoV1NamespacedTask']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3801,17 +7942,17 @@ export const Pipeline1eedaegonGithubIoV1ApiFp = function(configuration?: Configu
         /**
          * replace status of the specified Task
          * @param {string} name name of the Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options);
+        async replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IoGithub1eedaegonPipelineV1Task>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['Pipeline1eedaegonGithubIoV1Api.replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3828,528 +7969,531 @@ export const Pipeline1eedaegonGithubIoV1ApiFactory = function (configuration?: C
     return {
         /**
          * create a Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPipeline1eedaegonGithubIoV1NamespacedPipeline(body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
-            return localVarFp.createPipeline1eedaegonGithubIoV1NamespacedPipeline(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        createPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
+            return localVarFp.createPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
         /**
          * create a Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPipeline1eedaegonGithubIoV1NamespacedRun(body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
-            return localVarFp.createPipeline1eedaegonGithubIoV1NamespacedRun(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        createPipeline1eedaegonGithubIoV1NamespacedRun(namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
+            return localVarFp.createPipeline1eedaegonGithubIoV1NamespacedRun(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
         /**
          * create a Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPipeline1eedaegonGithubIoV1NamespacedTask(body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
-            return localVarFp.createPipeline1eedaegonGithubIoV1NamespacedTask(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        createPipeline1eedaegonGithubIoV1NamespacedTask(namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
+            return localVarFp.createPipeline1eedaegonGithubIoV1NamespacedTask(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
         /**
          * delete collection of Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
-            return localVarFp.deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(axios, basePath));
+        deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
+            return localVarFp.deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * delete collection of Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
-            return localVarFp.deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(axios, basePath));
+        deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
+            return localVarFp.deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * delete collection of Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
-            return localVarFp.deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(axios, basePath));
+        deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
+            return localVarFp.deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
-            return localVarFp.deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options).then((request) => request(axios, basePath));
+        deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
+            return localVarFp.deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
-            return localVarFp.deletePipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options).then((request) => request(axios, basePath));
+        deletePipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
+            return localVarFp.deletePipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
+         * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+         * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+         * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+         * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+         * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
-            return localVarFp.deletePipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options).then((request) => request(axios, basePath));
+        deletePipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig): AxiosPromise<IoK8sApimachineryPkgApisMetaV1Status> {
+            return localVarFp.deletePipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options).then((request) => request(axios, basePath));
         },
         /**
          * list objects of kind Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1NamespacedPipeline(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1PipelineList> {
-            return localVarFp.listPipeline1eedaegonGithubIoV1NamespacedPipeline(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(axios, basePath));
+        listPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1PipelineList> {
+            return localVarFp.listPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * list objects of kind Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1NamespacedRun(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1RunList> {
-            return localVarFp.listPipeline1eedaegonGithubIoV1NamespacedRun(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(axios, basePath));
+        listPipeline1eedaegonGithubIoV1NamespacedRun(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1RunList> {
+            return localVarFp.listPipeline1eedaegonGithubIoV1NamespacedRun(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * list objects of kind Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
-         * @param {} [UNKNOWN_PARAMETER_NAME12] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1NamespacedTask(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1TaskList> {
-            return localVarFp.listPipeline1eedaegonGithubIoV1NamespacedTask(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(axios, basePath));
+        listPipeline1eedaegonGithubIoV1NamespacedTask(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1TaskList> {
+            return localVarFp.listPipeline1eedaegonGithubIoV1NamespacedTask(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * list objects of kind Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1PipelineList> {
-            return localVarFp.listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options).then((request) => request(axios, basePath));
+        listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1PipelineList> {
+            return localVarFp.listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * list objects of kind Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1RunForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1RunList> {
-            return localVarFp.listPipeline1eedaegonGithubIoV1RunForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options).then((request) => request(axios, basePath));
+        listPipeline1eedaegonGithubIoV1RunForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1RunList> {
+            return localVarFp.listPipeline1eedaegonGithubIoV1RunForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * list objects of kind Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
-         * @param {} [UNKNOWN_PARAMETER_NAME6] 
-         * @param {} [UNKNOWN_PARAMETER_NAME7] 
-         * @param {} [UNKNOWN_PARAMETER_NAME8] 
-         * @param {} [UNKNOWN_PARAMETER_NAME9] 
-         * @param {} [UNKNOWN_PARAMETER_NAME10] 
-         * @param {} [UNKNOWN_PARAMETER_NAME11] 
+         * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+         * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+         * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+         * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+         * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+         * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+         * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+         * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1TaskList> {
-            return localVarFp.listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options).then((request) => request(axios, basePath));
+        listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1TaskList> {
+            return localVarFp.listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(axios, basePath));
         },
         /**
          * partially update the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
-            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(axios, basePath));
+        patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
+            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(axios, basePath));
         },
         /**
          * partially update status of the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
-            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(axios, basePath));
+        patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
+            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(axios, basePath));
         },
         /**
          * partially update the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
-            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(axios, basePath));
+        patchPipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
+            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(axios, basePath));
         },
         /**
          * partially update status of the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
-            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(axios, basePath));
+        patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
+            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(axios, basePath));
         },
         /**
          * partially update the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
-            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(axios, basePath));
+        patchPipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
+            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(axios, basePath));
         },
         /**
          * partially update status of the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {object} body 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME4] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-         * @param {} [UNKNOWN_PARAMETER_NAME5] 
+         * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
-            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(axios, basePath));
+        patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
+            return localVarFp.patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(axios, basePath));
         },
         /**
          * read the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
-            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(axios, basePath));
+        readPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
+            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, pretty, resourceVersion, options).then((request) => request(axios, basePath));
         },
         /**
          * read status of the specified Pipeline
          * @param {string} name name of the Pipeline
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
-            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(axios, basePath));
+        readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
+            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, pretty, resourceVersion, options).then((request) => request(axios, basePath));
         },
         /**
          * read the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
-            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(axios, basePath));
+        readPipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
+            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, pretty, resourceVersion, options).then((request) => request(axios, basePath));
         },
         /**
          * read status of the specified Run
          * @param {string} name name of the Run
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
-            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(axios, basePath));
+        readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
+            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, pretty, resourceVersion, options).then((request) => request(axios, basePath));
         },
         /**
          * read the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
-            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(axios, basePath));
+        readPipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
+            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, pretty, resourceVersion, options).then((request) => request(axios, basePath));
         },
         /**
          * read status of the specified Task
          * @param {string} name name of the Task
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} namespace object name and auth scope, such as for teams and projects
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+         * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
-            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(axios, basePath));
+        readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
+            return localVarFp.readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, pretty, resourceVersion, options).then((request) => request(axios, basePath));
         },
         /**
          * replace the specified Pipeline
          * @param {string} name name of the Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
-            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
+            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
         /**
          * replace status of the specified Pipeline
          * @param {string} name name of the Pipeline
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
-            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Pipeline> {
+            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
         /**
          * replace the specified Run
          * @param {string} name name of the Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedRun(name: string, body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
-            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedRun(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        replacePipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
+            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
         /**
          * replace status of the specified Run
          * @param {string} name name of the Run
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Run} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
-            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Run> {
+            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
         /**
          * replace the specified Task
          * @param {string} name name of the Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedTask(name: string, body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
-            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedTask(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        replacePipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
+            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
         /**
          * replace status of the specified Task
          * @param {string} name name of the Task
+         * @param {string} namespace object name and auth scope, such as for teams and projects
          * @param {IoGithub1eedaegonPipelineV1Task} body 
-         * @param {} [UNKNOWN_PARAMETER_NAME] 
-         * @param {} [UNKNOWN_PARAMETER_NAME2] 
+         * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
          * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-         * @param {} [UNKNOWN_PARAMETER_NAME3] 
+         * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
          * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
-            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(axios, basePath));
+        replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig): AxiosPromise<IoGithub1eedaegonPipelineV1Task> {
+            return localVarFp.replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4363,593 +8507,596 @@ export const Pipeline1eedaegonGithubIoV1ApiFactory = function (configuration?: C
 export class Pipeline1eedaegonGithubIoV1Api extends BaseAPI {
     /**
      * create a Pipeline
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public createPipeline1eedaegonGithubIoV1NamespacedPipeline(body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).createPipeline1eedaegonGithubIoV1NamespacedPipeline(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public createPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).createPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * create a Run
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Run} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public createPipeline1eedaegonGithubIoV1NamespacedRun(body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).createPipeline1eedaegonGithubIoV1NamespacedRun(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public createPipeline1eedaegonGithubIoV1NamespacedRun(namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).createPipeline1eedaegonGithubIoV1NamespacedRun(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * create a Task
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Task} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public createPipeline1eedaegonGithubIoV1NamespacedTask(body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).createPipeline1eedaegonGithubIoV1NamespacedTask(body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public createPipeline1eedaegonGithubIoV1NamespacedTask(namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).createPipeline1eedaegonGithubIoV1NamespacedTask(namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * delete collection of Pipeline
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
-     * @param {} [UNKNOWN_PARAMETER_NAME12] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(this.axios, this.basePath));
+    public deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1CollectionNamespacedPipeline(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * delete collection of Run
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
-     * @param {} [UNKNOWN_PARAMETER_NAME12] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(this.axios, this.basePath));
+    public deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1CollectionNamespacedRun(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * delete collection of Task
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
-     * @param {} [UNKNOWN_PARAMETER_NAME12] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(this.axios, this.basePath));
+    public deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1CollectionNamespacedTask(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * delete a Pipeline
      * @param {string} name name of the Pipeline
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
+     * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+     * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+     * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+     * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+     * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options).then((request) => request(this.axios, this.basePath));
+    public deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * delete a Run
      * @param {string} name name of the Run
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
+     * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+     * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+     * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+     * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+     * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public deletePipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options).then((request) => request(this.axios, this.basePath));
+    public deletePipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * delete a Task
      * @param {string} name name of the Task
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
+     * @param {number} [gracePeriodSeconds] The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+     * @param {boolean} [ignoreStoreReadErrorWithClusterBreakingPotential] if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+     * @param {boolean} [orphanDependents] Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object\&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.
+     * @param {string} [propagationPolicy] Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: \&#39;Orphan\&#39; - orphan the dependents; \&#39;Background\&#39; - allow the garbage collector to delete the dependents in the background; \&#39;Foreground\&#39; - a cascading policy that deletes all dependents in the foreground.
+     * @param {IoK8sApimachineryPkgApisMetaV1DeleteOptions} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public deletePipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, options).then((request) => request(this.axios, this.basePath));
+    public deletePipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, pretty?: string, dryRun?: string, gracePeriodSeconds?: number, ignoreStoreReadErrorWithClusterBreakingPotential?: boolean, orphanDependents?: boolean, propagationPolicy?: string, body?: IoK8sApimachineryPkgApisMetaV1DeleteOptions, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).deletePipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, pretty, dryRun, gracePeriodSeconds, ignoreStoreReadErrorWithClusterBreakingPotential, orphanDependents, propagationPolicy, body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * list objects of kind Pipeline
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
-     * @param {} [UNKNOWN_PARAMETER_NAME12] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public listPipeline1eedaegonGithubIoV1NamespacedPipeline(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1NamespacedPipeline(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(this.axios, this.basePath));
+    public listPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1NamespacedPipeline(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * list objects of kind Run
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
-     * @param {} [UNKNOWN_PARAMETER_NAME12] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public listPipeline1eedaegonGithubIoV1NamespacedRun(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1NamespacedRun(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(this.axios, this.basePath));
+    public listPipeline1eedaegonGithubIoV1NamespacedRun(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1NamespacedRun(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * list objects of kind Task
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
-     * @param {} [UNKNOWN_PARAMETER_NAME12] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public listPipeline1eedaegonGithubIoV1NamespacedTask(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , UNKNOWN_PARAMETER_NAME12?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1NamespacedTask(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, UNKNOWN_PARAMETER_NAME12, options).then((request) => request(this.axios, this.basePath));
+    public listPipeline1eedaegonGithubIoV1NamespacedTask(namespace: string, pretty?: string, allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1NamespacedTask(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * list objects of kind Pipeline
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options).then((request) => request(this.axios, this.basePath));
+    public listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1PipelineForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * list objects of kind Run
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public listPipeline1eedaegonGithubIoV1RunForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1RunForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options).then((request) => request(this.axios, this.basePath));
+    public listPipeline1eedaegonGithubIoV1RunForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1RunForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * list objects of kind Task
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
-     * @param {} [UNKNOWN_PARAMETER_NAME6] 
-     * @param {} [UNKNOWN_PARAMETER_NAME7] 
-     * @param {} [UNKNOWN_PARAMETER_NAME8] 
-     * @param {} [UNKNOWN_PARAMETER_NAME9] 
-     * @param {} [UNKNOWN_PARAMETER_NAME10] 
-     * @param {} [UNKNOWN_PARAMETER_NAME11] 
+     * @param {boolean} [allowWatchBookmarks] allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server\&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored.
+     * @param {string} [_continue] The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+     * @param {string} [fieldSelector] A selector to restrict the list of returned objects by their fields. Defaults to everything.
+     * @param {string} [labelSelector] A selector to restrict the list of returned objects by their labels. Defaults to everything.
+     * @param {number} [limit] limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {string} [resourceVersionMatch] resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
+     * @param {boolean} [sendInitialEvents] &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise.
+     * @param {number} [timeoutSeconds] Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+     * @param {boolean} [watch] Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , UNKNOWN_PARAMETER_NAME4?: , UNKNOWN_PARAMETER_NAME5?: , UNKNOWN_PARAMETER_NAME6?: , UNKNOWN_PARAMETER_NAME7?: , UNKNOWN_PARAMETER_NAME8?: , UNKNOWN_PARAMETER_NAME9?: , UNKNOWN_PARAMETER_NAME10?: , UNKNOWN_PARAMETER_NAME11?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, UNKNOWN_PARAMETER_NAME4, UNKNOWN_PARAMETER_NAME5, UNKNOWN_PARAMETER_NAME6, UNKNOWN_PARAMETER_NAME7, UNKNOWN_PARAMETER_NAME8, UNKNOWN_PARAMETER_NAME9, UNKNOWN_PARAMETER_NAME10, UNKNOWN_PARAMETER_NAME11, options).then((request) => request(this.axios, this.basePath));
+    public listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(allowWatchBookmarks?: boolean, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, pretty?: string, resourceVersion?: string, resourceVersionMatch?: string, sendInitialEvents?: boolean, timeoutSeconds?: number, watch?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).listPipeline1eedaegonGithubIoV1TaskForAllNamespaces(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * partially update the specified Pipeline
      * @param {string} name name of the Pipeline
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {object} body 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
+     * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(this.axios, this.basePath));
+    public patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * partially update status of the specified Pipeline
      * @param {string} name name of the Pipeline
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {object} body 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
+     * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(this.axios, this.basePath));
+    public patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * partially update the specified Run
      * @param {string} name name of the Run
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {object} body 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
+     * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public patchPipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(this.axios, this.basePath));
+    public patchPipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * partially update status of the specified Run
      * @param {string} name name of the Run
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {object} body 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
+     * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(this.axios, this.basePath));
+    public patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * partially update the specified Task
      * @param {string} name name of the Task
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {object} body 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
+     * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public patchPipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(this.axios, this.basePath));
+    public patchPipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * partially update status of the specified Task
      * @param {string} name name of the Task
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {object} body 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME4] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch).
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
-     * @param {} [UNKNOWN_PARAMETER_NAME5] 
+     * @param {boolean} [force] Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , dryRun?: string, UNKNOWN_PARAMETER_NAME4?: , fieldValidation?: string, UNKNOWN_PARAMETER_NAME5?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, dryRun, UNKNOWN_PARAMETER_NAME4, fieldValidation, UNKNOWN_PARAMETER_NAME5, options).then((request) => request(this.axios, this.basePath));
+    public patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, body: object, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, force?: boolean, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).patchPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * read the specified Pipeline
      * @param {string} name name of the Pipeline
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public readPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedPipeline(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(this.axios, this.basePath));
+    public readPipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, pretty, resourceVersion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * read status of the specified Pipeline
      * @param {string} name name of the Pipeline
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(this.axios, this.basePath));
+    public readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, pretty, resourceVersion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * read the specified Run
      * @param {string} name name of the Run
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public readPipeline1eedaegonGithubIoV1NamespacedRun(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedRun(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(this.axios, this.basePath));
+    public readPipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, pretty, resourceVersion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * read status of the specified Run
      * @param {string} name name of the Run
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(this.axios, this.basePath));
+    public readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, pretty, resourceVersion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * read the specified Task
      * @param {string} name name of the Task
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public readPipeline1eedaegonGithubIoV1NamespacedTask(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedTask(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(this.axios, this.basePath));
+    public readPipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, pretty, resourceVersion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * read status of the specified Task
      * @param {string} name name of the Task
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} namespace object name and auth scope, such as for teams and projects
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
+     * @param {string} [resourceVersion] resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , UNKNOWN_PARAMETER_NAME3?: , options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, UNKNOWN_PARAMETER_NAME3, options).then((request) => request(this.axios, this.basePath));
+    public readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, pretty?: string, resourceVersion?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).readPipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, pretty, resourceVersion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * replace the specified Pipeline
      * @param {string} name name of the Pipeline
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedPipeline(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * replace status of the specified Pipeline
      * @param {string} name name of the Pipeline
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Pipeline} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, body: IoGithub1eedaegonPipelineV1Pipeline, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Pipeline, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedPipelineStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * replace the specified Run
      * @param {string} name name of the Run
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Run} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public replacePipeline1eedaegonGithubIoV1NamespacedRun(name: string, body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedRun(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public replacePipeline1eedaegonGithubIoV1NamespacedRun(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedRun(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * replace status of the specified Run
      * @param {string} name name of the Run
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Run} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, body: IoGithub1eedaegonPipelineV1Run, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Run, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedRunStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * replace the specified Task
      * @param {string} name name of the Task
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Task} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public replacePipeline1eedaegonGithubIoV1NamespacedTask(name: string, body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedTask(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public replacePipeline1eedaegonGithubIoV1NamespacedTask(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedTask(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * replace status of the specified Task
      * @param {string} name name of the Task
+     * @param {string} namespace object name and auth scope, such as for teams and projects
      * @param {IoGithub1eedaegonPipelineV1Task} body 
-     * @param {} [UNKNOWN_PARAMETER_NAME] 
-     * @param {} [UNKNOWN_PARAMETER_NAME2] 
+     * @param {string} [pretty] If \&#39;true\&#39;, then the output is pretty printed. Defaults to \&#39;false\&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
      * @param {string} [dryRun] When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-     * @param {} [UNKNOWN_PARAMETER_NAME3] 
+     * @param {string} [fieldManager] fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint.
      * @param {string} [fieldValidation] fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Pipeline1eedaegonGithubIoV1Api
      */
-    public replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, body: IoGithub1eedaegonPipelineV1Task, UNKNOWN_PARAMETER_NAME?: , UNKNOWN_PARAMETER_NAME2?: , dryRun?: string, UNKNOWN_PARAMETER_NAME3?: , fieldValidation?: string, options?: RawAxiosRequestConfig) {
-        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, body, UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2, dryRun, UNKNOWN_PARAMETER_NAME3, fieldValidation, options).then((request) => request(this.axios, this.basePath));
+    public replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name: string, namespace: string, body: IoGithub1eedaegonPipelineV1Task, pretty?: string, dryRun?: string, fieldManager?: string, fieldValidation?: string, options?: RawAxiosRequestConfig) {
+        return Pipeline1eedaegonGithubIoV1ApiFp(this.configuration).replacePipeline1eedaegonGithubIoV1NamespacedTaskStatus(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

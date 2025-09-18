@@ -24,10 +24,12 @@ import (
 	"time"
 
 	"github.com/robfig/cron/v3"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 const (
+	ApiVersion             = "pipeline.1eedaegon.github.io/v1"
 	ScheduleDateAnnotation = "pipeline.1eedaegon.github.io/schedule-date"
 	EndDateAnnotation      = "pipeline.1eedaegon.github.io/end-date"
 	ScheduledAtAnnotation  = "pipeline.1eedaegon.github.io/scheduled-at"
@@ -40,6 +42,20 @@ type Trigger bool
 const (
 	IsTriggered    Trigger = true
 	IsNotTriggered Trigger = false
+)
+
+type VolumeLifecycle string
+
+const (
+	// Created once (by run reconciller / existing pvc), never deleted
+	Persistent VolumeLifecycle = "persistent"
+	// Created once (by run reconciller / existing pvc), deleted after pipeline deletion
+	// Set by default value
+	DefaultPipelineScope VolumeLifecycle = ""
+	// Created once (by run reconciller / existing pvc), deleted after pipeline deletion
+	PipelineScope VolumeLifecycle = "pipeline"
+	// Created once (by run reconciller / existing pvc), deleted after run deletion
+	RunScope VolumeLifecycle = "run"
 )
 
 func (t Trigger) String() string {
@@ -69,12 +85,37 @@ type VolumeResource struct {
 	Name     string `json:"name,omitempty"`
 	Capacity string `json:"capacity,omitempty"`
 	Storage  string `json:"storage,omitempty"`
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Enum="";persistent;pipeline;run
+	// +kubebuilder:default:=""
+	Lifecycle VolumeLifecycle `json:"lifecycle,omitempty"`
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:={"ReadWriteOnce"}
+	AccessModes []corev1.PersistentVolumeAccessMode `json:"accessModes,omitempty"`
+}
+
+// Pipeline / Task 내 Input / Output 정의에 필요한 Spec
+type IOVolumeSpec struct {
+	// Volume의 name과 동일해야 한다. (기존 or 신규 생성 Volume 공통)
+	Name string `json:"name,omitempty"`
+	// mountPathPrefix + "/" + volumeName + "/" + subPath로 구성된 mountPath내의 volumeName + "/" + subPath 값을 override한다.
+	// 값이 주어지지 않았을 경우 상기의 mountPath expression을 사용한다.
+	MountPathOverride string `json:"mountPathOverride,omitempty"`
+	// IOVolumeSpec에 대응되는 KJob Pod volumeMounts item의 mountPathPrefix를 정의한다.
+	// 값이 주어지지 않았을 경우 Operator 로직에 의해 /data/pipeline을 기본값으로 사용하며, Pipeline / Run등의 Resource에 해당 값이 반영되지 않는다.
+	MountPrefix string `json:"mountPrefix,omitempty"`
+	// pvc root 하위의 run별로 격리된 hashed path를 subPath로 사용할 것인지 정의한다. (PipelineSpec 참고)
+	UseIntermediateDirectory bool `json:"useIntermediateDirectory,omitempty"`
 }
 
 type ScheduleDate string
 
-func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
+func (sd ScheduleDate) durationFromDateString(start time.Time) (time.Duration, error) {
 	var duration time.Duration
+	now := time.Now()
+	if start.After(now) {
+		duration += start.Sub(now)
+	}
 	// date string parser
 	scheduleDatePattern := `(\d+)([smhdMy])`
 	re := regexp.MustCompile(scheduleDatePattern)
@@ -107,20 +148,27 @@ func (sd ScheduleDate) durationFromDateString() (time.Duration, error) {
 	return duration, nil
 }
 
-func (sd ScheduleDate) durationFromCron() (time.Duration, error) {
+func (sd ScheduleDate) durationFromCron(start time.Time) (time.Duration, error) {
 	// cron parser
 	cronExpr, err := cron.ParseStandard(string(sd))
-	duration := cronExpr.Next(time.Now()).Sub(time.Now())
 	if err != nil {
 		return 0, err
 	}
+	duration := time.Until(cronExpr.Next(start))
 	return duration, nil
 }
-func (sd ScheduleDate) Duration() (time.Duration, error) {
-	cronDuration, err := sd.durationFromCron()
-	dateDuration, err2 := sd.durationFromDateString()
+func (sd ScheduleDate) Duration(startDate *metav1.Time) (time.Duration, error) {
+	var start time.Time
+	now := time.Now()
+	if startDate == nil || start.Before(now) {
+		start = now
+	} else {
+		start = startDate.Time
+	}
+	cronDuration, err := sd.durationFromCron(start)
+	dateDuration, err2 := sd.durationFromDateString(start)
 	if err != nil && err2 != nil {
-		return 0, fmt.Errorf("unknown format schedule")
+		return 0, fmt.Errorf("unknown format schedule: cron parsing error is %v, date parsing error is %v", err, err2)
 	}
 	if err != nil {
 		return dateDuration, nil
@@ -129,9 +177,14 @@ func (sd ScheduleDate) Duration() (time.Duration, error) {
 }
 
 type Schedule struct {
-	// ScheduleType ScheduleType `json:"type,omitempty"`         // ScheduleType이 cron이면 cron의 최초 도달시점, date면 시스템 시간에 시작
-	ScheduleDate ScheduleDate `json:"scheduleDate,omitempty"` // ScheduleDate를 기점으로 scheduling 시작
-	EndDate      string       `json:"endDate,omitempty"`      // 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
+	// +kubebuilder:validation:Optional
+	StartDate *metav1.Time `json:"startDate,omitempty"` // StartDate가 정의되어 있다면 해당 date부터 Scheduling 시작
+	// +kubebuilder:validation:Optional
+	ScheduleDate ScheduleDate `json:"scheduleDate,omitempty"` // Scheduling의 기준, cron or basic expression
+	// +kubebuilder:validation:Optional
+	EndDate *metav1.Time `json:"endDate,omitempty"` // EndDate가 정의되었고 현재 *time.Time이 EndDate보다 높으면 complete and no queuing
+	// +kubebuilder:validation:Optional
+	Repeat bool `json:"repeat,omitempty"` // Schedule의 1회 수행 혹은 반복 여부를 정의
 }
 
 type ModeType string
@@ -144,14 +197,20 @@ const (
 type PipelineTask struct {
 	// Inline 타입이면 Task를 수동으로 기입해줘야한다. inline에서 정의한 task가 task 템플릿으로 들어가진 않는다.
 	// Import 타입이면 이미있는 Task를 기준으로 Task가 채워진다.
-	TaskSpec  `json:",inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
-	Schedule  Schedule                   `json:"schedule,omitempty"`
-	Resource  Resource                   `json:"resource,omitempty"`
-	Trigger   Trigger                    `json:"trigger,omitempty"`
-	RunBefore []string                   `json:"runBefore,omitempty"`
-	Inputs    []string                   `json:"inputs,omitempty"`
-	Outputs   []string                   `json:"outputs,omitempty"`
-	Env       map[string]string          `json:"env,omitempty"`
+	TaskSpec `json:",inline,omitempty"` // Task의 image 키워드가 없으면 name을 불러온다. 존재하지 않으면 에러가 발생한다.
+	Schedule Schedule                   `json:"schedule,omitempty"`
+	Resource Resource                   `json:"resource,omitempty"`
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=false
+	Trigger   Trigger           `json:"trigger,omitempty"`
+	RunBefore []string          `json:"runBefore,omitempty"`
+	Inputs    []IOVolumeSpec    `json:"inputs,omitempty"`
+	Outputs   []IOVolumeSpec    `json:"outputs,omitempty"`
+	Env       map[string]string `json:"env,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalContainerSpecs *corev1.Container `json:"additionalContainerSpecs,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalPodSpecs *corev1.PodSpec `json:"additionalPodSpecs,omitempty"`
 }
 
 /*
@@ -167,25 +226,46 @@ type PipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	// Name       string   `json:"name,omitempty"` - Spec이 아니라 Metadata에 들어가야할 내용임.
-	Schedule     Schedule          `json:"schedule,omitempty"`
-	Volumes      []VolumeResource  `json:"volumes,omitempty"` // Volume이 run으로 진입했을 때 겹칠 수 있으니 새로 생성해야한다. +prefix
+	Schedule *Schedule `json:"schedule,omitempty"`
+	/*
+		단일 pipeline의 run들은 동일한 volume을 사용한다.
+		hashed intermediate directory (IOVolumeSpec.UseIntermediateDirectory) 구성에 따른 영향과 목적은 다음과 같다.
+		  true: 개별 run의 input / output에서 source hashed intermediate directory를 사용함으로써 개별 run이 다룰 수 있는 volume 내 데이터가 격리된다.
+				Share intermediate directory on same run based jobs
+				It is attended to output of a job becomes input of other job.
+				To avoid this sharing, append subDirectories on task input / output name.
+		  false: pvc에 초기 주입된 기존 데이터를 사용하거나 기존 run에서 write한 결과를 재사용할 수 있다.
+	*/
+	Volumes      []VolumeResource  `json:"volumes,omitempty"`
 	Trigger      Trigger           `json:"trigger,omitempty"`
 	HistoryLimit HistoryLimit      `json:"historyLimit,omitempty"` // post-run 상태의 pipeline들의 최대 보존 기간
 	Tasks        []PipelineTask    `json:"tasks,omitempty"`
 	RunBefore    []string          `json:"runBefore,omitempty"`
-	Inputs       []string          `json:"inputs,omitempty"`   // RX
-	Outputs      []string          `json:"outputs,omitempty"`  // RWX
+	Inputs       []IOVolumeSpec    `json:"inputs,omitempty"`   // RX
+	Outputs      []IOVolumeSpec    `json:"outputs,omitempty"`  // RWX
 	Resource     Resource          `json:"resource,omitempty"` // task에 리소스가 없을 때, pipeline에 리소스가 지정되어있다면 이것을 적용
 	Env          map[string]string `json:"env,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalContainerSpecs *corev1.Container `json:"additionalContainerSpecs,omitempty"`
+	// +kubebuilder:validation:Optional
+	AdditionalPodSpecs *corev1.PodSpec `json:"additionalPodSpecs,omitempty"`
 }
 
 // PipelineStatus defines the observed state of Pipeline
 type PipelineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Runs            int          `json:"runs,omitempty"`            // Number of run
-	CreatedDate     *metav1.Time `json:"createdDate,omitempty"`     // Date of created pipeline
-	LastUpdatedDate *metav1.Time `json:"lastUpdatedDate,omitempty"` // Last modified date pipeline
+	Runs                           int          `json:"runs,omitempty"`                           // Number of run
+	CreatedDate                    *metav1.Time `json:"createdDate,omitempty"`                    // Date of created pipeline
+	LastUpdatedDate                *metav1.Time `json:"lastUpdatedDate,omitempty"`                // Last modified date pipeline
+	Schedule                       *Schedule    `json:"schedule,omitempty"`                       // Currently applied schedule for checking diff
+	ScheduleStartDate              *metav1.Time `json:"scheduleStartDate,omitempty"`              // Current Schedule Start Date
+	SchedulePendingExecuctionDate  *metav1.Time `json:"schedulePendingExecutionDate,omitempty"`   // Schedule Pending Next Execution Date (now() >= x)
+	ScheduleLastExecutionStartDate *metav1.Time `json:"scheduleLastExecutionStartDate,omitempty"` // Schedule Last Execution Started Date (now() <= x)
+	ScheduleLastExecutionEndDate   *metav1.Time `json:"scheduleLastExecutionEndDate,omitempty"`   // Schedule Last Execution Ended Date ow() <= x)
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=0
+	ScheduleRepeated int `json:"scheduleRepeated,omitempty"` // Repeated (executed) runs count by current schedule
 }
 
 // +kubebuilder:object:root=true

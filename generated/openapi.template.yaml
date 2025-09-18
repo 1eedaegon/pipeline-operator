@@ -2,10 +2,6 @@ swagger: "2.0"
 info:
   title: Kubernetes
   version: v1.30.0
-paths:
-$paths
-definitions:
-$definitions
 securityDefinitions:
   BearerToken:
     description: Bearer Token authentication
@@ -13,4 +9,4 @@ securityDefinitions:
     name: authorization
     in: header
 security:
-  - BearerToken: []
+- BearerToken: []

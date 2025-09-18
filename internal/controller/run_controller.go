@@ -21,12 +21,14 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"sort"
 	"time"
 
 	kbatchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
+	apitypes "k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/util/retry"
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -58,10 +60,38 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 	log := log.FromContext(ctx)
 	run := &pipelinev1.Run{}
 
-	// Checking pipeline CRD
+	pipeline := &pipelinev1.Pipeline{}
+
 	log.Info("Reconciling run.")
+
+	// Checking run CR
 	if err := r.Get(ctx, req.NamespacedName, run); err != nil {
-		log.V(1).Error(err, "unable to fetch run")
+		var errorMsg string
+		// If network error, return unknown
+		if !apierrors.IsNotFound(err) {
+			errorMsg = "unable to fetch run: unknown error"
+		} else {
+			errorMsg = "unable to fetch run: run not exists"
+		}
+		log.V(1).Error(err, errorMsg)
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+
+	pipelineNamespacedName := apitypes.NamespacedName{
+		Namespace: req.NamespacedName.Namespace,
+		Name:      run.Labels[pipelinev1.PipelineNameLabel],
+	}
+
+	// Checking pipeline CR
+	if err := r.Get(ctx, pipelineNamespacedName, pipeline); err != nil {
+		var errorMsg string
+		// If network error, return unknown
+		if !apierrors.IsNotFound(err) {
+			errorMsg = "unable to fetch pipeline of run: unknown error"
+		} else {
+			errorMsg = "unable to fetch pipeline of run: pipeline not exists"
+		}
+		log.V(1).Error(err, errorMsg)
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
@@ -70,7 +100,7 @@ func (r *RunReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 		return ctrl.Result{}, err
 	}
 
-	if err := r.ensureVolumeList(ctx, run); err != nil {
+	if err := r.ensureVolumeList(ctx, run, pipeline); err != nil {
 		log.V(1).Error(err, "unable to ensure volume list")
 		return ctrl.Result{}, err
 	}
@@ -130,7 +160,7 @@ func (r *RunReconciler) ensureRunMetadata(ctx context.Context, run *pipelinev1.R
 	return nil
 }
 
-func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Run) error {
+func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Run, pipeline *pipelinev1.Pipeline) error {
 	log := log.FromContext(ctx)
 	log.Info("ensure volume list.")
 	for idx, volume := range run.Spec.Volumes {
@@ -159,10 +189,22 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				return err
 			}
 
-			// Relation owner run -> pvc(owner)
-			if err := ctrl.SetControllerReference(run, pvc, r.Scheme); err != nil {
-				log.V(1).Error(err, "unable to reference between run and new pvc")
-				return err
+			var owner metav1.Object
+
+			if volume.Lifecycle == pipelinev1.PipelineScope || volume.Lifecycle == pipelinev1.DefaultPipelineScope {
+				// Relation owner pipeline(owner) -> pvc(resource)
+				owner = pipeline
+			}
+			if volume.Lifecycle == pipelinev1.RunScope {
+				// Relation owner run(owner) -> pvc(resource)
+				owner = run
+			}
+
+			if volume.Lifecycle != pipelinev1.Persistent {
+				if err := ctrl.SetControllerReference(owner, pvc, r.Scheme); err != nil {
+					log.V(1).Error(err, "unable to reference between pipeline or run and new pvc")
+					return err
+				}
 			}
 
 			if err := r.Create(ctx, pvc); err != nil {
@@ -170,16 +212,43 @@ func (r *RunReconciler) ensureVolumeList(ctx context.Context, run *pipelinev1.Ru
 				return err
 			}
 		} else {
-			log.V(1).Info("update run pvc")
+			log.V(1).Info("update from fetched pvc to run volume")
 			capacityQuantity := pvcQuery.Spec.Resources.Requests[corev1.ResourceName(corev1.ResourceStorage)]
 			capacity := capacityQuantity.String()
 			run.Spec.Volumes[idx] = pipelinev1.VolumeResource{
-				Name:     pvcQuery.Name,
-				Capacity: capacity,
-				Storage:  *pvcQuery.Spec.StorageClassName,
+				Name:      pvcQuery.Name,
+				Capacity:  capacity,
+				Storage:   *pvcQuery.Spec.StorageClassName,
+				Lifecycle: volume.Lifecycle,
 			}
 
 			if err := r.Update(ctx, run); err != nil {
+				return err
+			}
+
+			log.V(1).Info("reconciling pvc using update volume definition.")
+			volume = run.Spec.Volumes[idx]
+
+			var owner metav1.Object
+
+			if volume.Lifecycle == pipelinev1.PipelineScope || volume.Lifecycle == pipelinev1.DefaultPipelineScope {
+				// Relation owner pipeline(owner) -> pvc(resource)
+				owner = pipeline
+			}
+			if volume.Lifecycle == pipelinev1.RunScope {
+				// Relation owner run(owner) -> pvc(resource)
+				owner = run
+			}
+
+			pvcQuery.OwnerReferences = make([]metav1.OwnerReference, 0)
+			if volume.Lifecycle != pipelinev1.Persistent {
+				if err := ctrl.SetControllerReference(owner, pvcQuery, r.Scheme); err != nil {
+					log.V(1).Error(err, "unable to reference between pipeline or run and new pvc")
+					return err
+				}
+			}
+
+			if err := r.Update(ctx, pvcQuery); err != nil {
 				return err
 			}
 		}
@@ -309,6 +378,9 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		client.MatchingLabels(labels.Set{pipelinev1.RunNameLabel: run.ObjectMeta.Name}),
 	}
 
+	runName := run.ObjectMeta.Name
+	pipelineName := run.ObjectMeta.Labels[pipelinev1.PipelineNameLabel]
+
 	objKey := client.ObjectKey{
 		Name:      run.ObjectMeta.Name,
 		Namespace: run.ObjectMeta.Namespace,
@@ -341,9 +413,10 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 			kjobState := pipelinev1.JobState(kjob.Annotations[pipelinev1.StatusAnnotation])
 			kjobReason := kjob.Annotations[pipelinev1.ReasonAnnotation]
 			runJobState := pipelinev1.RunJobState{
-				Name:     kjob.ObjectMeta.Name,
-				JobState: kjobState,
-				Reason:   kjobReason,
+				Name:       kjob.ObjectMeta.Name,
+				RunJobName: kjob.ObjectMeta.Labels[pipelinev1.RunJobNameLabel],
+				JobState:   kjobState,
+				Reason:     kjobReason,
 			}
 			jobState = pipelinev1.DetermineJobStateFromOrder(jobState, kjobState)
 			runJobStateList = append(runJobStateList, runJobState)
@@ -381,6 +454,17 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 			}
 		}
 
+		// Construct run.Spec.Jobs.Name -> index mappings.
+		m := make(map[string]int)
+		for i, v := range run.Spec.Jobs {
+			m[v.Name] = i
+		}
+
+		// Sort runJobStateList by above mappings.
+		sort.Slice(runJobStateList, func(i, j int) bool {
+			return m[runJobStateList[i].RunJobName] < m[runJobStateList[j].RunJobName]
+		})
+
 		run.Status.JobStates = runJobStateList
 		run.Status.Initializing = &Init
 		run.Status.Waiting = &Wait
@@ -393,6 +477,20 @@ func (r *RunReconciler) updateRunStatus(ctx context.Context, run *pipelinev1.Run
 		run.Status.RunState = pipelinev1.RunState(jobState)
 		run.Status.CreatedDate = &run.ObjectMeta.CreationTimestamp
 		run.Status.LastUpdatedDate = &metav1.Time{Time: time.Now()}
+
+		if Complete+Deleted+Failed == len(run.Spec.Jobs) {
+			objKey.Name = pipelineName
+
+			pipeline := &pipelinev1.Pipeline{}
+			r.Get(ctx, objKey, pipeline)
+
+			pipeline.Status.ScheduleLastExecutionEndDate = &metav1.Time{Time: time.Now()}
+
+			if err := r.Status().Update(ctx, pipeline); err != nil {
+				log.V(1).Error(err, fmt.Sprintf("Pipeline not found (run %v, pipeline %v)", runName, pipelineName))
+				return err
+			}
+		}
 
 		return r.Status().Update(ctx, run)
 	}); err != nil {
